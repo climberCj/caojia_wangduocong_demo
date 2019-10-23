@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @author ${caojia}
+ * @author caojia
  * @time 下午 7:52
  */
 @RestController
