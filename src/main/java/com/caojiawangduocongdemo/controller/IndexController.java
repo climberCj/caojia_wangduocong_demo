@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class IndexController {
     @RequestMapping("/index")
     public String index(){
+        System.out.println("为啥在这个类上加了一个@RequestMapping的注解");
         return "hello world";
     }
 }
