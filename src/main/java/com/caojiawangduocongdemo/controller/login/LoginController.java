@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @createtime 2019-11-04 15:36
  */
 @Controller
-@RequestMapping("/login")
 public class LoginController {
+    @RequestMapping("/login")
+    public String login(){
+        return "login";
+    }
 }
