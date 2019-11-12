@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"></meta>
+    <title>在线考试系统</title>
+    <link rel="stylesheet" href="css/style.default.css" type="text/css" />
+    <link rel="stylesheet" href="css/slidetounlock.css" type="text/css"/>
+
+    <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery-migrate-1.1.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery-ui-1.9.2.min.js"></script>
+    <script type="text/javascript" src="js/modernizr.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="js/custom.js"></script>
+    <script type="text/javascript" src="js/slidetounlock.js"></script>
+</head>
+<body class="loginpage">
+<div class="login-wrap">
+    <div class="loginpanel">
+        <div class="loginpanelinner">
+            <div class="logo animate0 bounceIn">
+                <h1>在线考试系统</h1>
+            </div>
+            <form id="login" action="main" method="post">
+                <div class="inputwrapper login-alert">
+                    <div class="alert alert-error">Invalid username or password</div>
+                </div>
+                <div class="inputwrapper animate1 bounceIn">
+                    <input type="text" name="username" id="username" placeholder="请输入您的账号" />
+                </div>
+                <div class="inputwrapper animate2 bounceIn">
+                    <input type="password" name="password" id="password" placeholder="请输入您的密码" />
+                </div>
+                <div class="inputwrapper animate3 bounceIn">
+                    <label class="signlabel" >角色：</label>
+                    <label  class="signlabel">
+                        <input  name="role" type="radio" value="teacher"/>教师</label>
+                    <label  class="signlabel" >
+                        <input name="role" type="radio" value="student" />学生</label>
+                </div>
+                <div id="well" class="inputwrapper animate4 bounceIn">
+                    <div id="unlock">
+                        <span id="slider"></span>
+                    </div>
+                </div>
+                <div class="inputwrapper animate5 bounceIn">
+                    <button id="submit" name="submit" class="btn" >登&nbsp;&nbsp;录</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    jQuery(document).ready(function(){
+        var login_height =  jQuery(window).height();
+        jQuery('.login-wrap').css('height',login_height);
+        jQuery('#login').submit(function(){
+            var u = jQuery('#username').val();
+            var p = jQuery('#password').val();
+            if(u == ''&&p == '') {
+                jQuery('.login-alert').fadeIn();//淡入效果
+                return false;
+            }
+        });
+    });
+    /*]]>*/
+</script>
+</body>
+</html>

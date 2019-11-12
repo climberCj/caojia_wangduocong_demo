@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<title>Document</title>
+	<link rel="stylesheet" href="dist/css/base.css"/>
+	<link rel="stylesheet" href="dist/css/skin.css"/>
+	<link rel="stylesheet" href="dist/plugins/select2/css/select2.min.css"/>
+</head>
+<body>
+	<div class="wrap">
+		<!-- 页面头部start -->
+		<div class="header">
+			<div class="logo">
+				<h1>
+					<a>在线考试系统</a>
+				</h1>
+			</div>
+			<div class="header-menu">
+				<ul class="fn-clear">
+					<li>
+						<img src="dist/img/admin.png" alt="">
+						<span>张三</span><span>，欢迎您登录在线考试系统</span>
+					</li>
+					<li class="space"></li>
+					<li class="exit">
+						<a>退出登录</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!-- 页面头部end -->
+		<!-- 页面主体start -->
+		<div class="main fn-clear" id="main_content">
+			<!-- 页面导航栏start -->
+			<div class="navi">
+				<ul class="app-list-menu menu1">
+					<li class="app-list level1">
+						<a href="" class="active name level1-name">学生管理</a>
+						<ul class="app-list-menu menu2">
+							<li><a href="../teacher/addStudent.html" class="name level2-name">添加学生</a></li>
+							<li><a href="" class="active name level2-name">查询学生信息</a></li>
+						</ul>
+					</li>
+					<li class="app-list level1">
+						<a class="name level1-name">试题管理</a>
+						<ul class="app-list-menu menu2">
+							<li><a href="../teacher/addExam.html" class="name level2-name">添加试题</a></li>
+							<li><a href="../teacher/examList.html" class="name level2-name">查询试题</a></li>
+							<li><a href="exam.html" class="name level2-name">搜索试题</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<!-- 页面导航栏end -->
+			<div class="content">
+				<div class="content-wrap">
+					<div class="add-stu-wrap">
+						<ul class="stu-list-ul">
+							<li class="active"><a href="">根据班级查询学生</a></li>
+							<li><a href="">根据姓名查询学生</a></li>
+							<li><a href="">根据学号查询学生</a></li>
+						</ul>
+						<h3 class="patr-name">学生列表</h3>
+						<form action="">
+							<table class="table same-table">
+								<thead>
+									<tr>
+										<th width="25%">
+											<div>学生编号</div>
+										</th>
+										<th width="25%">
+											<div>学生姓名</div>
+										</th>
+										<th width="25%">
+											<div>学生班级</div>
+										</th>
+										<th width="25%">
+											<div>学生成绩</div>
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>
+											<div>11111</div>
+										</td>
+										<td>
+											<div>学生姓名</div>
+										</td>
+										<td>
+											<div>1111</div>
+										</td>
+										<td>
+											<div>1111</div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<div>11111</div>
+										</td>
+										<td>
+											<div>学生姓名</div>
+										</td>
+										<td>
+											<div>1111</div>
+										</td>
+										<td>
+											<div>1111</div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<div>11111</div>
+										</td>
+										<td>
+											<div>学生姓名</div>
+										</td>
+										<td>
+											<div>1111</div>
+										</td>
+										<td>
+											<div>1111</div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<div>11111</div>
+										</td>
+										<td>
+											<div>学生姓名</div>
+										</td>
+										<td>
+											<div>1111</div>
+										</td>
+										<td>
+											<div>1111</div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<div>11111</div>
+										</td>
+										<td>
+											<div>学生姓名</div>
+										</td>
+										<td>
+											<div>1111</div>
+										</td>
+										<td>
+											<div>1111</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</form>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 页面主体start -->
+	</div>
+	<script type="text/javaScript" src="dist/plugins/jquery/jquery-1.11.3.min.js"></script>
+	<script type="text/javaScript" src="dist/plugins/select2/pinyin.js"></script>
+	<script type="text/javaScript" src="dist/plugins/select2/select2.js"></script>
+	<script type="text/javaScript" src="dist/plugins/nicescroll/jquery.nicescroll.js"></script>
+	<script>
+		$(document).ready(function() {
+			var _wHeight = $(window).height();
+			var _hHeight =$(".header").height();
+			$("#main_content").height(_wHeight-80);
+			$(".navi").height(_wHeight-80);
+			$(".content").height(_wHeight-80);
+			$(".sel").select2();
+			$('.content').niceScroll().hide();
+
+		});
+	</script>
+</body>
+</html>
