@@ -24,7 +24,7 @@
             </div>
             <form id="login" action="main" method="post">
                 <div class="inputwrapper login-alert">
-                    <div class="alert alert-error">Invalid username or password</div>
+                    <div class="alert alert-error">Invalid username and password</div>
                 </div>
                 <div class="inputwrapper animate1 bounceIn">
                     <input type="text" name="username" id="username" placeholder="请输入您的账号" />
@@ -38,6 +38,9 @@
                         <input  name="role" type="radio" value="teacher"/>教师</label>
                     <label  class="signlabel" >
                         <input name="role" type="radio" value="student" />学生</label>
+                </div>
+                <div class="inputwrapper login-alert-role">
+                    <div class="alert alert-error">Invalid role</div>
                 </div>
                 <div id="well" class="inputwrapper animate4 bounceIn">
                     <div id="unlock">
@@ -57,13 +60,23 @@
     /*<![CDATA[*/
     jQuery(document).ready(function(){
         var login_height =  jQuery(window).height();
+        jQuery('.login-alert-role').hide();
         jQuery('.login-wrap').css('height',login_height);
         jQuery('#login').submit(function(){
             var u = jQuery('#username').val();
             var p = jQuery('#password').val();
-            if(u == ''&&p == '') {
+            var role = jQuery("input[type='radio']:checked").val();
+            //任何一个为空都阻止登录
+            if(u == '' ||　p == '') {
                 jQuery('.login-alert').fadeIn();//淡入效果
                 return false;
+            }
+            if(role==null) {
+                jQuery('.login-alert-role').fadeIn();//淡入效果
+                return false;
+            }else{
+                jQuery('.login-alert-role').hide();
+                return true;
             }
         });
     });
