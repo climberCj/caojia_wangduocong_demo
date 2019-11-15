@@ -4,8 +4,12 @@
  */
 package com.caojiawangduocongdemo.config;
 
+import com.caojiawangduocongdemo.intercept.MyIntercept;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 /**
@@ -14,11 +18,37 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
  */
 @Configuration
 public class MyWebConfig extends WebMvcConfigurationSupport {
+    @Autowired
+    private MyIntercept myIntercept;
+
+    /**
+     * 重写该方法访问静态资源
+     * @param registry
+     */
     @Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**").
-                addResourceLocations("/static/**").
+                addResourceLocations("classpath:/resources/").
                 addResourceLocations("classpath:/static/");
         super.addResourceHandlers(registry);
+    }
+
+    /**
+     * 自定义拦截器
+     * @param registry
+     */
+    protected void addInterceptors(InterceptorRegistry registry){
+        registry.addInterceptor(myIntercept).addPathPatterns("/**").
+                excludePathPatterns("/","/login");
+        super.addInterceptors(registry);
+    }
+
+    /**
+     * 自定义默认请求
+     * @param registry
+     */
+    protected void addViewControllers(ViewControllerRegistry registry){
+        registry.addViewController("/").setViewName("login");
+        super.addViewControllers(registry);
     }
 }
