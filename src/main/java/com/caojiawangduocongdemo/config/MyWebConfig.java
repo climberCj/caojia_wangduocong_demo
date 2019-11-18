@@ -16,7 +16,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
  * @author caojia
  * @createtime 2019-11-04 17:17
  */
-@Configuration
+//@Configuration
 public class MyWebConfig extends WebMvcConfigurationSupport {
     @Autowired
     private MyIntercept myIntercept;
@@ -37,9 +37,10 @@ public class MyWebConfig extends WebMvcConfigurationSupport {
      * 自定义拦截器
      * @param registry
      */
+    @Override
     protected void addInterceptors(InterceptorRegistry registry){
         registry.addInterceptor(myIntercept).addPathPatterns("/**").
-                excludePathPatterns("/","/login");
+                excludePathPatterns("/","/login","/main");
         super.addInterceptors(registry);
     }
 
@@ -47,6 +48,7 @@ public class MyWebConfig extends WebMvcConfigurationSupport {
      * 自定义默认请求
      * @param registry
      */
+    @Override
     protected void addViewControllers(ViewControllerRegistry registry){
         registry.addViewController("/").setViewName("login");
         super.addViewControllers(registry);
