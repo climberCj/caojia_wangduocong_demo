@@ -4,6 +4,8 @@
  */
 package com.caojiawangduocongdemo.controller.login;
 
+import com.caojiawangduocongdemo.entity.Student;
+import com.caojiawangduocongdemo.entity.Teacher;
 import com.caojiawangduocongdemo.service.student.StudentService;
 import com.caojiawangduocongdemo.service.teacher.TeacherService;
 import org.slf4j.Logger;
@@ -51,6 +53,10 @@ public class LoginController {
         Map<String,String> respMap = new HashMap<>();
         if("teacher".equals(role)){
             if(teacherService.allowLogin(username,password )){
+                //将教师信息存入session
+                Teacher teacher = teacherService.findByTeacherId(username);
+                request.getSession().setAttribute("user",teacher);
+                //重定向到教师控制层
                 return new ModelAndView("redirect:teacher/main");
             }else{
                 //教师登录失败
@@ -58,6 +64,10 @@ public class LoginController {
             }
         }else if("student".equals(role)){
             if(studentService.allowLogin(username,password )){
+                //将学生对象存入session
+                Student student = studentService.findByStudentId(username);
+                request.getSession().setAttribute("user", student);
+                //重定向到学生控制层
                 return new ModelAndView("redirect:student/main");
             }else{
                 //学生登录失败
