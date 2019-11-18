@@ -34,4 +34,14 @@ public class StudentServiceImpl implements StudentService {
             }
         }
     }
+
+    /**
+     * 通过学生用户名查询学生对象
+     * @param studentId
+     * @return
+     */
+    @Override
+    public Student findByStudentId(String studentId) {
+        return studentMapper.findByStudentId(studentId);
+    }
 }

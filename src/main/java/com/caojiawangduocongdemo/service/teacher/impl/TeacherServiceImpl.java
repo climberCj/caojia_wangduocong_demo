@@ -34,4 +34,14 @@ public class TeacherServiceImpl implements TeacherService {
             return false;
         }
     }
+
+    /**
+     * 通过老师用户名查询教师对象
+     * @param teacherId
+     * @return
+     */
+    @Override
+    public Teacher findByTeacherId(String teacherId) {
+        return teacherMapper.findByTeacherId(teacherId);
+    }
 }
