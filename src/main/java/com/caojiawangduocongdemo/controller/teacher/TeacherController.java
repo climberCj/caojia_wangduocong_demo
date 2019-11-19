@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @author caojia
- * @time 下午 10:08
+ * @createtime 2019-11-15 14:45
  */
 @Controller
 @RequestMapping("/teacher")

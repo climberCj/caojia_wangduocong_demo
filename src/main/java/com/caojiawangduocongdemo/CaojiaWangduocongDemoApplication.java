@@ -14,7 +14,7 @@ import java.util.List;
 
 @SpringBootApplication
 @MapperScan("com.caojiawangduocongdemo.dao")
-public class CaojiaWangduocongDemoApplication extends WebMvcConfigurationSupport {
+public class CaojiaWangduocongDemoApplication /*extends WebMvcConfigurationSupport*/ {
 
     public static void main(String[] args) {
         SpringApplication.run(CaojiaWangduocongDemoApplication.class, args);
@@ -23,19 +23,19 @@ public class CaojiaWangduocongDemoApplication extends WebMvcConfigurationSupport
      * 自定义拦截器
      * @param registry
      */
-    @Override
+    /*@Override
     protected void addInterceptors(InterceptorRegistry registry){
         List<String> excludeAllList = Arrays.asList("/", "/login","/main","/teacher/main","/student/main", "/css/**", "/fonts/**","/images/**","/img/**", "/js/**", "/plugins/**");
         registry.addInterceptor(new MyIntercept()).addPathPatterns("/**").
                 excludePathPatterns(excludeAllList);
         super.addInterceptors(registry);
-    }
+    }*/
 
     /**
      * 重写该方法访问静态资源
      * @param registry
      */
-    @Override
+    /*@Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**").
                 addResourceLocations("classpath:/META-INF/resources/").
@@ -43,15 +43,14 @@ public class CaojiaWangduocongDemoApplication extends WebMvcConfigurationSupport
                 addResourceLocations("classpath:/static/").
                 addResourceLocations("classpath:/public/");
         super.addResourceHandlers(registry);
-    }
+    }*/
     /**
      * 自定义默认请求
      * @param registry
      */
-    @Override
+    /*@Override
     protected void addViewControllers(ViewControllerRegistry registry){
         registry.addViewController("/").setViewName("login");
         super.addViewControllers(registry);
-    }
-
+    }*/
 }
