@@ -19,11 +19,11 @@
 				<ul class="fn-clear">
 					<li>
 						<img src="../img/admin.png" alt="">
-						<span>张三</span><span>，欢迎您登录在线考试系统</span>
+						<span th:text="${session.user.teachername}"></span><span>，欢迎您登录在线考试系统</span>
 					</li>
 					<li class="space"></li>
 					<li class="exit">
-						<a>退出登录</a>
+						<a onclick="loginOut()">退出登录</a>
 					</li>
 				</ul>
 			</div>
@@ -56,6 +56,8 @@
 
 			</div>
 		</div>
+		<!--退出系统form-->
+		<!--<form id="sysOut" action="loginOut" method="post"></form>-->
 		<!-- 页面主体end -->
 	</div>
 	<script type="text/javaScript" src="../plugins/jquery/jquery-1.11.3.min.js"></script>
@@ -71,6 +73,17 @@
 			$(".sel").select2();
 			$('.content').niceScroll().hide();
 		});
+		//退出登录
+		function loginOut(){
+		    //显示弹出框，点击确定才能退出
+			//$("#sysOut").submit();
+			//获取项目跟路径
+			debugger
+			var pathname = document.location.pathname;
+            var index = pathname.substr(1).indexOf("/");
+            var result = pathname.substr(0,index+1);
+			window.location.href=result+"/loginOut";
+		}
 	</script>
 </body>
 </html>
