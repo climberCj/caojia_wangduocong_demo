@@ -1,5 +1,6 @@
 package com.caojiawangduocongdemo.controller.login;
 
+import com.caojiawangduocongdemo.common.ResultBody;
 import com.caojiawangduocongdemo.entity.Student;
 import com.caojiawangduocongdemo.entity.Teacher;
 import com.caojiawangduocongdemo.service.student.StudentService;
@@ -85,6 +86,17 @@ public class LoginController {
             response.getWriter().write("</script>");
             return null;
         }
+        return new ModelAndView("redirect:/login");
+    }
+
+    @RequestMapping("/loginOut")
+    public ModelAndView loginOut(HttpServletRequest request){
+        ResultBody rb = new ResultBody();
+        Object user = request.getSession().getAttribute("user");
+        if(user != null){
+            request.getSession().removeAttribute("user");
+        }
+        rb.setMessage("success");
         return new ModelAndView("redirect:/login");
     }
 }
