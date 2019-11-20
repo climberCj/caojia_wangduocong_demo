@@ -120,4 +120,12 @@
       teacherId = #{teacherid,jdbcType=VARCHAR}
     where sysid = #{sysid,jdbcType=VARCHAR}
   </update>
+
+  <select id="page" resultMap="ResourceResult">
+    select id, name, pattern, method, created_time, updated_time from resources where 1 = 1
+    <if test="q != null">
+      and (name like '%${q}%' or pattern like '%${q}%')
+    </if>
+    order by name desc limit #{limit} offset #{offset}
+  </select>
 </mapper>

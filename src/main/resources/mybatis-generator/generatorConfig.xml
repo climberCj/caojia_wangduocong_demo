@@ -5,7 +5,7 @@
 
 <generatorConfiguration>
     <classPathEntry
-            location="D:/maven/repository/mysql/mysql-connector-java/5.1.46/mysql-connector-java-5.1.46.jar"/>
+            location="/home/dev/.m2/repository/mysql/mysql-connector-java/8.0.18/mysql-connector-java-8.0.18.jar"/>
     <context id="my" targetRuntime="MyBatis3">
         <commentGenerator>
             <property name="suppressDate" value="false"/>
@@ -13,8 +13,8 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://127.0.0.1:3306/examonlinedb" userId="root"
-                        password="root"/>
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/VSCod" userId="dev"
+                        password="dev"/>
 
         <javaModelGenerator targetPackage="com.caojiawangduocongdemo.entity"
                             targetProject="E:\github\caojia_heisi_project\caojia_wangduocong_demo\src\main\java">
