@@ -1,9 +1,6 @@
 package com.caojiawangduocongdemo.entity;
 
-import java.io.Serializable;
-
-public class Teacher implements Serializable {
-    private static final long serialVersionUID = 2720321197227790809L;
+public class Teacher {
     private String sysid;
 
     private String teacherid;

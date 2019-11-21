@@ -1,11 +1,9 @@
 package com.caojiawangduocongdemo.entity;
 
-import java.io.Serializable;
+public class Subject {
+    private String sysid;
 
-public class Subject implements Serializable {
-
-    private static final long serialVersionUID = 5115025691260881052L;
-    private Integer stid;
+    private String stno;
 
     private String sttitle;
 
@@ -21,12 +19,22 @@ public class Subject implements Serializable {
 
     private String stparse;
 
-    public Integer getStid() {
-        return stid;
+    private String ststatus;
+
+    public String getSysid() {
+        return sysid;
     }
 
-    public void setStid(Integer stid) {
-        this.stid = stid;
+    public void setSysid(String sysid) {
+        this.sysid = sysid == null ? null : sysid.trim();
+    }
+
+    public String getStno() {
+        return stno;
+    }
+
+    public void setStno(String stno) {
+        this.stno = stno == null ? null : stno.trim();
     }
 
     public String getSttitle() {
@@ -83,5 +91,13 @@ public class Subject implements Serializable {
 
     public void setStparse(String stparse) {
         this.stparse = stparse == null ? null : stparse.trim();
+    }
+
+    public String getStstatus() {
+        return ststatus;
+    }
+
+    public void setStstatus(String ststatus) {
+        this.ststatus = ststatus == null ? null : ststatus.trim();
     }
 }
