@@ -1,6 +1,5 @@
 package com.caojiawangduocongdemo.service.student.impl;
 
-import com.caojiawangduocongdemo.common.Page;
 import com.caojiawangduocongdemo.dao.StudentMapper;
 import com.caojiawangduocongdemo.entity.Student;
 import com.caojiawangduocongdemo.service.student.StudentService;
