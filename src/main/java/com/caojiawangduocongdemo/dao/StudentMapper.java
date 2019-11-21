@@ -1,6 +1,7 @@
 package com.caojiawangduocongdemo.dao;
 
 import com.caojiawangduocongdemo.entity.Student;
+import com.github.pagehelper.Page;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -19,4 +20,7 @@ public interface StudentMapper {
 
     //通过学生账号查询
     Student findByStudentId(String studentId);
+
+    //分页查询
+    Page<Student> findByPage();
 }

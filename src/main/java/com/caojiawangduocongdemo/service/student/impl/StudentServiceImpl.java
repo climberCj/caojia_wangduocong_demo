@@ -3,6 +3,8 @@ package com.caojiawangduocongdemo.service.student.impl;
 import com.caojiawangduocongdemo.dao.StudentMapper;
 import com.caojiawangduocongdemo.entity.Student;
 import com.caojiawangduocongdemo.service.student.StudentService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,5 +45,11 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student findByStudentId(String studentId) {
         return studentMapper.findByStudentId(studentId);
+    }
+
+    @Override
+    public Page<Student> findByPage(int pageNo, int pageSize) {
+        Page<Student> page = PageHelper.startPage(pageNo,pageSize);
+        return studentMapper.findByPage();
     }
 }
