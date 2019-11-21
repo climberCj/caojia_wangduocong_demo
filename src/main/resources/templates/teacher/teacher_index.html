@@ -63,6 +63,7 @@
 	<script type="text/javaScript" src="../plugins/jquery/jquery-1.11.3.min.js"></script>
 	<script type="text/javaScript" src="../plugins/nicescroll/jquery.nicescroll.js"></script>
 	<script type="text/javaScript" src="../plugins/select2/select2.js"></script>
+	<script type="text/javascript" src="../js/dialog.js"></script>
 	<script>
 		$(document).ready(function() {
 			var _wHeight = $(window).height();
@@ -76,13 +77,21 @@
 		//退出登录
 		function loginOut(){
 		    //显示弹出框，点击确定才能退出
-			//$("#sysOut").submit();
-			//获取项目跟路径
-			debugger
-			var pathname = document.location.pathname;
-            var index = pathname.substr(1).indexOf("/");
-            var result = pathname.substr(0,index+1);
-			window.location.href=result+"/loginOut";
+            new $Msg({
+                content:"确定要退出吗？",
+                type:"success",
+                cancle:function(){
+
+                },
+                confirm:function(){
+                    //获取项目跟路径
+                    var pathname = document.location.pathname;
+                    var index = pathname.substr(1).indexOf("/");
+                    var result = pathname.substr(0,index+1);
+                    window.location.href=result+"/loginOut";
+                }
+            })
+
 		}
 	</script>
 </body>
