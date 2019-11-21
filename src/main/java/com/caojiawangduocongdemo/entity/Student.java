@@ -3,21 +3,24 @@ package com.caojiawangduocongdemo.entity;
 import java.io.Serializable;
 
 public class Student implements Serializable {
-    //alt+Enter提示自动生成
-    private static final long serialVersionUID = -3020817981039772976L;
+    private static final long serialVersionUID = -8641291172933911171L;
     private String sysid;
 
     private String studentid;
 
-    private String password;
-
     private String studentname;
+
+    private String password;
 
     private Integer result;
 
     private String sclass;
 
     private String teacherid;
+
+    private String stustatus;
+
+    private String stupic;
 
     public String getSysid() {
         return sysid;
@@ -35,20 +38,20 @@ public class Student implements Serializable {
         this.studentid = studentid == null ? null : studentid.trim();
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
-    }
-
     public String getStudentname() {
         return studentname;
     }
 
     public void setStudentname(String studentname) {
         this.studentname = studentname == null ? null : studentname.trim();
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
     }
 
     public Integer getResult() {
@@ -73,5 +76,21 @@ public class Student implements Serializable {
 
     public void setTeacherid(String teacherid) {
         this.teacherid = teacherid == null ? null : teacherid.trim();
+    }
+
+    public String getStustatus() {
+        return stustatus;
+    }
+
+    public void setStustatus(String stustatus) {
+        this.stustatus = stustatus == null ? null : stustatus.trim();
+    }
+
+    public String getStupic() {
+        return stupic;
+    }
+
+    public void setStupic(String stupic) {
+        this.stupic = stupic == null ? null : stupic.trim();
     }
 }

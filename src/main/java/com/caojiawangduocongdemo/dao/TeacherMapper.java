@@ -3,6 +3,7 @@ package com.caojiawangduocongdemo.dao;
 import com.caojiawangduocongdemo.entity.Teacher;
 import org.springframework.stereotype.Component;
 
+@Component
 public interface TeacherMapper {
     int deleteByPrimaryKey(String sysid);
 

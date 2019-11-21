@@ -3,7 +3,7 @@ package com.caojiawangduocongdemo.entity;
 import java.io.Serializable;
 
 public class Teacher implements Serializable {
-    private static final long serialVersionUID = 2720321197227790809L;
+    private static final long serialVersionUID = 3889841156651636309L;
     private String sysid;
 
     private String teacherid;
@@ -11,6 +11,8 @@ public class Teacher implements Serializable {
     private String password;
 
     private String teachername;
+
+    private String teacherpic;
 
     public String getSysid() {
         return sysid;
@@ -42,5 +44,13 @@ public class Teacher implements Serializable {
 
     public void setTeachername(String teachername) {
         this.teachername = teachername == null ? null : teachername.trim();
+    }
+
+    public String getTeacherpic() {
+        return teacherpic;
+    }
+
+    public void setTeacherpic(String teacherpic) {
+        this.teacherpic = teacherpic == null ? null : teacherpic.trim();
     }
 }

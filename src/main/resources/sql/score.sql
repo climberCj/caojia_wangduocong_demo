@@ -10,20 +10,18 @@ Target Server Type    : MYSQL
 Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-11-21 16:35:59
+Date: 2019-11-21 16:35:40
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for teacher
+-- Table structure for score
 -- ----------------------------
-DROP TABLE IF EXISTS `teacher`;
-CREATE TABLE `teacher` (
+DROP TABLE IF EXISTS `score`;
+CREATE TABLE `score` (
   `sysid` varchar(32) NOT NULL COMMENT '主键',
-  `teacherId` varchar(32) DEFAULT NULL COMMENT '教师账号',
-  `password` varchar(32) DEFAULT NULL COMMENT '密码',
-  `teacherName` varchar(255) DEFAULT '' COMMENT '教师姓名',
-  `teacherPic` varchar(255) DEFAULT NULL COMMENT '头像',
+  `studentId` varchar(32) DEFAULT NULL COMMENT '学生id',
+  `score` int(3) DEFAULT NULL COMMENT '分数',
   PRIMARY KEY (`sysid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -6,9 +6,10 @@
     <result column="teacherId" property="teacherid" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="teacherName" property="teachername" jdbcType="VARCHAR" />
+    <result column="teacherPic" property="teacherpic" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    sysid, teacherId, password, teacherName
+    sysid, teacherId, password, teacherName, teacherPic
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -28,9 +29,9 @@
   </delete>
   <insert id="insert" parameterType="com.caojiawangduocongdemo.entity.Teacher" >
     insert into teacher (sysid, teacherId, password, 
-      teacherName)
+      teacherName, teacherPic)
     values (#{sysid,jdbcType=VARCHAR}, #{teacherid,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{teachername,jdbcType=VARCHAR})
+      #{teachername,jdbcType=VARCHAR}, #{teacherpic,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.caojiawangduocongdemo.entity.Teacher" >
     insert into teacher
@@ -47,6 +48,9 @@
       <if test="teachername != null" >
         teacherName,
       </if>
+      <if test="teacherpic != null" >
+        teacherPic,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="sysid != null" >
@@ -60,6 +64,9 @@
       </if>
       <if test="teachername != null" >
         #{teachername,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherpic != null" >
+        #{teacherpic,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -75,6 +82,9 @@
       <if test="teachername != null" >
         teacherName = #{teachername,jdbcType=VARCHAR},
       </if>
+      <if test="teacherpic != null" >
+        teacherPic = #{teacherpic,jdbcType=VARCHAR},
+      </if>
     </set>
     where sysid = #{sysid,jdbcType=VARCHAR}
   </update>
@@ -82,7 +92,8 @@
     update teacher
     set teacherId = #{teacherid,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
-      teacherName = #{teachername,jdbcType=VARCHAR}
+      teacherName = #{teachername,jdbcType=VARCHAR},
+      teacherPic = #{teacherpic,jdbcType=VARCHAR}
     where sysid = #{sysid,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.caojiawangduocongdemo.dao.SubjectMapper" >
   <resultMap id="BaseResultMap" type="com.caojiawangduocongdemo.entity.Subject" >
-    <id column="stid" property="stid" jdbcType="INTEGER" />
+    <id column="sysid" property="sysid" jdbcType="VARCHAR" />
+    <result column="stNo" property="stno" jdbcType="VARCHAR" />
     <result column="stTitle" property="sttitle" jdbcType="VARCHAR" />
     <result column="stOptionA" property="stoptiona" jdbcType="VARCHAR" />
     <result column="stOptionB" property="stoptionb" jdbcType="VARCHAR" />
@@ -10,33 +11,40 @@
     <result column="stOptionD" property="stoptiond" jdbcType="VARCHAR" />
     <result column="stAnswer" property="stanswer" jdbcType="VARCHAR" />
     <result column="stParse" property="stparse" jdbcType="VARCHAR" />
+    <result column="stStatus" property="ststatus" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    stid, stTitle, stOptionA, stOptionB, stOptionC, stOptionD, stAnswer, stParse
+    sysid, stNo, stTitle, stOptionA, stOptionB, stOptionC, stOptionD, stAnswer, stParse, 
+    stStatus
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from subject
-    where stid = #{stid,jdbcType=INTEGER}
+    where sysid = #{sysid,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from subject
-    where stid = #{stid,jdbcType=INTEGER}
+    where sysid = #{sysid,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.caojiawangduocongdemo.entity.Subject" >
-    insert into subject (stid, stTitle, stOptionA, 
-      stOptionB, stOptionC, stOptionD, 
-      stAnswer, stParse)
-    values (#{stid,jdbcType=INTEGER}, #{sttitle,jdbcType=VARCHAR}, #{stoptiona,jdbcType=VARCHAR}, 
-      #{stoptionb,jdbcType=VARCHAR}, #{stoptionc,jdbcType=VARCHAR}, #{stoptiond,jdbcType=VARCHAR}, 
-      #{stanswer,jdbcType=VARCHAR}, #{stparse,jdbcType=VARCHAR})
+    insert into subject (sysid, stNo, stTitle, 
+      stOptionA, stOptionB, stOptionC, 
+      stOptionD, stAnswer, stParse, 
+      stStatus)
+    values (#{sysid,jdbcType=VARCHAR}, #{stno,jdbcType=VARCHAR}, #{sttitle,jdbcType=VARCHAR}, 
+      #{stoptiona,jdbcType=VARCHAR}, #{stoptionb,jdbcType=VARCHAR}, #{stoptionc,jdbcType=VARCHAR}, 
+      #{stoptiond,jdbcType=VARCHAR}, #{stanswer,jdbcType=VARCHAR}, #{stparse,jdbcType=VARCHAR}, 
+      #{ststatus,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.caojiawangduocongdemo.entity.Subject" >
     insert into subject
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="stid != null" >
-        stid,
+      <if test="sysid != null" >
+        sysid,
+      </if>
+      <if test="stno != null" >
+        stNo,
       </if>
       <if test="sttitle != null" >
         stTitle,
@@ -59,10 +67,16 @@
       <if test="stparse != null" >
         stParse,
       </if>
+      <if test="ststatus != null" >
+        stStatus,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="stid != null" >
-        #{stid,jdbcType=INTEGER},
+      <if test="sysid != null" >
+        #{sysid,jdbcType=VARCHAR},
+      </if>
+      <if test="stno != null" >
+        #{stno,jdbcType=VARCHAR},
       </if>
       <if test="sttitle != null" >
         #{sttitle,jdbcType=VARCHAR},
@@ -85,11 +99,17 @@
       <if test="stparse != null" >
         #{stparse,jdbcType=VARCHAR},
       </if>
+      <if test="ststatus != null" >
+        #{ststatus,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.caojiawangduocongdemo.entity.Subject" >
     update subject
     <set >
+      <if test="stno != null" >
+        stNo = #{stno,jdbcType=VARCHAR},
+      </if>
       <if test="sttitle != null" >
         stTitle = #{sttitle,jdbcType=VARCHAR},
       </if>
@@ -111,18 +131,23 @@
       <if test="stparse != null" >
         stParse = #{stparse,jdbcType=VARCHAR},
       </if>
+      <if test="ststatus != null" >
+        stStatus = #{ststatus,jdbcType=VARCHAR},
+      </if>
     </set>
-    where stid = #{stid,jdbcType=INTEGER}
+    where sysid = #{sysid,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.caojiawangduocongdemo.entity.Subject" >
     update subject
-    set stTitle = #{sttitle,jdbcType=VARCHAR},
+    set stNo = #{stno,jdbcType=VARCHAR},
+      stTitle = #{sttitle,jdbcType=VARCHAR},
       stOptionA = #{stoptiona,jdbcType=VARCHAR},
       stOptionB = #{stoptionb,jdbcType=VARCHAR},
       stOptionC = #{stoptionc,jdbcType=VARCHAR},
       stOptionD = #{stoptiond,jdbcType=VARCHAR},
       stAnswer = #{stanswer,jdbcType=VARCHAR},
-      stParse = #{stparse,jdbcType=VARCHAR}
-    where stid = #{stid,jdbcType=INTEGER}
+      stParse = #{stparse,jdbcType=VARCHAR},
+      stStatus = #{ststatus,jdbcType=VARCHAR}
+    where sysid = #{sysid,jdbcType=VARCHAR}
   </update>
 </mapper>

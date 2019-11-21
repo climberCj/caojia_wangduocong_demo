@@ -4,14 +4,16 @@
   <resultMap id="BaseResultMap" type="com.caojiawangduocongdemo.entity.Student" >
     <id column="sysid" property="sysid" jdbcType="VARCHAR" />
     <result column="studentId" property="studentid" jdbcType="VARCHAR" />
-    <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="studentName" property="studentname" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="result" property="result" jdbcType="INTEGER" />
     <result column="sclass" property="sclass" jdbcType="VARCHAR" />
     <result column="teacherId" property="teacherid" jdbcType="VARCHAR" />
+    <result column="stuStatus" property="stustatus" jdbcType="VARCHAR" />
+    <result column="stuPic" property="stupic" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    sysid, studentId, password, studentName, result, sclass, teacherId
+    sysid, studentId, studentName, password, result, sclass, teacherId, stuStatus, stuPic
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -30,12 +32,14 @@
     where sysid = #{sysid,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.caojiawangduocongdemo.entity.Student" >
-    insert into student (sysid, studentId, password, 
-      studentName, result, sclass, 
-      teacherId)
-    values (#{sysid,jdbcType=VARCHAR}, #{studentid,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{studentname,jdbcType=VARCHAR}, #{result,jdbcType=INTEGER}, #{sclass,jdbcType=VARCHAR}, 
-      #{teacherid,jdbcType=VARCHAR})
+    insert into student (sysid, studentId, studentName, 
+      password, result, sclass, 
+      teacherId, stuStatus, stuPic
+      )
+    values (#{sysid,jdbcType=VARCHAR}, #{studentid,jdbcType=VARCHAR}, #{studentname,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{result,jdbcType=INTEGER}, #{sclass,jdbcType=VARCHAR}, 
+      #{teacherid,jdbcType=VARCHAR}, #{stustatus,jdbcType=VARCHAR}, #{stupic,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.caojiawangduocongdemo.entity.Student" >
     insert into student
@@ -46,11 +50,11 @@
       <if test="studentid != null" >
         studentId,
       </if>
-      <if test="password != null" >
-        password,
-      </if>
       <if test="studentname != null" >
         studentName,
+      </if>
+      <if test="password != null" >
+        password,
       </if>
       <if test="result != null" >
         result,
@@ -61,6 +65,12 @@
       <if test="teacherid != null" >
         teacherId,
       </if>
+      <if test="stustatus != null" >
+        stuStatus,
+      </if>
+      <if test="stupic != null" >
+        stuPic,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="sysid != null" >
@@ -69,11 +79,11 @@
       <if test="studentid != null" >
         #{studentid,jdbcType=VARCHAR},
       </if>
-      <if test="password != null" >
-        #{password,jdbcType=VARCHAR},
-      </if>
       <if test="studentname != null" >
         #{studentname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
       </if>
       <if test="result != null" >
         #{result,jdbcType=INTEGER},
@@ -84,6 +94,12 @@
       <if test="teacherid != null" >
         #{teacherid,jdbcType=VARCHAR},
       </if>
+      <if test="stustatus != null" >
+        #{stustatus,jdbcType=VARCHAR},
+      </if>
+      <if test="stupic != null" >
+        #{stupic,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.caojiawangduocongdemo.entity.Student" >
@@ -92,11 +108,11 @@
       <if test="studentid != null" >
         studentId = #{studentid,jdbcType=VARCHAR},
       </if>
-      <if test="password != null" >
-        password = #{password,jdbcType=VARCHAR},
-      </if>
       <if test="studentname != null" >
         studentName = #{studentname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
       </if>
       <if test="result != null" >
         result = #{result,jdbcType=INTEGER},
@@ -107,17 +123,25 @@
       <if test="teacherid != null" >
         teacherId = #{teacherid,jdbcType=VARCHAR},
       </if>
+      <if test="stustatus != null" >
+        stuStatus = #{stustatus,jdbcType=VARCHAR},
+      </if>
+      <if test="stupic != null" >
+        stuPic = #{stupic,jdbcType=VARCHAR},
+      </if>
     </set>
     where sysid = #{sysid,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.caojiawangduocongdemo.entity.Student" >
     update student
     set studentId = #{studentid,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
       studentName = #{studentname,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
       result = #{result,jdbcType=INTEGER},
       sclass = #{sclass,jdbcType=VARCHAR},
-      teacherId = #{teacherid,jdbcType=VARCHAR}
+      teacherId = #{teacherid,jdbcType=VARCHAR},
+      stuStatus = #{stustatus,jdbcType=VARCHAR},
+      stuPic = #{stupic,jdbcType=VARCHAR}
     where sysid = #{sysid,jdbcType=VARCHAR}
   </update>
 </mapper>
