@@ -1,6 +1,7 @@
 package com.caojiawangduocongdemo.dao;
 
 import com.caojiawangduocongdemo.entity.Subject;
+import com.github.pagehelper.Page;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,4 +17,6 @@ public interface SubjectMapper {
     int updateByPrimaryKeySelective(Subject record);
 
     int updateByPrimaryKey(Subject record);
+
+    Page<Subject> findByPage();
 }

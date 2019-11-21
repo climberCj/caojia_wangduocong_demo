@@ -46,10 +46,4 @@ public class StudentServiceImpl implements StudentService {
     public Student findByStudentId(String studentId) {
         return studentMapper.findByStudentId(studentId);
     }
-
-    @Override
-    public Page<Student> findByPage(int pageNo, int pageSize) {
-        Page<Student> page = PageHelper.startPage(pageNo,pageSize);
-        return studentMapper.findByPage();
-    }
 }

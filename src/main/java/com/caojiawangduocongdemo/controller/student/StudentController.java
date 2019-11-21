@@ -19,27 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping("/student")
 public class StudentController {
-    @Autowired
-    private StudentService studentService;
     @RequestMapping("/main")
     public String main(){
         return "student_index";
-    }
-
-    /**
-     * 学生分页列表
-     * @param pageNo
-     * @param pageSize
-     * @param request
-     * @param model
-     * @return
-     */
-    @RequestMapping("/list")
-    public String findPage(@RequestParam(value = "pageNo",defaultValue = "1") int pageNo,
-                           @RequestParam(value = "pageSize",defaultValue = "5")int pageSize, HttpServletRequest request, Model model){
-        Page<Student> page = studentService.findByPage(pageNo,pageSize);
-        PageInfo<Student> pageInfo = new PageInfo<>(page);
-        model.addAttribute("pageInfo",pageInfo);
-        return "student/stulist";
     }
 }

@@ -23,6 +23,11 @@
     from subject
     where sysid = #{sysid,jdbcType=VARCHAR}
   </select>
+  <select id="findByPage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from subject
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from subject
     where sysid = #{sysid,jdbcType=VARCHAR}
