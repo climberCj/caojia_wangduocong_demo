@@ -15,6 +15,7 @@ public class Student {
 
     private String teacherid;
 
+
     private String stustatus;
 
     public String getSysid() {

@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Page model.
  *
- * @author Yang XuePing
+ * @author DC
  */
 public class Page<T> implements Serializable {
     public static final int DEFAULT_PAGE_SIZE = 20;

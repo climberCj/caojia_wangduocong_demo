@@ -17,18 +17,18 @@
                         password="dev"/>
 
         <javaModelGenerator targetPackage="com.caojiawangduocongdemo.entity"
-                            targetProject="E:\github\caojia_heisi_project\caojia_wangduocong_demo\src\main\java">
+                            targetProject="/home/dev/gitHub/caojia_wangduocong_demo/src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
 
         <sqlMapGenerator targetPackage="mapper"
-                         targetProject="E:\github\caojia_heisi_project\caojia_wangduocong_demo\src\main\resources">
+                         targetProject="/home/dev/gitHub/caojia_wangduocong_demo/src/main/resources">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
 
         <javaClientGenerator targetPackage="com.caojiawangduocongdemo.dao"
-                             targetProject="E:\github\caojia_heisi_project\caojia_wangduocong_demo\src\main\java" type="XMLMAPPER">
+                             targetProject="E:/home/dev/gitHub/caojia_wangduocong_demo/src/main/java" type="XMLMAPPER">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 

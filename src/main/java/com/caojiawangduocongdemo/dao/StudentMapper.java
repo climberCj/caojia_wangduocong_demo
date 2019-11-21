@@ -34,7 +34,10 @@ public interface StudentMapper {
     Student findByStudentName(@Param("studentname") String findByStudentName);
 
     //    long countStudentName(@Param("studentName")String studentName);
-    long cout(@Param("q") String q);
+    long count(@Param("q") String q);
+
+    @Select("select count(1) from student where studentId=#{studentId}")
+    long countBySudentId(@Param("studentId")String studentId);
 
     //通过学生班级查询
     @Select("select * from student where sclass=#{sclass} order by result desc")

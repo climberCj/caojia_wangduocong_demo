@@ -1,7 +1,7 @@
 package com.caojiawangduocongdemo.service.student;
 
+import com.caojiawangduocongdemo.common.Page;
 import com.caojiawangduocongdemo.entity.Student;
-import org.springframework.data.domain.Page;
 
 /**
  * @author DC
@@ -13,13 +13,13 @@ public interface StudentService {
     //根据学生用户名查询
     Student findByStudentId(String studentId);
     //根据班级查询
-    void findBysclass(String sclass);
+    Student findBysclass(String sclass);
     //根据姓名查询
-    void findByName(String studentName);
+    Student findByName(String studentName);
     //学生分页
-    Page<Student> sPage(int page,int pageSize,String q);
+    Page<Student> sPage(int page, int pageSize, String q);
     //添加学生
-    void inser(Student student);
+    void insert(Student student);
     //根据sysId修改
     void updateBySysid(String sysid,String studentname,String scalss,int result);
     //根据sysId删除
