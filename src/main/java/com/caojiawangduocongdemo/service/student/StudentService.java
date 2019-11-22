@@ -1,6 +1,7 @@
 package com.caojiawangduocongdemo.service.student;
 
 import com.caojiawangduocongdemo.entity.Student;
+import com.caojiawangduocongdemo.utils.PageInfo;
 
 /**
  * @author DC
@@ -16,7 +17,7 @@ public interface StudentService {
     //根据姓名查询
     Student findByName(String studentName);
     //学生分页
-    Page<Student> sPage(int page, int pageSize, String q);
+    PageInfo<Student> sPage(int page, int pageSize, String q);
     //添加学生
     void insert(Student student);
     //根据sysId修改

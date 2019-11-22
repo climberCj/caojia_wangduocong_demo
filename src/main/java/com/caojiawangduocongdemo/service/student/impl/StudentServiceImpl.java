@@ -3,6 +3,7 @@ package com.caojiawangduocongdemo.service.student.impl;
 import com.caojiawangduocongdemo.dao.StudentMapper;
 import com.caojiawangduocongdemo.entity.Student;
 import com.caojiawangduocongdemo.service.student.StudentService;
+import com.caojiawangduocongdemo.utils.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -77,13 +78,13 @@ public class StudentServiceImpl implements StudentService {
      * @return
      */
     @Override
-    public Page<Student> sPage(int page, int pageSize, String q) {
-        Page<Student> result = new Page<>();
+    public PageInfo<Student> sPage(int page, int pageSize, String q) {
+        PageInfo<Student> result = new PageInfo<>();
         result.setTotal(studentMapper.count(q));
         result.setPageSize(pageSize);
-        result.setCurrent(page);
+        result.setPageNum(page);
         if (result.getTotal() > 0) {
-            result.setData(studentMapper.page(page, pageSize, q));
+            result.setList(studentMapper.page(page, pageSize, q));
         }
         return result;
     }
