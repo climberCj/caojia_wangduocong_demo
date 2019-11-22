@@ -35,6 +35,15 @@ public class SubjectController {
         Page<Subject> page = subjectService.findByPage(pageNo,pageSize);
         PageInfo<Subject> pageInfo = new PageInfo<>(page);
         model.addAttribute("pageInfo",pageInfo);
-        return "subject/sublist";
+        return "subject/subject_list";
+    }
+
+    /**
+     * 跳转添加试题页面
+     * @return
+     */
+    @RequestMapping("/addExam")
+    public String addQues(){
+        return "subject/addExam";
     }
 }

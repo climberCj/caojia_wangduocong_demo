@@ -53,7 +53,7 @@ public class LoginController {
                 Teacher teacher = teacherService.findByTeacherId(username);
                 request.getSession().setAttribute("user",teacher);
                 //重定向到教师控制层
-                return new ModelAndView("redirect:teacher/main");
+                return new ModelAndView("redirect:/index");
             }else{
                 //教师登录失败
                 respMap.put("msg","The teacher login in failed");
@@ -86,6 +86,11 @@ public class LoginController {
             return null;
         }
         return new ModelAndView("redirect:/login");
+    }
+
+    @RequestMapping("/index")
+    public String main(){
+        return "main";
     }
 
     @RequestMapping("/loginOut")
