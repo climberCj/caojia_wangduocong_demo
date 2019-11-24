@@ -1,14 +1,19 @@
 package com.caojiawangduocongdemo.controller.subject;
 
+import com.caojiawangduocongdemo.common.BizException;
+import com.caojiawangduocongdemo.common.ResultBody;
 import com.caojiawangduocongdemo.entity.Subject;
 import com.caojiawangduocongdemo.service.subject.SubjectService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -43,7 +48,24 @@ public class SubjectController {
      * @return
      */
     @RequestMapping("/addExam")
-    public String addQues(){
+    public String addQues(String sysid, Model model){
+        Subject subject = null;
+        if(StringUtils.isEmpty(sysid)){
+            subject = new Subject();
+        }else{
+            subject = subjectService.findBySysId(sysid);
+        }
+        model.addAttribute("subject", subject);
         return "subject/addExam";
+    }
+
+    @RequestMapping("/save")
+    @ResponseBody
+    public ResultBody saveSubject(Subject subject,Model model){
+        if(subject == null){
+            throw new BizException("试题对象为空");
+        }
+        int result = subjectService.save(subject);
+        return ResultBody.success(result);
     }
 }

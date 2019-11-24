@@ -25,4 +25,14 @@ public class SubjectServiceImpl implements SubjectService {
         Page<Subject> page = PageHelper.startPage(pageNo,pageSize);
         return subjectMapper.findByPage();
     }
+
+    @Override
+    public int save(Subject subject) {
+        return subjectMapper.insertSelective(subject);
+    }
+
+    @Override
+    public Subject findBySysId(String sysid) {
+        return subjectMapper.selectByPrimaryKey(sysid);
+    }
 }

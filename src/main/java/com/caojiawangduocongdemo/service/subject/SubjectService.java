@@ -11,4 +11,8 @@ public interface SubjectService {
      * @return
      */
     Page<Subject> findByPage(int pageNo, int pageSize);
+
+    int save(Subject subject);
+
+    Subject findBySysId(String sysid);
 }
