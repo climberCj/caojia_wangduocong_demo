@@ -7,11 +7,15 @@ package com.caojiawangduocongdemo.service.subject.impl;
 import com.caojiawangduocongdemo.dao.SubjectMapper;
 import com.caojiawangduocongdemo.entity.Subject;
 import com.caojiawangduocongdemo.service.subject.SubjectService;
+import com.caojiawangduocongdemo.utils.ExamUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,13 +32,29 @@ public class SubjectServiceImpl implements SubjectService {
         return subjectMapper.findByPage(conditions);
     }
 
+    @Transactional
     @Override
     public int save(Subject subject) {
+        if("".equals(subject.getStstatus()) || subject.getStstatus() == null){
+            subject.setStstatus("1");
+        }
+        if("".equals(subject.getStno()) || subject.getStno() == null){
+            List<String> stnoList = this.queryStnoList();
+            String[] array = new String[stnoList.size()];
+            array = stnoList.toArray(array);
+            int maxNum = ExamUtils.getMax(array);
+            subject.setStno(ExamUtils.getString(maxNum+1));
+        }
         return subjectMapper.insertSelective(subject);
     }
 
     @Override
     public Subject findBySysId(String sysid) {
         return subjectMapper.selectByPrimaryKey(sysid);
+    }
+
+    @Override
+    public List<String> queryStnoList() {
+        return subjectMapper.getStnoList();
     }
 }

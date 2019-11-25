@@ -3,6 +3,7 @@ package com.caojiawangduocongdemo.service.subject;
 import com.caojiawangduocongdemo.entity.Subject;
 import com.github.pagehelper.Page;
 
+import java.util.List;
 import java.util.Map;
 
 public interface SubjectService {
@@ -17,4 +18,6 @@ public interface SubjectService {
     int save(Subject subject);
 
     Subject findBySysId(String sysid);
+
+    List<String> queryStnoList();
 }
