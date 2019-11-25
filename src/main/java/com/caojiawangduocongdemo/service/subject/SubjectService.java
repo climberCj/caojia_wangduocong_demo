@@ -3,6 +3,8 @@ package com.caojiawangduocongdemo.service.subject;
 import com.caojiawangduocongdemo.entity.Subject;
 import com.github.pagehelper.Page;
 
+import java.util.Map;
+
 public interface SubjectService {
     /**
      * 分页查询
@@ -10,7 +12,7 @@ public interface SubjectService {
      * @param pageSize 每页显示条数
      * @return
      */
-    Page<Subject> findByPage(int pageNo, int pageSize);
+    Page<Subject> findByPage(Map<String,Object> conditions,int pageNo, int pageSize);
 
     int save(Subject subject);
 

@@ -5,11 +5,11 @@
             <tr>
                 <div class="info-write">
                     <label for="exam_option_A"><div>试题编号：</div></label>
-                    <input type="text"  id="exam_option_A" size="5" style="width:30%"/>
+                    <input type="text"  id="exam_option_A" style="width:30%" placeholder="请输入题号查询" name="filter_stNo" th:value="${sParams['stNo']}"/>
                 </div>
                 <div class="info-write">
                     <label for="exam_option_A"><div>题干信息：</div></label>
-                    <input type="text"  id="exam_option_B" size="5"/>
+                    <input type="text"  id="exam_option_B" placeholder="请输入题干信息精确查询" name="filter_stTitle" th:value="${sParams['stTitle']}"/>
                 </div>
             </tr>
             <tr>

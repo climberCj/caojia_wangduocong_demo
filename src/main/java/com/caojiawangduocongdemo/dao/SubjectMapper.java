@@ -4,6 +4,8 @@ import com.caojiawangduocongdemo.entity.Subject;
 import com.github.pagehelper.Page;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 @Component
 public interface SubjectMapper {
     int deleteByPrimaryKey(String sysid);
@@ -18,5 +20,5 @@ public interface SubjectMapper {
 
     int updateByPrimaryKey(Subject record);
 
-    Page<Subject> findByPage();
+    Page<Subject> findByPage(Map<String,Object> conditions);
 }

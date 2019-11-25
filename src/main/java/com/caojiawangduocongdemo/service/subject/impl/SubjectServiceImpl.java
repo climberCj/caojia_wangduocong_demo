@@ -12,6 +12,8 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 /**
  * @author caojia
  * @createtime 2019-11-21 17:54
@@ -21,9 +23,9 @@ public class SubjectServiceImpl implements SubjectService {
     @Autowired
     private SubjectMapper subjectMapper;
     @Override
-    public Page<Subject> findByPage(int pageNo, int pageSize) {
+    public Page<Subject> findByPage(Map<String,Object> conditions,int pageNo, int pageSize) {
         Page<Subject> page = PageHelper.startPage(pageNo,pageSize);
-        return subjectMapper.findByPage();
+        return subjectMapper.findByPage(conditions);
     }
 
     @Override

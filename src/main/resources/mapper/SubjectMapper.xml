@@ -23,10 +23,23 @@
     from subject
     where sysid = #{sysid,jdbcType=VARCHAR}
   </select>
-  <select id="findByPage" resultMap="BaseResultMap">
+  <select id="findByPage" resultMap="BaseResultMap" parameterType="java.util.Map">
     select
     <include refid="Base_Column_List"/>
     from subject
+    <where>
+      1=1
+    </where>
+    <where>
+      <if test="stNo != null and stNo != ''">
+        and stNo = #{stNo,jdbcType=VARCHAR}
+      </if>
+    </where>
+    <where>
+      <if test="stTitle != null and stTitle != ''">
+        and stTitle like concat('%',#{stTitle,jdbcType=VARCHAR},'%')
+      </if>
+    </where>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from subject

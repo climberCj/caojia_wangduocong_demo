@@ -14,8 +14,12 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springside.modules.web.Servlets;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * @author caojia
@@ -37,9 +41,16 @@ public class SubjectController {
     @RequestMapping("/list")
     public String findPage(@RequestParam(value = "pageNo",defaultValue = "1") int pageNo,
                            @RequestParam(value = "pageSize",defaultValue = "5")int pageSize, HttpServletRequest request, Model model){
-        Page<Subject> page = subjectService.findByPage(pageNo,pageSize);
+        Map<String,Object> searchParams = Servlets.getParametersStartingWith(request,"filter_");
+        Page<Subject> page = subjectService.findByPage(searchParams,pageNo,pageSize);
         PageInfo<Subject> pageInfo = new PageInfo<>(page);
         model.addAttribute("pageInfo",pageInfo);
+        model.addAttribute("searchParams",Servlets.encodeParameterStringWithPrefix(searchParams,"filter_"));
+        Map<String,Object> params = new HashMap<>();
+        for(Map.Entry<String,Object> entry:searchParams.entrySet()){
+            params.put(entry.getKey(),entry.getValue());
+        }
+        model.addAttribute("sParams",params);
         return "subject/subject_list";
     }
 
