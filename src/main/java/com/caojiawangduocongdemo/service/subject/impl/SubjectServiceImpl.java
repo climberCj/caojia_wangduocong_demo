@@ -13,6 +13,7 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -40,10 +41,14 @@ public class SubjectServiceImpl implements SubjectService {
         }
         if("".equals(subject.getStno()) || subject.getStno() == null){
             List<String> stnoList = this.queryStnoList();
-            String[] array = new String[stnoList.size()];
-            array = stnoList.toArray(array);
-            int maxNum = ExamUtils.getMax(array);
-            subject.setStno(ExamUtils.getString(maxNum+1));
+            if(!CollectionUtils.isEmpty(stnoList)){
+                String[] array = new String[stnoList.size()];
+                array = stnoList.toArray(array);
+                int maxNum = ExamUtils.getMax(array);
+                subject.setStno(ExamUtils.getString(maxNum+1));
+            }else{
+                subject.setStno("1");
+            }
         }
         return subjectMapper.insertSelective(subject);
     }
