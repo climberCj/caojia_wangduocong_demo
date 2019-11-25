@@ -63,6 +63,7 @@
 <script type="text/javaScript" src="plugins/nicescroll/jquery.nicescroll.js"></script>
 <script type="text/javaScript" src="plugins/select2/select2.js"></script>
 <script type="text/javascript" src="js/dialog.js"></script>
+<script type="text/javascript" src="js/online.js"></script>
 <script th:inline="javascript">
     /*<![CDATA[*/
     $(document).ready(function() {
@@ -95,9 +96,7 @@
             type:"success",
             confirm:function(){
                 //获取项目跟路径
-                var pathname = document.location.pathname;
-                var index = pathname.substr(1).indexOf("/");
-                var result = pathname.substr(0,index+1);
+                var result = EXAM.getPath();
                 window.location.href=result+"/loginOut";
             },
             cancle:function(){

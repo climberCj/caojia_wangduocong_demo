@@ -172,6 +172,23 @@
                 </tbody>
             </table>
         </form>
-
     </div>
+    <div class="pagger-box pagger" id="sub_page"></div>
 </div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    $(function(){
+        $('#sub_page').paging({
+            initPageNo: [[${pageInfo.pageNum}]], // 初始页码
+            totalPages: [[${pageInfo.pages}]], //总页数
+            totalCount: '合计' + [[${pageInfo.total}]] + '条数据', // 条目总数
+            slideSpeed: 600, // 缓动速度。单位毫秒
+            jump: true, //是否支持跳转
+            callback: function(page) { // 回调函数
+            },
+            url:EXAM.getPath()+"subject/list?pageNum="+encodeURI([[${searchParams}]])
+        });
+
+    });
+    /*]]>*/
+</script>
