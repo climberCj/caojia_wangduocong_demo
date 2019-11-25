@@ -9,6 +9,8 @@ public class Teacher {
 
     private String teachername;
 
+    private String teacherpic;
+
     public String getSysid() {
         return sysid;
     }
@@ -39,5 +41,13 @@ public class Teacher {
 
     public void setTeachername(String teachername) {
         this.teachername = teachername == null ? null : teachername.trim();
+    }
+
+    public String getTeacherpic() {
+        return teacherpic;
+    }
+
+    public void setTeacherpic(String teacherpic) {
+        this.teacherpic = teacherpic == null ? null : teacherpic.trim();
     }
 }

@@ -15,8 +15,9 @@ public class Student {
 
     private String teacherid;
 
-
     private String stustatus;
+
+    private String stupic;
 
     public String getSysid() {
         return sysid;
@@ -80,5 +81,13 @@ public class Student {
 
     public void setStustatus(String stustatus) {
         this.stustatus = stustatus == null ? null : stustatus.trim();
+    }
+
+    public String getStupic() {
+        return stupic;
+    }
+
+    public void setStupic(String stupic) {
+        this.stupic = stupic == null ? null : stupic.trim();
     }
 }

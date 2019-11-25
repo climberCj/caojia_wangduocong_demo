@@ -300,6 +300,453 @@
     where sysid = #{sysid,jdbcType=VARCHAR}
   </update>
   <resultMap id="BaseResultMap" type="com.caojiawangduocongdemo.entity.Subject">
+    <id column="sysid" jdbcType="VARCHAR" property="sysid" />
+    <result column="stNo" jdbcType="VARCHAR" property="stno" />
+    <result column="stTitle" jdbcType="VARCHAR" property="sttitle" />
+    <result column="stOptionA" jdbcType="VARCHAR" property="stoptiona" />
+    <result column="stOptionB" jdbcType="VARCHAR" property="stoptionb" />
+    <result column="stOptionC" jdbcType="VARCHAR" property="stoptionc" />
+    <result column="stOptionD" jdbcType="VARCHAR" property="stoptiond" />
+    <result column="stAnswer" jdbcType="VARCHAR" property="stanswer" />
+    <result column="stParse" jdbcType="VARCHAR" property="stparse" />
+    <result column="stStatus" jdbcType="VARCHAR" property="ststatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sysid, stNo, stTitle, stOptionA, stOptionB, stOptionC, stOptionD, stAnswer, stParse, 
+    stStatus
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from subject
+    where sysid = #{sysid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from subject
+    where sysid = #{sysid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.caojiawangduocongdemo.entity.Subject">
+    insert into subject (sysid, stNo, stTitle, 
+      stOptionA, stOptionB, stOptionC, 
+      stOptionD, stAnswer, stParse, 
+      stStatus)
+    values (#{sysid,jdbcType=VARCHAR}, #{stno,jdbcType=VARCHAR}, #{sttitle,jdbcType=VARCHAR}, 
+      #{stoptiona,jdbcType=VARCHAR}, #{stoptionb,jdbcType=VARCHAR}, #{stoptionc,jdbcType=VARCHAR}, 
+      #{stoptiond,jdbcType=VARCHAR}, #{stanswer,jdbcType=VARCHAR}, #{stparse,jdbcType=VARCHAR}, 
+      #{ststatus,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.caojiawangduocongdemo.entity.Subject">
+    insert into subject
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sysid != null">
+        sysid,
+      </if>
+      <if test="stno != null">
+        stNo,
+      </if>
+      <if test="sttitle != null">
+        stTitle,
+      </if>
+      <if test="stoptiona != null">
+        stOptionA,
+      </if>
+      <if test="stoptionb != null">
+        stOptionB,
+      </if>
+      <if test="stoptionc != null">
+        stOptionC,
+      </if>
+      <if test="stoptiond != null">
+        stOptionD,
+      </if>
+      <if test="stanswer != null">
+        stAnswer,
+      </if>
+      <if test="stparse != null">
+        stParse,
+      </if>
+      <if test="ststatus != null">
+        stStatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sysid != null">
+        #{sysid,jdbcType=VARCHAR},
+      </if>
+      <if test="stno != null">
+        #{stno,jdbcType=VARCHAR},
+      </if>
+      <if test="sttitle != null">
+        #{sttitle,jdbcType=VARCHAR},
+      </if>
+      <if test="stoptiona != null">
+        #{stoptiona,jdbcType=VARCHAR},
+      </if>
+      <if test="stoptionb != null">
+        #{stoptionb,jdbcType=VARCHAR},
+      </if>
+      <if test="stoptionc != null">
+        #{stoptionc,jdbcType=VARCHAR},
+      </if>
+      <if test="stoptiond != null">
+        #{stoptiond,jdbcType=VARCHAR},
+      </if>
+      <if test="stanswer != null">
+        #{stanswer,jdbcType=VARCHAR},
+      </if>
+      <if test="stparse != null">
+        #{stparse,jdbcType=VARCHAR},
+      </if>
+      <if test="ststatus != null">
+        #{ststatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.caojiawangduocongdemo.entity.Subject">
+    update subject
+    <set>
+      <if test="stno != null">
+        stNo = #{stno,jdbcType=VARCHAR},
+      </if>
+      <if test="sttitle != null">
+        stTitle = #{sttitle,jdbcType=VARCHAR},
+      </if>
+      <if test="stoptiona != null">
+        stOptionA = #{stoptiona,jdbcType=VARCHAR},
+      </if>
+      <if test="stoptionb != null">
+        stOptionB = #{stoptionb,jdbcType=VARCHAR},
+      </if>
+      <if test="stoptionc != null">
+        stOptionC = #{stoptionc,jdbcType=VARCHAR},
+      </if>
+      <if test="stoptiond != null">
+        stOptionD = #{stoptiond,jdbcType=VARCHAR},
+      </if>
+      <if test="stanswer != null">
+        stAnswer = #{stanswer,jdbcType=VARCHAR},
+      </if>
+      <if test="stparse != null">
+        stParse = #{stparse,jdbcType=VARCHAR},
+      </if>
+      <if test="ststatus != null">
+        stStatus = #{ststatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sysid = #{sysid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.caojiawangduocongdemo.entity.Subject">
+    update subject
+    set stNo = #{stno,jdbcType=VARCHAR},
+      stTitle = #{sttitle,jdbcType=VARCHAR},
+      stOptionA = #{stoptiona,jdbcType=VARCHAR},
+      stOptionB = #{stoptionb,jdbcType=VARCHAR},
+      stOptionC = #{stoptionc,jdbcType=VARCHAR},
+      stOptionD = #{stoptiond,jdbcType=VARCHAR},
+      stAnswer = #{stanswer,jdbcType=VARCHAR},
+      stParse = #{stparse,jdbcType=VARCHAR},
+      stStatus = #{ststatus,jdbcType=VARCHAR}
+    where sysid = #{sysid,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.caojiawangduocongdemo.entity.Subject">
+    <id column="sysid" jdbcType="VARCHAR" property="sysid" />
+    <result column="stNo" jdbcType="VARCHAR" property="stno" />
+    <result column="stTitle" jdbcType="VARCHAR" property="sttitle" />
+    <result column="stOptionA" jdbcType="VARCHAR" property="stoptiona" />
+    <result column="stOptionB" jdbcType="VARCHAR" property="stoptionb" />
+    <result column="stOptionC" jdbcType="VARCHAR" property="stoptionc" />
+    <result column="stOptionD" jdbcType="VARCHAR" property="stoptiond" />
+    <result column="stAnswer" jdbcType="VARCHAR" property="stanswer" />
+    <result column="stParse" jdbcType="VARCHAR" property="stparse" />
+    <result column="stStatus" jdbcType="VARCHAR" property="ststatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sysid, stNo, stTitle, stOptionA, stOptionB, stOptionC, stOptionD, stAnswer, stParse, 
+    stStatus
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from subject
+    where sysid = #{sysid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from subject
+    where sysid = #{sysid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.caojiawangduocongdemo.entity.Subject">
+    insert into subject (sysid, stNo, stTitle, 
+      stOptionA, stOptionB, stOptionC, 
+      stOptionD, stAnswer, stParse, 
+      stStatus)
+    values (#{sysid,jdbcType=VARCHAR}, #{stno,jdbcType=VARCHAR}, #{sttitle,jdbcType=VARCHAR}, 
+      #{stoptiona,jdbcType=VARCHAR}, #{stoptionb,jdbcType=VARCHAR}, #{stoptionc,jdbcType=VARCHAR}, 
+      #{stoptiond,jdbcType=VARCHAR}, #{stanswer,jdbcType=VARCHAR}, #{stparse,jdbcType=VARCHAR}, 
+      #{ststatus,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.caojiawangduocongdemo.entity.Subject">
+    insert into subject
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sysid != null">
+        sysid,
+      </if>
+      <if test="stno != null">
+        stNo,
+      </if>
+      <if test="sttitle != null">
+        stTitle,
+      </if>
+      <if test="stoptiona != null">
+        stOptionA,
+      </if>
+      <if test="stoptionb != null">
+        stOptionB,
+      </if>
+      <if test="stoptionc != null">
+        stOptionC,
+      </if>
+      <if test="stoptiond != null">
+        stOptionD,
+      </if>
+      <if test="stanswer != null">
+        stAnswer,
+      </if>
+      <if test="stparse != null">
+        stParse,
+      </if>
+      <if test="ststatus != null">
+        stStatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sysid != null">
+        #{sysid,jdbcType=VARCHAR},
+      </if>
+      <if test="stno != null">
+        #{stno,jdbcType=VARCHAR},
+      </if>
+      <if test="sttitle != null">
+        #{sttitle,jdbcType=VARCHAR},
+      </if>
+      <if test="stoptiona != null">
+        #{stoptiona,jdbcType=VARCHAR},
+      </if>
+      <if test="stoptionb != null">
+        #{stoptionb,jdbcType=VARCHAR},
+      </if>
+      <if test="stoptionc != null">
+        #{stoptionc,jdbcType=VARCHAR},
+      </if>
+      <if test="stoptiond != null">
+        #{stoptiond,jdbcType=VARCHAR},
+      </if>
+      <if test="stanswer != null">
+        #{stanswer,jdbcType=VARCHAR},
+      </if>
+      <if test="stparse != null">
+        #{stparse,jdbcType=VARCHAR},
+      </if>
+      <if test="ststatus != null">
+        #{ststatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.caojiawangduocongdemo.entity.Subject">
+    update subject
+    <set>
+      <if test="stno != null">
+        stNo = #{stno,jdbcType=VARCHAR},
+      </if>
+      <if test="sttitle != null">
+        stTitle = #{sttitle,jdbcType=VARCHAR},
+      </if>
+      <if test="stoptiona != null">
+        stOptionA = #{stoptiona,jdbcType=VARCHAR},
+      </if>
+      <if test="stoptionb != null">
+        stOptionB = #{stoptionb,jdbcType=VARCHAR},
+      </if>
+      <if test="stoptionc != null">
+        stOptionC = #{stoptionc,jdbcType=VARCHAR},
+      </if>
+      <if test="stoptiond != null">
+        stOptionD = #{stoptiond,jdbcType=VARCHAR},
+      </if>
+      <if test="stanswer != null">
+        stAnswer = #{stanswer,jdbcType=VARCHAR},
+      </if>
+      <if test="stparse != null">
+        stParse = #{stparse,jdbcType=VARCHAR},
+      </if>
+      <if test="ststatus != null">
+        stStatus = #{ststatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sysid = #{sysid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.caojiawangduocongdemo.entity.Subject">
+    update subject
+    set stNo = #{stno,jdbcType=VARCHAR},
+      stTitle = #{sttitle,jdbcType=VARCHAR},
+      stOptionA = #{stoptiona,jdbcType=VARCHAR},
+      stOptionB = #{stoptionb,jdbcType=VARCHAR},
+      stOptionC = #{stoptionc,jdbcType=VARCHAR},
+      stOptionD = #{stoptiond,jdbcType=VARCHAR},
+      stAnswer = #{stanswer,jdbcType=VARCHAR},
+      stParse = #{stparse,jdbcType=VARCHAR},
+      stStatus = #{ststatus,jdbcType=VARCHAR}
+    where sysid = #{sysid,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.caojiawangduocongdemo.entity.Subject">
+    <id column="sysid" jdbcType="VARCHAR" property="sysid" />
+    <result column="stNo" jdbcType="VARCHAR" property="stno" />
+    <result column="stTitle" jdbcType="VARCHAR" property="sttitle" />
+    <result column="stOptionA" jdbcType="VARCHAR" property="stoptiona" />
+    <result column="stOptionB" jdbcType="VARCHAR" property="stoptionb" />
+    <result column="stOptionC" jdbcType="VARCHAR" property="stoptionc" />
+    <result column="stOptionD" jdbcType="VARCHAR" property="stoptiond" />
+    <result column="stAnswer" jdbcType="VARCHAR" property="stanswer" />
+    <result column="stParse" jdbcType="VARCHAR" property="stparse" />
+    <result column="stStatus" jdbcType="VARCHAR" property="ststatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sysid, stNo, stTitle, stOptionA, stOptionB, stOptionC, stOptionD, stAnswer, stParse, 
+    stStatus
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from subject
+    where sysid = #{sysid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from subject
+    where sysid = #{sysid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.caojiawangduocongdemo.entity.Subject">
+    insert into subject (sysid, stNo, stTitle, 
+      stOptionA, stOptionB, stOptionC, 
+      stOptionD, stAnswer, stParse, 
+      stStatus)
+    values (#{sysid,jdbcType=VARCHAR}, #{stno,jdbcType=VARCHAR}, #{sttitle,jdbcType=VARCHAR}, 
+      #{stoptiona,jdbcType=VARCHAR}, #{stoptionb,jdbcType=VARCHAR}, #{stoptionc,jdbcType=VARCHAR}, 
+      #{stoptiond,jdbcType=VARCHAR}, #{stanswer,jdbcType=VARCHAR}, #{stparse,jdbcType=VARCHAR}, 
+      #{ststatus,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.caojiawangduocongdemo.entity.Subject">
+    insert into subject
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sysid != null">
+        sysid,
+      </if>
+      <if test="stno != null">
+        stNo,
+      </if>
+      <if test="sttitle != null">
+        stTitle,
+      </if>
+      <if test="stoptiona != null">
+        stOptionA,
+      </if>
+      <if test="stoptionb != null">
+        stOptionB,
+      </if>
+      <if test="stoptionc != null">
+        stOptionC,
+      </if>
+      <if test="stoptiond != null">
+        stOptionD,
+      </if>
+      <if test="stanswer != null">
+        stAnswer,
+      </if>
+      <if test="stparse != null">
+        stParse,
+      </if>
+      <if test="ststatus != null">
+        stStatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sysid != null">
+        #{sysid,jdbcType=VARCHAR},
+      </if>
+      <if test="stno != null">
+        #{stno,jdbcType=VARCHAR},
+      </if>
+      <if test="sttitle != null">
+        #{sttitle,jdbcType=VARCHAR},
+      </if>
+      <if test="stoptiona != null">
+        #{stoptiona,jdbcType=VARCHAR},
+      </if>
+      <if test="stoptionb != null">
+        #{stoptionb,jdbcType=VARCHAR},
+      </if>
+      <if test="stoptionc != null">
+        #{stoptionc,jdbcType=VARCHAR},
+      </if>
+      <if test="stoptiond != null">
+        #{stoptiond,jdbcType=VARCHAR},
+      </if>
+      <if test="stanswer != null">
+        #{stanswer,jdbcType=VARCHAR},
+      </if>
+      <if test="stparse != null">
+        #{stparse,jdbcType=VARCHAR},
+      </if>
+      <if test="ststatus != null">
+        #{ststatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.caojiawangduocongdemo.entity.Subject">
+    update subject
+    <set>
+      <if test="stno != null">
+        stNo = #{stno,jdbcType=VARCHAR},
+      </if>
+      <if test="sttitle != null">
+        stTitle = #{sttitle,jdbcType=VARCHAR},
+      </if>
+      <if test="stoptiona != null">
+        stOptionA = #{stoptiona,jdbcType=VARCHAR},
+      </if>
+      <if test="stoptionb != null">
+        stOptionB = #{stoptionb,jdbcType=VARCHAR},
+      </if>
+      <if test="stoptionc != null">
+        stOptionC = #{stoptionc,jdbcType=VARCHAR},
+      </if>
+      <if test="stoptiond != null">
+        stOptionD = #{stoptiond,jdbcType=VARCHAR},
+      </if>
+      <if test="stanswer != null">
+        stAnswer = #{stanswer,jdbcType=VARCHAR},
+      </if>
+      <if test="stparse != null">
+        stParse = #{stparse,jdbcType=VARCHAR},
+      </if>
+      <if test="ststatus != null">
+        stStatus = #{ststatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sysid = #{sysid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.caojiawangduocongdemo.entity.Subject">
+    update subject
+    set stNo = #{stno,jdbcType=VARCHAR},
+      stTitle = #{sttitle,jdbcType=VARCHAR},
+      stOptionA = #{stoptiona,jdbcType=VARCHAR},
+      stOptionB = #{stoptionb,jdbcType=VARCHAR},
+      stOptionC = #{stoptionc,jdbcType=VARCHAR},
+      stOptionD = #{stoptiond,jdbcType=VARCHAR},
+      stAnswer = #{stanswer,jdbcType=VARCHAR},
+      stParse = #{stparse,jdbcType=VARCHAR},
+      stStatus = #{ststatus,jdbcType=VARCHAR}
+    where sysid = #{sysid,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.caojiawangduocongdemo.entity.Subject">
     <id column="stid" jdbcType="INTEGER" property="stid" />
     <result column="stTitle" jdbcType="VARCHAR" property="sttitle" />
     <result column="stOptionA" jdbcType="VARCHAR" property="stoptiona" />

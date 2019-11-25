@@ -10,6 +10,143 @@
     <result column="sclass" jdbcType="VARCHAR" property="sclass" />
     <result column="teacherId" jdbcType="VARCHAR" property="teacherid" />
     <result column="stuStatus" jdbcType="VARCHAR" property="stustatus" />
+    <result column="stuPic" jdbcType="VARCHAR" property="stupic" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sysid, studentId, studentName, password, result, sclass, teacherId, stuStatus, stuPic
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from student
+    where sysid = #{sysid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from student
+    where sysid = #{sysid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.caojiawangduocongdemo.entity.Student">
+    insert into student (sysid, studentId, studentName, 
+      password, result, sclass, 
+      teacherId, stuStatus, stuPic
+      )
+    values (#{sysid,jdbcType=VARCHAR}, #{studentid,jdbcType=VARCHAR}, #{studentname,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{result,jdbcType=INTEGER}, #{sclass,jdbcType=VARCHAR}, 
+      #{teacherid,jdbcType=VARCHAR}, #{stustatus,jdbcType=VARCHAR}, #{stupic,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.caojiawangduocongdemo.entity.Student">
+    insert into student
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sysid != null">
+        sysid,
+      </if>
+      <if test="studentid != null">
+        studentId,
+      </if>
+      <if test="studentname != null">
+        studentName,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="result != null">
+        result,
+      </if>
+      <if test="sclass != null">
+        sclass,
+      </if>
+      <if test="teacherid != null">
+        teacherId,
+      </if>
+      <if test="stustatus != null">
+        stuStatus,
+      </if>
+      <if test="stupic != null">
+        stuPic,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sysid != null">
+        #{sysid,jdbcType=VARCHAR},
+      </if>
+      <if test="studentid != null">
+        #{studentid,jdbcType=VARCHAR},
+      </if>
+      <if test="studentname != null">
+        #{studentname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="result != null">
+        #{result,jdbcType=INTEGER},
+      </if>
+      <if test="sclass != null">
+        #{sclass,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherid != null">
+        #{teacherid,jdbcType=VARCHAR},
+      </if>
+      <if test="stustatus != null">
+        #{stustatus,jdbcType=VARCHAR},
+      </if>
+      <if test="stupic != null">
+        #{stupic,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.caojiawangduocongdemo.entity.Student">
+    update student
+    <set>
+      <if test="studentid != null">
+        studentId = #{studentid,jdbcType=VARCHAR},
+      </if>
+      <if test="studentname != null">
+        studentName = #{studentname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="result != null">
+        result = #{result,jdbcType=INTEGER},
+      </if>
+      <if test="sclass != null">
+        sclass = #{sclass,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherid != null">
+        teacherId = #{teacherid,jdbcType=VARCHAR},
+      </if>
+      <if test="stustatus != null">
+        stuStatus = #{stustatus,jdbcType=VARCHAR},
+      </if>
+      <if test="stupic != null">
+        stuPic = #{stupic,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sysid = #{sysid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.caojiawangduocongdemo.entity.Student">
+    update student
+    set studentId = #{studentid,jdbcType=VARCHAR},
+      studentName = #{studentname,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      result = #{result,jdbcType=INTEGER},
+      sclass = #{sclass,jdbcType=VARCHAR},
+      teacherId = #{teacherid,jdbcType=VARCHAR},
+      stuStatus = #{stustatus,jdbcType=VARCHAR},
+      stuPic = #{stupic,jdbcType=VARCHAR}
+    where sysid = #{sysid,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.caojiawangduocongdemo.entity.Student">
+    <id column="sysid" jdbcType="VARCHAR" property="sysid" />
+    <result column="studentId" jdbcType="VARCHAR" property="studentid" />
+    <result column="studentName" jdbcType="VARCHAR" property="studentname" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="result" jdbcType="INTEGER" property="result" />
+    <result column="sclass" jdbcType="VARCHAR" property="sclass" />
+    <result column="teacherId" jdbcType="VARCHAR" property="teacherid" />
+    <result column="stuStatus" jdbcType="VARCHAR" property="stustatus" />
   </resultMap>
   <sql id="Base_Column_List">
     sysid, studentId, studentName, password, result, sclass, teacherId, stuStatus
