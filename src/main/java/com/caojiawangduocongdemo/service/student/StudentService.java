@@ -17,13 +17,15 @@ public interface StudentService {
     //根据姓名查询
     Student findByName(String studentName);
     //学生分页
-    PageInfo<Student> sPage(int page, int pageSize, String q);
+    PageInfo<Student> sPage(int page, int pageSize, String q,String status);
     //添加学生
     void insert(Student student);
     //根据sysId修改
-    void updateBySysid(String sysid,String studentname,String scalss,int result);
+    void updateBySysid(String sysid,String scalss,String stupic,int result);
     //根据sysId删除
     void delete(String sysid);
+    //逻辑性删除
+    void updateStatus(String sysid,String status);
 
 
 

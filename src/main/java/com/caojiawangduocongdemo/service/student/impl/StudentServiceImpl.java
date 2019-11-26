@@ -66,7 +66,7 @@ public class StudentServiceImpl implements StudentService {
      */
     @Override
     public Student findByName(String studentName) {
-        return   studentMapper.findByStudentName(studentName);
+        return studentMapper.findByStudentName(studentName);
     }
 
     /**
@@ -78,9 +78,9 @@ public class StudentServiceImpl implements StudentService {
      * @return
      */
     @Override
-    public PageInfo<Student> sPage(int page, int pageSize, String q) {
+    public PageInfo<Student> sPage(int page, int pageSize, String q, String status) {
         PageInfo<Student> result = new PageInfo<>();
-        result.setTotal(studentMapper.count(q));
+        result.setTotal(studentMapper.count(q, status));
         result.setPageSize(pageSize);
         result.setPageNum(page);
         if (result.getTotal() > 0) {
@@ -104,15 +104,15 @@ public class StudentServiceImpl implements StudentService {
      * 编辑学生信息
      *
      * @param sysid
-     * @param studentname
      * @param scalss
+     * @param stupic
      * @param result
      */
     @Override
-    public void updateBySysid(String sysid, String studentname, String scalss, int result) {
+    public void updateBySysid(String sysid, String scalss, String stupic, int result) {
         Student student = studentMapper.selectByPrimaryKey(sysid);
-        student.setStudentname(studentname);
         student.setSclass(scalss);
+        student.setStupic(stupic);
         student.setResult(result);
         studentMapper.updateByPrimaryKey(student);
     }
@@ -124,6 +124,16 @@ public class StudentServiceImpl implements StudentService {
      */
     @Override
     public void delete(String sysid) {
+        studentMapper.deleteByPrimaryKey(sysid);
+    }
+
+    /**
+     * 逻辑性删除
+     *
+     * @param sysid
+     */
+    @Override
+    public void updateStatus(String sysid, String status) {
         studentMapper.deleteByPrimaryKey(sysid);
     }
 }

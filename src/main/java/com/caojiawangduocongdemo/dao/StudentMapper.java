@@ -29,18 +29,24 @@ public interface StudentMapper {
     Student findByStudentId(String studentId);
 
     //通过学生姓名查询
-    @Select("select * from student where studentname=#{studentName} order by result desc")
+    @Select("select * from student where studentname=#{studentName} and status=1 order by result desc")
     @ResultMap("BaseResultMap")
     Student findByStudentName(@Param("studentname") String findByStudentName);
 
     //    long countStudentName(@Param("studentName")String studentName);
-    long count(@Param("q") String q);
+    long count(@Param("q") String q,@Param("status")String status);
 
-    @Select("select count(1) from student where studentId=#{studentId}")
+    @Select("select count(1) from student where studentId=#{studentId} and status=1")
     long countBySudentId(@Param("studentId")String studentId);
 
     //通过学生班级查询
-    @Select("select * from student where sclass=#{sclass} order by result desc")
+    @Select("select * from student where sclass=#{sclass} and status=1 order by result desc")
     @ResultMap("BaseResultMap")
     Student findBysclass(String sclass);
+
+    @Select("select * from student where status=1 order by result desc")
+    @ResultMap("BaseResultMap")
+    Student findAll();
+
+
 }

@@ -38,8 +38,8 @@
                 <li class="app-list level1">
                     <a class="active name level1-name">学生管理</a>
                     <ul class="app-list-menu menu2">
-                        <li><a href="addStudent.html" class="active name level2-name">添加学生</a></li>
-                        <li><a href="../student/stulist.html" class="name level2-name">查询学生信息</a></li>
+                        <li><a  class="active name level2-name"id="add_student">添加学生</a></li>
+                        <li><a class="name level2-name"id="search_students">查询学生信息</a></li>
                     </ul>
                 </li>
                 <li class="app-list level1">
@@ -84,6 +84,12 @@
     //查询试题
     $("#search_questions").on('click',function(){
         $("#content_page").load("subject/list",function(){
+
+        });
+    });
+    //查询学生信息
+    $("#search_students").on('click',function(){
+        $("#content_page").load("student/students",function(){
 
         });
     });
