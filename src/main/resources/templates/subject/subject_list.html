@@ -83,7 +83,7 @@
             jump: true, //是否支持跳转
             callback: function(page) { // 回调函数
             },
-            url:EXAM.getPath()+"/subject/list?pageNo="/*+encodeURI([[${searchParams}]])*/
+            url:EXAM.getPath()+"/subject/list?"+encodeURI([[${searchParams}]])
         });
     });
     /*]]>*/
