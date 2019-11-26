@@ -4,6 +4,7 @@
  */
 package com.caojiawangduocongdemo.service.subject.impl;
 
+import com.caojiawangduocongdemo.common.BizException;
 import com.caojiawangduocongdemo.dao.SubjectMapper;
 import com.caojiawangduocongdemo.entity.Subject;
 import com.caojiawangduocongdemo.service.subject.SubjectService;
@@ -37,23 +38,28 @@ public class SubjectServiceImpl implements SubjectService {
     @Transactional
     @Override
     public int save(Subject subject) {
-        if("".equals(subject.getStstatus()) || subject.getStstatus() == null){
-            subject.setStstatus("1");
-        }
-        if("".equals(subject.getStno()) || subject.getStno() == null){
-            List<String> stnoList = this.queryStnoList();
-            //由于数据库中查出来的数据有为Null的情况，因此移除集合中的Null
-            stnoList.removeAll(Collections.singleton(null));
-            if(!CollectionUtils.isEmpty(stnoList) && stnoList.size()!=0){
-                String[] array = new String[stnoList.size()];
-                array = stnoList.toArray(array);
-                int maxNum = ExamUtils.getMax(array);
-                subject.setStno(ExamUtils.getString(maxNum+1));
-            }else{
-                subject.setStno("1");
+        Subject exitsSub = subjectMapper.selectByPrimaryKey(subject.getSysid());
+        if(exitsSub!=null){//说明存在，更新数据
+           return subjectMapper.updateByPrimaryKeySelective(subject);
+        }else{
+            if("".equals(subject.getStstatus()) || subject.getStstatus() == null){
+                subject.setStstatus("1");
             }
+            if("".equals(subject.getStno()) || subject.getStno() == null){
+                List<String> stnoList = this.queryStnoList();
+                //由于数据库中查出来的数据有为Null的情况，因此移除集合中的Null
+                stnoList.removeAll(Collections.singleton(null));
+                if(!CollectionUtils.isEmpty(stnoList) && stnoList.size()!=0){
+                    String[] array = new String[stnoList.size()];
+                    array = stnoList.toArray(array);
+                    int maxNum = ExamUtils.getMax(array);
+                    subject.setStno(ExamUtils.getString(maxNum+1));
+                }else{
+                    subject.setStno("1");
+                }
+            }
+            return subjectMapper.insertSelective(subject);
         }
-        return subjectMapper.insertSelective(subject);
     }
 
     @Override
@@ -64,5 +70,16 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public List<String> queryStnoList() {
         return subjectMapper.getStnoList();
+    }
+
+    @Override
+    @Transactional
+    public int delete(String sysid) {
+        Subject subject = subjectMapper.selectByPrimaryKey(sysid);
+        if(subject==null){
+            throw new BizException("该对象不存在");
+        }
+        subject.setStstatus("0");
+        return subjectMapper.updateByPrimaryKeySelective(subject);
     }
 }

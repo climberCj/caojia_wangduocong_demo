@@ -20,4 +20,6 @@ public interface SubjectService {
     Subject findBySysId(String sysid);
 
     List<String> queryStnoList();
+
+    int delete(String sysid);
 }
