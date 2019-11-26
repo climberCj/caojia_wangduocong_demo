@@ -112,7 +112,23 @@
             })
 
             function jumpToPage(url,pageIndex){
-                window.location.href=url+pageIndex;
+                //处理url
+                if (url.indexOf("&") != -1) {
+                    url += "&";
+                } else {
+                    //判断是否含参数
+                    if (url.indexOf("?") != -1) {
+                        //判断是否含一个参数
+                        if (url.indexOf("=") != -1) {
+                            url += "&";
+                        }
+                    } else {
+                        //不含参数的url
+                        url += "?";
+                    }
+                }
+                //window.location.href=url+pageIndex;
+                $("#content_page").load(url,function(){});
             }
 
             function handles(pageIndex,isMutual,url) {
