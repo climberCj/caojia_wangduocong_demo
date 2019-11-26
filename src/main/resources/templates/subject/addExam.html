@@ -2,10 +2,12 @@
 	<div class="add-stu-wrap">
 		<h3 class="patr-name">添加试题</h3>
 		<form id="add_exam_form">
+			<input type="hidden" name="sysid" th:value="${subject.sysid}"/>
+			<input type="hidden" name="stno" th:value="${subject.stno}"/>
 			<div class="form-table">
 				<div class="info-write">
 					<label for="exam_title"><div>试题题目：</div></label>
-					<textarea name="sttitle" id="exam_title" th:value="${subject.sttitle}"></textarea>
+					<textarea name="sttitle" id="exam_title" th:text="${subject.sttitle}"></textarea>
 				</div>
 				<div class="info-write">
 					<label for="exam_option_A"><div>选项A：</div></label>
@@ -45,7 +47,7 @@
 				</div>
 				<div class="info-write">
 					<label for="exam_detail"><div>试题解析：</div></label>
-					<textarea name="stparse" id="exam_detail" th:value="${subject.stparse}"></textarea>
+					<textarea name="stparse" id="exam_detail" th:text="${subject.stparse}"></textarea>
 				</div>
 				<div class="operate">
 					<a class="btn add-btn" id="add_save" th:onclick="subjectAdd.save()">添加</a>
