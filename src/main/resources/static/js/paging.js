@@ -128,6 +128,7 @@
                     }
                 }
                 //window.location.href=url+pageIndex;
+                url += "&pageNo="+pageIndex;
                 $("#content_page").load(url,function(){});
             }
 
