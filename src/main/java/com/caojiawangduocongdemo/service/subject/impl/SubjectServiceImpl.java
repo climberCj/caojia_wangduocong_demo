@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +42,9 @@ public class SubjectServiceImpl implements SubjectService {
         }
         if("".equals(subject.getStno()) || subject.getStno() == null){
             List<String> stnoList = this.queryStnoList();
-            if(!CollectionUtils.isEmpty(stnoList)){
+            //由于数据库中查出来的数据有为Null的情况，因此移除集合中的Null
+            stnoList.removeAll(Collections.singleton(null));
+            if(!CollectionUtils.isEmpty(stnoList) && stnoList.size()!=0){
                 String[] array = new String[stnoList.size()];
                 array = stnoList.toArray(array);
                 int maxNum = ExamUtils.getMax(array);

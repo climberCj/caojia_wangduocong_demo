@@ -28,7 +28,7 @@
     <include refid="Base_Column_List"/>
     from subject
     <where>
-      1=1
+      stStatus = "1"
     </where>
     <where>
       <if test="stNo != null and stNo != ''">
