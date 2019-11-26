@@ -72,11 +72,21 @@ public class SubjectController {
 
     @RequestMapping("/save")
     @ResponseBody
-    public ResultBody saveSubject(Subject subject,Model model){
+    public ResultBody saveSubject(Subject subject){
         if(subject == null){
             throw new BizException("试题对象为空");
         }
         int result = subjectService.save(subject);
+        return ResultBody.success(result);
+    }
+
+    @RequestMapping("/delete")
+    @ResponseBody
+    public ResultBody delete(String sysid){
+        int result = subjectService.delete(sysid);
+        if(result != 1){
+            throw new BizException("删除失败！");
+        }
         return ResultBody.success(result);
     }
 }
