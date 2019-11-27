@@ -145,12 +145,9 @@
     where sysid = #{sysid,jdbcType=VARCHAR}
   </update>
   <select id="count" resultType="long">
-    select count(1) from student where 1=1
+    select count(1) from student where stuStatus='1'
     <if test="q != null">
       AND (studentName like '%${q}%' or studentId like '%${q}%')
-    </if>
-    <if test="stuStatus != null and stuStatus !=0">
-      AND stuStatus = #{stuStatus}
     </if>
   </select>
   <select id="page" resultMap="BaseResultMap">
