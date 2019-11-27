@@ -1,0 +1,191 @@
+<div class="content-wrap">
+	<div class="add-stu-wrap">
+		<h3 class="patr-name">添加试题</h3>
+		<form id="add_exam_form">
+			<div class="form-table">
+				<div class="info-write">
+					<label for="exam_title"><div>试题题目：</div></label>
+					<textarea name="sttitle" id="exam_title" th:value="${subject.sttitle}"></textarea>
+				</div>
+				<div class="info-write">
+					<label for="exam_option_A"><div>选项A：</div></label>
+					<input type="text"  id="exam_option_A" name="stoptiona" th:value="${subject.stoptiona}"/>
+				</div>
+				<div class="info-write">
+					<label for="exam_option_B"><div>选项B：</div></label>
+					<input type="text"  id="exam_option_B" name="stoptionb" th:value="${subject.stoptionb}"/>
+				</div>
+				<div class="info-write">
+					<label for="exam_option_C"><div>选项C：</div></label>
+					<input type="text"  id="exam_option_C" name="stoptionc" th:value="${subject.stoptionc}"/>
+				</div>
+				<div class="info-write">
+					<label for="exam_option_D"><div>选项D：</div></label>
+					<input type="text" id="exam_option_D" name="stoptiond" th:value="${subject.stoptiond}"/>
+				</div>
+				<div class="info-write">
+					<label><div>答案：</div></label>
+					<label>
+						<label for="option_a">A</label>
+						<input type="radio" name="stanswer" id="option_a" value="1" th:field="${subject.stanswer}"/>
+					</label>
+					<label>
+						<label for="option_b">B</label>
+						<input type="radio" name="stanswer" value="2" id="option_b" th:field="${subject.stanswer}"/>
+					</label>
+					<label>
+						<label for="option_c">C</label>
+						<input type="radio" name="stanswer" value="3" id="option_c" th:field="${subject.stanswer}"/>
+					</label>
+					<label>
+						<label for="option_d">D</label>
+						<input type="radio" name="stanswer" value="4" id="option_d" th:field="${subject.stanswer}"/>
+					</label>
+
+				</div>
+				<div class="info-write">
+					<label for="exam_detail"><div>试题解析：</div></label>
+					<textarea name="stparse" id="exam_detail" th:value="${subject.stparse}"></textarea>
+				</div>
+				<div class="operate">
+					<a class="btn add-btn" id="add_save" th:onclick="subjectAdd.save()">添加</a>
+					<a class="btn reset-btn" id="reset">重置</a>
+				</div>
+			</div>
+		</form>
+
+	</div>
+</div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+	$(function(){
+	    window.subjectAdd = window.subjectAdd || {};
+	    //页面初始化方法
+        subjectAdd.init = function(){};
+        //保存方法
+		subjectAdd.save = function(){
+		    //表单校验
+			if(subjectAdd.validate()){
+                //保存
+				$.ajax({
+					type:'post',
+					url:'subject/save',
+					dataType:'json',
+					data:$("#add_exam_form").serializeArray(),
+					async:'false',//异步
+					success:function(res){
+					    if(res.code='200'){
+							new $Msg({
+                                content:"保存"+res.message+"！",
+                                type:"success",
+                                btnName : ["留在本页", "试题列表"],
+                                confirm:function(){
+
+                                },
+                                cancle:function(){
+                                    //跳转列表
+                                }
+							});
+						}
+					},
+					error:function(res){
+
+					}
+				});
+            }
+		};
+		//表单校验方法
+		subjectAdd.validate = function(){
+		    var textAreaVal = $("#exam_title").val();
+		    if(textAreaVal == null || textAreaVal == 'undefined' || textAreaVal == ''){
+		        new $Msg({
+                    content:"试题题目为空，请输入！",
+                    type:"success",
+                    confirm:function(){
+                        //获取焦点
+                        $("#exam_title")[0].focus();
+                    },
+                    cancle:function(){
+                        $("#exam_title")[0].focus();
+                    }
+				});
+		        return false;
+			}
+		    var exam_a = $("#exam_option_A").val();
+		    if(exam_a == null || exam_a == 'undefined' || exam_a == ''){
+                new $Msg({
+                    content:"试题的A选项为空，请输入！",
+                    type:"success",
+                    confirm:function(){
+                        //获取焦点
+                        $("#exam_option_A")[0].focus();
+                    },
+                    cancle:function(){
+                        $("#exam_option_A")[0].focus();
+                    }
+                });
+                return false;
+			}
+            var exam_b = $("#exam_option_B").val();
+            if(exam_b == null || exam_b == 'undefined' || exam_b == ''){
+                new $Msg({
+                    content:"试题的B选项为空，请输入！",
+                    type:"success",
+                    confirm:function(){
+                        //获取焦点
+                        $("#exam_option_B")[0].focus();
+                    },
+                    cancle:function(){
+                        $("#exam_option_B")[0].focus();
+                    }
+                });
+                return false;
+            }
+            var exam_c = $("#exam_option_C").val();
+            if(exam_c == null || exam_c == 'undefined' || exam_c == ''){
+                new $Msg({
+                    content:"试题的C选项为空，请输入！",
+                    type:"success",
+                    confirm:function(){
+                        //获取焦点
+                        $("#exam_option_C")[0].focus();
+                    },
+                    cancle:function(){
+                        $("#exam_option_C")[0].focus();
+                    }
+                });
+                return false;
+            }
+            var exam_d = $("#exam_option_D").val();
+            if(exam_d == null || exam_d == 'undefined' || exam_d == ''){
+                new $Msg({
+                    content:"试题的D选项为空，请输入！",
+                    type:"success",
+                    confirm:function(){
+                        //获取焦点
+                        $("#exam_option_D")[0].focus();
+                    },
+                    cancle:function(){
+                        $("#exam_option_D")[0].focus();
+                    }
+                });
+                return false;
+            }
+			var right_answer = $("#add_exam_form input[type='radio']:checked").val();
+            if(right_answer == null || right_answer == 'undefined' || right_answer == ''){
+                new $Msg({
+                    content:"请选择试题的正确答案！",
+                    type:"success",
+                    confirm:function(){},
+                    cancle:function(){}
+                });
+                return false;
+            }
+			return true;
+		};
+
+        //方法调用
+        subjectAdd.init();
+	});
+    /*]]>*/
+</script>

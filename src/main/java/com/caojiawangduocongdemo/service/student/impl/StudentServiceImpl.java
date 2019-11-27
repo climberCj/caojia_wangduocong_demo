@@ -78,9 +78,9 @@ public class StudentServiceImpl implements StudentService {
      * @return
      */
     @Override
-    public PageInfo<Student> sPage(int page, int pageSize, String q, String status) {
+    public PageInfo<Student> sPage(int page, int pageSize, String q) {
         PageInfo<Student> result = new PageInfo<>();
-        result.setTotal(studentMapper.count(q, status));
+        result.setTotal(studentMapper.count(q));
         result.setPageSize(pageSize);
         result.setPageNum(page);
         if (result.getTotal() > 0) {
@@ -133,7 +133,7 @@ public class StudentServiceImpl implements StudentService {
      * @param sysid
      */
     @Override
-    public void updateStatus(String sysid, String status) {
-        studentMapper.deleteByPrimaryKey(sysid);
+    public void updateStatus(String sysid) {
+        studentMapper.updateStatuds(sysid);
     }
 }

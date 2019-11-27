@@ -9,7 +9,7 @@
     <result column="result" property="result" jdbcType="INTEGER" />
     <result column="sclass" property="sclass" jdbcType="VARCHAR" />
     <result column="teacherId" property="teacherid" jdbcType="VARCHAR" />
-    <result column="stuStatus" property="stustatus" jdbcType="VARCHAR" />
+    <result column="stuStatus" property="stuStatus" jdbcType="VARCHAR" />
     <result column="stuPic" property="stupic" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
@@ -38,7 +38,7 @@
       )
     values (#{sysid,jdbcType=VARCHAR}, #{studentid,jdbcType=VARCHAR}, #{studentname,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{result,jdbcType=INTEGER}, #{sclass,jdbcType=VARCHAR}, 
-      #{teacherid,jdbcType=VARCHAR}, #{stustatus,jdbcType=VARCHAR}, #{stupic,jdbcType=VARCHAR}
+      #{teacherid,jdbcType=VARCHAR}, #{stuStatus,jdbcType=VARCHAR}, #{stupic,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.caojiawangduocongdemo.entity.Student" >
@@ -65,7 +65,7 @@
       <if test="teacherid != null" >
         teacherId,
       </if>
-      <if test="stustatus != null" >
+      <if test="stuStatus != null" >
         stuStatus,
       </if>
       <if test="stupic != null" >
@@ -94,8 +94,8 @@
       <if test="teacherid != null" >
         #{teacherid,jdbcType=VARCHAR},
       </if>
-      <if test="stustatus != null" >
-        #{stustatus,jdbcType=VARCHAR},
+      <if test="stuStatus != null" >
+        #{stuStatus,jdbcType=VARCHAR},
       </if>
       <if test="stupic != null" >
         #{stupic,jdbcType=VARCHAR},
@@ -123,8 +123,8 @@
       <if test="teacherid != null" >
         teacherId = #{teacherid,jdbcType=VARCHAR},
       </if>
-      <if test="stustatus != null" >
-        stuStatus = #{stustatus,jdbcType=VARCHAR},
+      <if test="stuStatus != null" >
+        stuStatus = #{stuStatus,jdbcType=VARCHAR},
       </if>
       <if test="stupic != null" >
         stuPic = #{stupic,jdbcType=VARCHAR},
@@ -140,27 +140,27 @@
       result = #{result,jdbcType=INTEGER},
       sclass = #{sclass,jdbcType=VARCHAR},
       teacherId = #{teacherid,jdbcType=VARCHAR},
-      stuStatus = #{stustatus,jdbcType=VARCHAR},
+      stuStatus = #{stuStatus,jdbcType=VARCHAR},
       stuPic = #{stupic,jdbcType=VARCHAR}
     where sysid = #{sysid,jdbcType=VARCHAR}
   </update>
   <select id="count" resultType="long">
     select count(1) from student where 1=1
     <if test="q != null">
-      AND (name like '%${q}%' or id like '%${q}%')
+      AND (studentName like '%${q}%' or studentId like '%${q}%')
     </if>
-    <if test="status != null and status !=0">
-      AND status = #{status}
+    <if test="stuStatus != null and stuStatus !=0">
+      AND stuStatus = #{stuStatus}
     </if>
   </select>
   <select id="page" resultMap="BaseResultMap">
-    SELECT sysid, studentId, status, studentName, password, result,sclass,teacherId,stupic FROM student
+    SELECT sysid, studentId, stuStatus, studentName, password, result,sclass,teacherId,stupic FROM student
     where 1=1
     <if test="q != null">
       AND (studentName like '%${q}%' or studentId like '%${q}%'  )
     </if>
-    <if test="status != null and status !=0">
-      AND status = #{status}
+    <if test="stuStatus != null and stuStatus !=0">
+      AND stuStatus = #{stuStatus}
     </if>
     order by result desc limit #{pageSize} offset #{start}
   </select>

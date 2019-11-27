@@ -17,7 +17,7 @@ public interface StudentService {
     //根据姓名查询
     Student findByName(String studentName);
     //学生分页
-    PageInfo<Student> sPage(int page, int pageSize, String q,String status);
+    PageInfo<Student> sPage(int page, int pageSize, String q);
     //添加学生
     void insert(Student student);
     //根据sysId修改
@@ -25,7 +25,7 @@ public interface StudentService {
     //根据sysId删除
     void delete(String sysid);
     //逻辑性删除
-    void updateStatus(String sysid,String status);
+    void updateStatus(String sysid);
 
 
 

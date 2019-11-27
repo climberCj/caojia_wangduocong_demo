@@ -1,181 +1,139 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8"/>
-	<title>Document</title>
-	<link rel="stylesheet" href="dist/css/base.css"/>
-	<link rel="stylesheet" href="dist/css/skin.css"/>
-	<link rel="stylesheet" href="dist/plugins/select2/css/select2.min.css"/>
-</head>
-<body>
-	<div class="wrap">
-		<!-- 页面头部start -->
-		<div class="header">
-			<div class="logo">
-				<h1>
-					<a>在线考试系统</a>
-				</h1>
-			</div>
-			<div class="header-menu">
-				<ul class="fn-clear">
-					<li>
-						<img src="dist/img/admin.png" alt="">
-						<span>张三</span><span>，欢迎您登录在线考试系统</span>
-					</li>
-					<li class="space"></li>
-					<li class="exit">
-						<a>退出登录</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-		<!-- 页面头部end -->
-		<!-- 页面主体start -->
-		<div class="main fn-clear" id="main_content">
-			<!-- 页面导航栏start -->
-			<div class="navi">
-				<ul class="app-list-menu menu1">
-					<li class="app-list level1">
-						<a href="" class="active name level1-name">学生管理</a>
-						<ul class="app-list-menu menu2">
-							<li><a href="../teacher/addStudent.html" class="name level2-name">添加学生</a></li>
-							<li><a href="" class="active name level2-name">查询学生信息</a></li>
-						</ul>
-					</li>
-					<li class="app-list level1">
-						<a class="name level1-name">试题管理</a>
-						<ul class="app-list-menu menu2">
-							<li><a href="../teacher/addExam.html" class="name level2-name">添加试题</a></li>
-							<li><a href="../teacher/examList.html" class="name level2-name">查询试题</a></li>
-							<li><a href="exam.html" class="name level2-name">搜索试题</a></li>
-						</ul>
-					</li>
-				</ul>
-			</div>
-			<!-- 页面导航栏end -->
-			<div class="content">
-				<div class="content-wrap">
-					<div class="add-stu-wrap">
-						<ul class="stu-list-ul">
-							<li class="active"><a href="">根据班级查询学生</a></li>
-							<li><a href="">根据姓名查询学生</a></li>
-							<li><a href="">根据学号查询学生</a></li>
-						</ul>
-						<h3 class="patr-name">学生列表</h3>
-						<form action="">
-							<table class="table same-table">
-								<thead>
-									<tr>
-										<th width="25%">
-											<div>学生编号</div>
-										</th>
-										<th width="25%">
-											<div>学生姓名</div>
-										</th>
-										<th width="25%">
-											<div>学生班级</div>
-										</th>
-										<th width="25%">
-											<div>学生成绩</div>
-										</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>
-											<div>11111</div>
-										</td>
-										<td>
-											<div>学生姓名</div>
-										</td>
-										<td>
-											<div>1111</div>
-										</td>
-										<td>
-											<div>1111</div>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<div>11111</div>
-										</td>
-										<td>
-											<div>学生姓名</div>
-										</td>
-										<td>
-											<div>1111</div>
-										</td>
-										<td>
-											<div>1111</div>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<div>11111</div>
-										</td>
-										<td>
-											<div>学生姓名</div>
-										</td>
-										<td>
-											<div>1111</div>
-										</td>
-										<td>
-											<div>1111</div>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<div>11111</div>
-										</td>
-										<td>
-											<div>学生姓名</div>
-										</td>
-										<td>
-											<div>1111</div>
-										</td>
-										<td>
-											<div>1111</div>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<div>11111</div>
-										</td>
-										<td>
-											<div>学生姓名</div>
-										</td>
-										<td>
-											<div>1111</div>
-										</td>
-										<td>
-											<div>1111</div>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</form>
+<div class="wrap">
+    <div class="content">
+        <div class="content-wrap">
+            <div class="add-stu-wrap">
+                <div class="row">
+                    <form>
+                        <div class="info-write">
+                            <label for="findBySclass">
+                                <div>根据班级查询学生</div>
+                            </label>
+                            <input type="text" id="findBySclass" style="width:30%" placeholder="请输入班级查询"
+                                   name="filter_stNo" th:value="${sclass}"/>
+                        </div>
 
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- 页面主体start -->
-	</div>
-	<script type="text/javaScript" src="dist/plugins/jquery/jquery-1.11.3.min.js"></script>
-	<script type="text/javaScript" src="dist/plugins/select2/pinyin.js"></script>
-	<script type="text/javaScript" src="dist/plugins/select2/select2.js"></script>
-	<script type="text/javaScript" src="dist/plugins/nicescroll/jquery.nicescroll.js"></script>
-	<script>
-		$(document).ready(function() {
-			var _wHeight = $(window).height();
-			var _hHeight =$(".header").height();
-			$("#main_content").height(_wHeight-80);
-			$(".navi").height(_wHeight-80);
-			$(".content").height(_wHeight-80);
-			$(".sel").select2();
-			$('.content').niceScroll().hide();
+                        <div class="info-write">
+                            <label for="findBySclass">
+                                <div>根据姓名查询学生</div>
+                            </label>
+                            <input type="text" id="findByStudentName" style="width:30%" placeholder="请输入姓名查询"
+                                   name="filter_stNo" th:value="${studentName}"/>
+                        </div>
+                        <div class="info-write">
+                            <label for="findBySid">
+                                <div>根据姓名查询学生</div>
+                            </label>
+                            <input type="text" id="findBySid" style="width:30%" placeholder="请输入姓名查询" name="filter_stNo"
+                                   th:value="${studentId}"/>
+                        </div>
+                        <div class="col-md-3 col-xs-12 col-sm-12">
+                            <div class="search-form-nav-rotate">
+                                <input class="search-content-nav form-control" name="q"
+                                       value="${q}"
+                                       placeholder="搜索内容（学生名称）" type="text">
+                                <button class="btn search-btn-nav glyphicon glyphicon-search"
+                                        type="submit"></button>
+                            </div>
+                            <div style="margin-bottom: 5px;"></div>
+                        </div>
+                    </form>
+                </div>
+                <h3 class="patr-name">学生列表</h3>
+                <form action="">
+                    <table class="table same-table">
+                        <thead>
+                        <tr>
+                            <th>
+                                <div>序号</div>
+                            </th>
+                            <th>
+                                <div>学生编号</div>
+                            </th>
+                            <th>
+                                <div>学生姓名</div>
+                            </th>
+                            <th>
+                                <div>学生班级</div>
+                            </th>
+                            <th>
+                                <div>学生成绩</div>
+                            </th>
+                            <th>
+                                <div>操作</div>
+                            </th>
 
-		});
-	</script>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="item:${result.data}">
+                            <td style="vertical-align: middle">
+                                <div th:text="${(result.current-1) * result.pageSize + num.count}"></div>
+                            </td>
+                            <td style="vertical-align: middle">
+                                <div th:text="${item.sysid}"></div>
+                            </td>
+                            <td style="vertical-align: middle">
+                                <div th:text="${item.studentName}"></div>
+                            </td>
+                            <td style="vertical-align: middle">
+                                <div th:text="${item.sclass}"></div>
+                            </td>
+                            <td style="vertical-align: middle">
+                                <div th:text="${item.result}"></div>
+                            </td>
+                            <button class="btn btn-sm btn-primary btn-edit"
+                                    data-id="${student.sysid}"
+                                    data-name="${student.studentName}"><span
+                                    class="fa fa-edit"></span>编辑
+                            </button>
+                            <td>
+                                <button class="btn btn-sm btn-danger btn-delete"
+                                        data-id="${student.sysid}"><span
+                                        class="fa fa-trash"></span> 删除
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <!--<div class="pagger-box pagger" id="sub_page"></div>-->
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 页面主体start -->
+</div>
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+<script type="text/javaScript" src="dist/plugins/select2/pinyin.js"></script>
+<script type="text/javaScript" src="dist/plugins/select2/select2.js"></script>
+<script type="text/javaScript" src="dist/plugins/nicescroll/jquery.nicescroll.js"></script>
+<script>
+    $(document).ready(function () {
+        var _wHeight = $(window).height();
+        var _hHeight = $(".header").height();
+        $("#main_content").height(_wHeight - 80);
+        $(".navi").height(_wHeight - 80);
+        $(".content").height(_wHeight - 80);
+        $(".sel").select2();
+        $('.content').niceScroll().hide();
+
+        /*<![CDATA[*/
+        $(function(){
+            $('#sub_page').paging({
+                initPageNo: [[${pageInfo.pageNum}]], // 初始页码
+                totalPages: [[${pageInfo.pages}]], //总页数
+                totalCount: '合计' + [[${pageInfo.total}]] + '条数据', // 条目总数
+                slideSpeed: 600, // 缓动速度。单位毫秒
+                jump: true, //是否支持跳转
+                callback: function(page) { // 回调函数
+                },
+                url:EXAM.getPath()+"/student/sytdents?"+encodeURI([[${searchParams}]])
+            });
+        });
+        /*]]>*/
+
+    });
+</script>
 </body>
 </html>

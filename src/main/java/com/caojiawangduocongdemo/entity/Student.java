@@ -18,7 +18,7 @@ public class Student implements Serializable {
 
     private String teacherid;
 
-    private String stustatus;
+    private String stuStatus;
 
     private String stupic;
 
@@ -78,12 +78,12 @@ public class Student implements Serializable {
         this.teacherid = teacherid == null ? null : teacherid.trim();
     }
 
-    public String getStustatus() {
-        return stustatus;
+    public String getStuStatus() {
+        return stuStatus;
     }
 
-    public void setStustatus(String stustatus) {
-        this.stustatus = stustatus == null ? null : stustatus.trim();
+    public void setStuStatus(String stuStatus) {
+        this.stuStatus = stuStatus == null ? null : stuStatus.trim();
     }
 
     public String getStupic() {
