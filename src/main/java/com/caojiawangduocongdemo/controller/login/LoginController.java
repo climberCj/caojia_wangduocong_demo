@@ -64,7 +64,7 @@ public class LoginController {
                 Student student = studentService.findByStudentId(username);
                 request.getSession().setAttribute("user", student);
                 //重定向到学生控制层
-                return new ModelAndView("redirect:student/main");
+                return new ModelAndView("redirect:exam/index");
             }else{
                 //学生登录失败
                 respMap.put("msg","The student login in failed");
