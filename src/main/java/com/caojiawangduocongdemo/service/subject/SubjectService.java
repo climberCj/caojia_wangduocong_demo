@@ -22,4 +22,6 @@ public interface SubjectService {
     List<String> queryStnoList();
 
     int delete(String sysid);
+
+    List<Subject> findAll();
 }

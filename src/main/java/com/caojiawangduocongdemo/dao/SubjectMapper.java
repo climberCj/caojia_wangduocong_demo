@@ -28,4 +28,7 @@ public interface SubjectMapper {
 
     @Select("select stNo from subject")
     List<String> getStnoList();
+
+    @Select("select * from subject where stStatus = '1'")
+    List<Subject> findAll();
 }

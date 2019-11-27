@@ -1,7 +1,3 @@
-/**
- * Copyright (c) 2019, 万维公司 All rights reserved.
- * 万维公司 专有/保密源代码,未经许可禁止任何人通过任何渠道使用、修改源代码.
- */
 package com.caojiawangduocongdemo.service.subject.impl;
 
 import com.caojiawangduocongdemo.common.BizException;
@@ -17,9 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author caojia
@@ -81,5 +75,23 @@ public class SubjectServiceImpl implements SubjectService {
         }
         subject.setStstatus("0");
         return subjectMapper.updateByPrimaryKeySelective(subject);
+    }
+
+    @Override
+    public List<Subject> findAll() {
+        List<Subject> lists = subjectMapper.findAll();
+        List<Subject> examLists = new ArrayList<>();
+        if(lists.size()<5){
+            return lists;
+        }else{
+            //从所有试题中选出5道题组成试卷
+            for(int i = 0;i < 5;i ++){
+                Random r = new Random();
+                int a = r.nextInt(lists.size());
+                examLists.add(lists.get(a));
+                lists.remove(a);
+            }
+            return examLists;
+        }
     }
 }
