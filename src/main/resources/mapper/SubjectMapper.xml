@@ -29,13 +29,9 @@
     from subject
     <where>
       stStatus = "1"
-    </where>
-    <where>
       <if test="stNo != null and stNo != ''">
         and stNo = #{stNo,jdbcType=VARCHAR}
       </if>
-    </where>
-    <where>
       <if test="stTitle != null and stTitle != ''">
         and stTitle like concat('%',#{stTitle,jdbcType=VARCHAR},'%')
       </if>

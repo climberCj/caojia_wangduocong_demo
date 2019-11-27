@@ -14,8 +14,8 @@
             </tr>
             <tr>
                 <div class="operate">
-                    <a class="btn add-btn">查询</a>
-                    <a class="btn reset-btn">重置</a>
+                    <a class="btn add-btn" id="subject_search">查询</a>
+                    <a class="btn reset-btn" id="subject_reset">重置</a>
                 </div>
             </tr>
         </table>
@@ -60,10 +60,10 @@
                         <div class="right-answer" th:if="${item.stanswer eq '4'}">D</div>
                     </td>
                     <td>
-                        <div><a>编辑</a></div>
+                        <div><a th:onclick="edit([[${item.sysid}]])">编辑</a></div>
                     </td>
                     <td>
-                        <div><a>删除</a></div>
+                        <div><a th:onclick="del([[${item.sysid}]])">删除</a></div>
                     </td>
                 </tr>
                 </tbody>
@@ -75,6 +75,16 @@
 <script th:inline="javascript">
     /*<![CDATA[*/
     $(function(){
+        var totalCount = [[${pageInfo.total}]];
+        var pageSize = [[${pageInfo.pageSize}]];
+        if(pageSize>=totalCount){
+            $("#sub_page").hide();
+        }
+        //暂无数据
+        if(totalCount==0){
+            var resultHtml = '<div class="no-result normal"><div class="no-result-cont">' + "暂无数据！" + '</div></div>';
+            $("thead").append(resultHtml);
+        }
         $('#sub_page').paging({
             initPageNo: [[${pageInfo.pageNum}]], // 初始页码
             totalPages: [[${pageInfo.pages}]], //总页数
@@ -85,6 +95,54 @@
             },
             url:EXAM.getPath()+"/subject/list?"+encodeURI([[${searchParams}]])
         });
+
+        //查询
+        $("#subject_search").on('click',function(){
+            $("#content_page").load('subject/list',$("#question_search").serializeArray(),function(){
+
+            });
+        });
+        //重置
+        $("#subject_reset").on('click',function(){
+            $("#exam_option_A").val('');
+            $("#exam_option_B").val('');
+        });
     });
+    //编辑
+    function edit(sysid){
+        $("#content_page").load('subject/addExam',{"sysid":sysid},function(){
+
+        });
+    };
+    //删除
+    function del(sysid){
+        new $Msg({
+            content:"确定要删除吗？",
+            type:"success",
+            btnName : ["确定","取消"],
+            confirm:function(){
+                $.ajax({
+                    type:'post',
+                    url:'subject/delete',
+                    data:{"sysid":sysid},
+                    dataType:"json",
+                    success:function(res){
+                        if(res.code=='200'){
+                            new $Msg({
+                                content:"删除"+res.message+"！",
+                                type:"success",
+                                btnName : ["确定","取消"],
+                                confirm:function(){
+                                    //跳转列表
+                                    $("#content_page").load("subject/list",function(){});
+                                }
+                            });
+                        }
+                    },
+                });
+            }
+        });
+
+    };
     /*]]>*/
 </script>
