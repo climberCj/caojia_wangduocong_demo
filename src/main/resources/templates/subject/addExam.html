@@ -2,8 +2,9 @@
 	<div class="add-stu-wrap">
 		<h3 class="patr-name">添加试题</h3>
 		<form id="add_exam_form">
-			<input type="hidden" name="sysid" th:value="${subject.sysid}"/>
+			<input type="hidden" id="subject_sysid" name="sysid" th:value="${subject.sysid}"/>
 			<input type="hidden" name="stno" th:value="${subject.stno}"/>
+			<input type="hidden" name="ststatus" th:value="${subject.ststatus}"/>
 			<div class="form-table">
 				<div class="info-write">
 					<label for="exam_title"><div>试题题目：</div></label>
@@ -82,10 +83,12 @@
                                 type:"success",
                                 btnName : ["留在本页", "试题列表"],
                                 confirm:function(){
-
+                                    //刷新页面
+                                    $("#content_page").load("subject/addExam",{"sysid":$("#subject_sysid".val())},function(){});
                                 },
                                 cancle:function(){
                                     //跳转列表
+                                    $("#content_page").load("subject/list",function(){});
                                 }
 							});
 						}
