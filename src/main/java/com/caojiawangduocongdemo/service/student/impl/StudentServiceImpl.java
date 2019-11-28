@@ -78,9 +78,9 @@ public class StudentServiceImpl implements StudentService {
      * @return
      */
     @Override
-    public PageInfo<Student> sPage(int page, int pageSize, String q) {
+    public PageInfo<Student> sPage(int page, int pageSize, String q,String stuStatus) {
         PageInfo<Student> result = new PageInfo<>();
-        result.setTotal(studentMapper.count(q));
+        result.setTotal(studentMapper.count(q,stuStatus));
         result.setPageSize(pageSize);
         result.setPageNum(page);
         if (result.getTotal() > 0) {

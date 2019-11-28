@@ -156,9 +156,6 @@
     <if test="q != null">
       AND (studentName like '%${q}%' or studentId like '%${q}%'  )
     </if>
-    <if test="stuStatus != null and stuStatus !=0">
-      AND stuStatus = #{stuStatus}
-    </if>
-    order by result desc limit #{pageSize} offset #{start}
+    order by result desc limit #{pageSize} offset #{page}
   </select>
 </mapper>

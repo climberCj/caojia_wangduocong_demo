@@ -35,7 +35,7 @@ public interface StudentMapper {
     Student findByStudentName(@Param("studentname") String findByStudentName);
 
     //    long countStudentName(@Param("studentName")String studentName);
-    long count(@Param("q") String q);
+    long count(@Param("q") String q,@Param("stuStatus")String stuStatus);
 
     @Select("select count(1) from student where studentId=#{studentid} and stuStatus='1'")
     long countBySudentId(@Param("studentId")String studentId);
@@ -45,10 +45,10 @@ public interface StudentMapper {
     @ResultMap("BaseResultMap")
     Student findBysclass(@Param("sclass") String sclass);
 
-    @Select("select * from student where stuStatus=1 order by result desc")
+    @Select("select * from student where stuStatus='1' order by result desc")
     @ResultMap("BaseResultMap")
     Student findAll();
 
-    @Update("update student set stuStatus= 0 where sysid=#{sysid}")
+    @Update("update student set stuStatus= '0' where sysid=#{sysid}")
     void updateStatuds(@Param("sysid")String sysid);
 }

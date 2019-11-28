@@ -35,11 +35,12 @@ public class StudentController {
                        @RequestParam(value = "page",required = false,defaultValue = "1") int page,
                        @RequestParam(value = "pageSize",defaultValue = "20") int pageSize,
                        @RequestParam(value = "q",required = false) String q,
-                       @RequestParam(value = "stuStatus", defaultValue = "1") String stuStatus,
+                       @RequestParam(value = "stuStatus", required = false,defaultValue = "1") String stuStatus,
                        @RequestParam(value = "studentId",required = false) String studentId,
                        @RequestParam(value = "studentName",required = false) String studentName,
                        @RequestParam(value = "sclass",required = false) String sclass) {
-        request.setAttribute("result", studentService.sPage(page, pageSize, q));
+        request.setAttribute("result", studentService.sPage(page, pageSize, q,stuStatus));
+        System.out.println(studentService.sPage(page, pageSize, q,stuStatus).getList());
         request.setAttribute("url", (null == q ? "" : "?q=" + q));
         request.setAttribute("students", studentMapper.findAll());
         request.setAttribute("stuStatus", stuStatus);

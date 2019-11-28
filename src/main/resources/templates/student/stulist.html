@@ -40,7 +40,7 @@
                 </div>
                 <h3 class="patr-name">学生列表</h3>
                 <form action="">
-                    <table class="table same-table">
+                    <table class="table same-table table-striped table-bordered dataTable no-footer">
                         <thead>
                         <tr>
                             <th>
@@ -65,9 +65,9 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="item:${result.data}">
+                        <tr th:each="item:${result.list}">
                             <td style="vertical-align: middle">
-                                <div th:text="${(result.current-1) * result.pageSize + num.count}"></div>
+                                <div th:text="${(result.pages-1) * result.pageSize + num.count}"></div>
                             </td>
                             <td style="vertical-align: middle">
                                 <div th:text="${item.sysid}"></div>
@@ -82,8 +82,8 @@
                                 <div th:text="${item.result}"></div>
                             </td>
                             <button class="btn btn-sm btn-primary btn-edit"
-                                    data-id="${student.sysid}"
-                                    data-name="${student.studentName}"><span
+                                    data-sysid="${student.sysid}"
+                                    data-studentName="${student.studentName}"><span
                                     class="fa fa-edit"></span>编辑
                             </button>
                             <td>
@@ -95,9 +95,53 @@
                         </tr>
                         </tbody>
                     </table>
-                    <!--<div class="pagger-box pagger" id="sub_page"></div>-->
+                    <div class="pagger-box pagger" id="sub_page"></div>
                 </form>
 
+            </div>
+        </div>
+    </div>
+</div>
+<!--编辑弹出框-->
+<div class="modal fade" id="modal-edit" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"><b>编辑学生</b></h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal form" id="form-edit" method="post">
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="hidden" name="_method" value="PUT">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">学生班级
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                <input type="text" class="form-control" required="required"
+                                       id="edit-sclass" name="sclass" placeholder="学生班级">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">分数
+                                <span class="required">&nbsp;</span>
+                            </label>
+                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                <textarea type="text" class="form-control" id="edit-result" name="result"
+                                          placeholder="分数"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btn-edit-submit"><span
+                        class="fa fa-plus-circle"></span> 编辑
+                </button>
             </div>
         </div>
     </div>
@@ -121,19 +165,45 @@
         /*<![CDATA[*/
         $(function(){
             $('#sub_page').paging({
-                initPageNo: [[${pageInfo.pageNum}]], // 初始页码
-                totalPages: [[${pageInfo.pages}]], //总页数
-                totalCount: '合计' + [[${pageInfo.total}]] + '条数据', // 条目总数
+                initPageNo: [[${result.pageNum}]], // 初始页码
+                totalPages: [[${result.pages}]], //总页数
+                totalCount: '合计' + [[${result.total}]] + '条数据', // 条目总数
                 slideSpeed: 600, // 缓动速度。单位毫秒
                 jump: true, //是否支持跳转
                 callback: function(page) { // 回调函数
                 },
-                url:EXAM.getPath()+"/student/sytdents?"+encodeURI([[${searchParams}]])
+                url:EXAM.getPath()+"/student/students?"+encodeURI([[${q}]])
             });
         });
         /*]]>*/
+/*学生编辑事件触发*/
+        $(".btn-edit").click(function (e) {
+            e.preventDefault();
+            $("#edit-sclass").val($(this).attr('data-sclass'));
+            $("#edit-result").val($(this).attr('data-result'));
+            $('#btn-edit-submit').attr('data-sysid', $(this).attr('data-sysid'));
+            $("#modal-edit").modal('show');
+        });
+/*学生编辑保存*/
+        $("#btn-edit-submit").click(function (e) {
+            e.preventDefault();
+            $('#form-edit').parsley().validate();
+            if ($('#form-edit').parsley().isValid()) {
+                var id = $(this).attr('data-id');
+                $.ajax({
+                    url: '/student/' + sysid,
+                    method: 'POST',
+                    dataType: 'json',
+                    data: $('#form-edit').serialize(),
+                    success: function (data) {
+                        window.location.reload();
+                    },
+                    error: function (data) {
+                        notie.alert(3, data.responseJSON.message, 2.5);
+                    }
+                });
+            }
+        });
 
     });
 </script>
-</body>
-</html>
