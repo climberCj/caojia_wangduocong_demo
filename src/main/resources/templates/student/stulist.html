@@ -1,8 +1,4 @@
-<div class="wrap">
-    <div class="content">
-        <div class="content-wrap">
-            <div class="add-stu-wrap">
-                <div class="row">
+<!--<div class="row">
                     <form>
                         <div class="info-write">
                             <label for="findBySclass">
@@ -37,7 +33,55 @@
                             <div style="margin-bottom: 5px;"></div>
                         </div>
                     </form>
+                </div>-->
+<div>
+    <h3 class="patr-name">学生查询</h3>
+    <form id="student_search_form">
+        <table>
+            <tr>
+                <div class="info-write">
+                    <label for="findBySclass">
+                        <div>根据班级查询学生:</div>
+                    </label>
+                    <input type="text" id="findBySclass" style="width:30%" placeholder="请输入班级查询"
+                           name="filter_stNo" th:value="${sclass}"/>
                 </div>
+                <div class="info-write">
+                    <label for="findBySclass">
+                        <div>根据姓名查询学生:</div>
+                    </label>
+                    <input type="text" id="findByStudentName" style="width:30%" placeholder="请输入姓名查询"
+                           name="filter_stNo" th:value="${studentName}"/>
+                </div>
+                <div class="info-write">
+                    <label for="findBySid">
+                        <div>根据姓名查询学生:</div>
+                    </label>
+                    <input type="text" id="findBySid" style="width:30%" placeholder="请输入姓名查询" name="filter_stNo"
+                           th:value="${studentId}"/>
+                </div>
+                <!--<div class="col-md-3 col-xs-12 col-sm-12">
+                    <div class="search-form-nav-rotate">
+                        <input class="search-content-nav form-control" name="q"
+                               value="${q}"
+                               placeholder="搜索内容（学生名称）" type="text">
+                        <button class="btn search-btn-nav glyphicon glyphicon-search"
+                                type="submit"></button>
+                    </div>
+                    <div style="margin-bottom: 5px;"></div>
+                </div>-->
+            </tr>
+            <tr>
+                <div class="operate">
+                    <a class="btn add-btn" id="student_search">查询</a>
+                    <a class="btn reset-btn" id="student_reset">重置</a>
+                </div>
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="content-wrap">
+      <div class="add-stu-wrap">
                 <h3 class="patr-name">学生列表</h3>
                 <form action="">
                     <table class="table same-table table-striped table-bordered dataTable no-footer">
@@ -95,12 +139,10 @@
                         </tr>
                         </tbody>
                     </table>
-                    <div class="pagger-box pagger" id="sub_page"></div>
+                    <div class="pagger-box pagger" id="stu_page"></div>
                 </form>
 
-            </div>
-        </div>
-    </div>
+      </div>
 </div>
 <!--编辑弹出框-->
 <div class="modal fade" id="modal-edit" tabindex="-1" role="dialog">
@@ -147,13 +189,9 @@
     </div>
 </div>
 <!-- 页面主体start -->
-</div>
-<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
-<script type="text/javaScript" src="dist/plugins/select2/pinyin.js"></script>
-<script type="text/javaScript" src="dist/plugins/select2/select2.js"></script>
-<script type="text/javaScript" src="dist/plugins/nicescroll/jquery.nicescroll.js"></script>
-<script>
+<script th:inline="javascript">
     $(document).ready(function () {
+        /*<![CDATA[*/
         var _wHeight = $(window).height();
         var _hHeight = $(".header").height();
         $("#main_content").height(_wHeight - 80);
@@ -162,20 +200,17 @@
         $(".sel").select2();
         $('.content').niceScroll().hide();
 
-        /*<![CDATA[*/
-        $(function(){
-            $('#sub_page').paging({
-                initPageNo: [[${result.pageNum}]], // 初始页码
-                totalPages: [[${result.pages}]], //总页数
-                totalCount: '合计' + [[${result.total}]] + '条数据', // 条目总数
-                slideSpeed: 600, // 缓动速度。单位毫秒
-                jump: true, //是否支持跳转
-                callback: function(page) { // 回调函数
-                },
-                url:EXAM.getPath()+"/student/students?"+encodeURI([[${q}]])
-            });
+        $('#stu_page').paging({
+            initPageNo: [[${result.pageNum}]], // 初始页码
+            totalPages: [[${result.pages}]], //总页数
+            totalCount: '合计' + [[${result.total}]] + '条数据', // 条目总数
+            slideSpeed: 600, // 缓动速度。单位毫秒
+            jump: true, //是否支持跳转
+            callback: function(page) { // 回调函数
+            },
+            url:EXAM.getPath()+"/student/students?"+encodeURI([[${q}]])
         });
-        /*]]>*/
+
 /*学生编辑事件触发*/
         $(".btn-edit").click(function (e) {
             e.preventDefault();
@@ -206,4 +241,5 @@
         });
 
     });
+    /*]]>*/
 </script>
