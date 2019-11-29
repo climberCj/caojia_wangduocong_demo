@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,8 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 public class StudentController {
     @Autowired
     private StudentService studentService;
-    @Autowired
-    private StudentMapper studentMapper;
+   /* @Autowired
+    private StudentMapper studentMapper;*/
 
     @RequestMapping(value = "/students", method = RequestMethod.GET)
     public String view(HttpServletRequest request,
@@ -40,9 +37,8 @@ public class StudentController {
                        @RequestParam(value = "studentName",required = false) String studentName,
                        @RequestParam(value = "sclass",required = false) String sclass) {
         request.setAttribute("result", studentService.sPage(page, pageSize, q,stuStatus));
-        System.out.println(studentService.sPage(page, pageSize, q,stuStatus).getList());
         request.setAttribute("url", (null == q ? "" : "?q=" + q));
-        request.setAttribute("students", studentMapper.findAll());
+        request.setAttribute("students", studentService.getAll());
         request.setAttribute("stuStatus", stuStatus);
         request.setAttribute("sclass",studentService.findBysclass(sclass));
         request.setAttribute("studentById", studentService.findByStudentId(studentId));
@@ -50,7 +46,7 @@ public class StudentController {
         return "student/stulist";
     }
 
-    @RequestMapping(value = "/student", method = RequestMethod.POST)
+/*    @RequestMapping(value = "/student", method = RequestMethod.POST)
     public ResponseEntity<String> insert(HttpEntity<Student> body) {
         if (body.getBody() == null || body.getBody().getSysid() == null || body.getBody().getSysid().isEmpty() ||
                 body.getBody().getStudentid() == null || body.getBody().getStudentid().isEmpty() ||
@@ -59,14 +55,29 @@ public class StudentController {
             throw new BizException("学号和姓名不能为空");
         } else if (studentMapper.countBySudentId(body.getBody().getStudentid()) > 0) {
             throw new BizException("该生已存在");
-        } else if (body.getBody().getStuStatus() == "0" || body.getBody().getStuStatus() == null || body.getBody().getStuStatus().isEmpty()) {
-            throw new BizException("请检查学生状态");
         }
-        studentMapper.insert(body.getBody());
+        studentService.insert(body.getBody());
         return ResponseEntity.ok("{}");
-//        return "student/";
+    }*/
+
+    @RequestMapping(value = "/student",method = RequestMethod.GET)
+    public String insert(){
+
+       return "student/addExam";
     }
 
+    @RequestMapping(value = "/save",method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<String > save(@RequestParam(value = "studentId",required = false)String studentId,
+                                        @RequestParam(value = "sysid",required = false)String sysid,
+                                        @RequestParam(value = "studentName",required = false)String studentName,
+                                        @RequestParam(value = "sclass",required = false)String sclass,
+                                        @RequestParam(value = "result",required = false)int result,
+                                        @RequestParam(value = "stupic ",required = false)String stupic,
+                                        @RequestParam(value = "teacherId",required = false)String teacherId){
+        studentService.insert( sysid, studentId, studentName, sclass, stupic, result, teacherId);
+        return ResponseEntity.ok("{}");
+    }
     @RequestMapping(value = "/student/{sysid}", method = RequestMethod.PUT)
     public ResponseEntity<String> update(@PathVariable("sysid") String sysid,
                                          @RequestParam("sclass") String sclass,

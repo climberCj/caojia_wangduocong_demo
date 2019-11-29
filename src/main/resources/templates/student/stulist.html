@@ -47,17 +47,17 @@
                            name="filter_stNo" th:value="${sclass}"/>
                 </div>
                 <div class="info-write">
-                    <label for="findBySclass">
+                    <label for="findByStudentName">
                         <div>根据姓名查询学生:</div>
                     </label>
                     <input type="text" id="findByStudentName" style="width:30%" placeholder="请输入姓名查询"
                            name="filter_stNo" th:value="${studentName}"/>
                 </div>
                 <div class="info-write">
-                    <label for="findBySid">
+                    <label for="findByStudentId">
                         <div>根据姓名查询学生:</div>
                     </label>
-                    <input type="text" id="findBySid" style="width:30%" placeholder="请输入姓名查询" name="filter_stNo"
+                    <input type="text" id="findByStudentId" style="width:30%" placeholder="请输入学号查询" name="filter_stNo"
                            th:value="${studentId}"/>
                 </div>
                 <!--<div class="col-md-3 col-xs-12 col-sm-12">
@@ -88,10 +88,7 @@
                         <thead>
                         <tr>
                             <th>
-                                <div>序号</div>
-                            </th>
-                            <th>
-                                <div>学生编号</div>
+                                <div>学生帐号</div>
                             </th>
                             <th>
                                 <div>学生姓名</div>
@@ -103,21 +100,20 @@
                                 <div>学生成绩</div>
                             </th>
                             <th>
-                                <div>操作</div>
+                                <div>编辑学生</div>
                             </th>
-
+                            <th>
+                                <div>删除学生</div>
+                            </th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="item:${result.list}">
-                            <td style="vertical-align: middle">
-                                <div th:text="${(result.pages-1) * result.pageSize + num.count}"></div>
-                            </td>
+                        <tr th:each="item:${result.list}" >
                             <td style="vertical-align: middle">
                                 <div th:text="${item.sysid}"></div>
                             </td>
                             <td style="vertical-align: middle">
-                                <div th:text="${item.studentName}"></div>
+                                <div th:text="${item.studentname}"></div>
                             </td>
                             <td style="vertical-align: middle">
                                 <div th:text="${item.sclass}"></div>
@@ -125,82 +121,36 @@
                             <td style="vertical-align: middle">
                                 <div th:text="${item.result}"></div>
                             </td>
-                            <button class="btn btn-sm btn-primary btn-edit"
-                                    data-sysid="${student.sysid}"
-                                    data-studentName="${student.studentName}"><span
-                                    class="fa fa-edit"></span>编辑
-                            </button>
                             <td>
-                                <button class="btn btn-sm btn-danger btn-delete"
-                                        data-id="${student.sysid}"><span
-                                        class="fa fa-trash"></span> 删除
-                                </button>
+                                <div><a th:onclick="edit([[${item.sysid}]])">编辑</a></div>
+                            </td>
+                            <td>
+                                <div><a th:onclick="del([[${item.sysid}]])">删除</a></div>
                             </td>
                         </tr>
                         </tbody>
                     </table>
                     <div class="pagger-box pagger" id="stu_page"></div>
                 </form>
-
       </div>
+    <div class="pagger-box pagger" id="sub_page"></div>
 </div>
-<!--编辑弹出框-->
-<div class="modal fade" id="modal-edit" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title"><b>编辑学生</b></h4>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal form" id="form-edit" method="post">
-                    <div class="row">
-                        <div class="form-group">
-                            <input type="hidden" name="_method" value="PUT">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">学生班级
-                                <span class="required">*</span>
-                            </label>
-                            <div class="col-md-8 col-sm-8 col-xs-12">
-                                <input type="text" class="form-control" required="required"
-                                       id="edit-sclass" name="sclass" placeholder="学生班级">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">分数
-                                <span class="required">&nbsp;</span>
-                            </label>
-                            <div class="col-md-8 col-sm-8 col-xs-12">
-                                <textarea type="text" class="form-control" id="edit-result" name="result"
-                                          placeholder="分数"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="btn-edit-submit"><span
-                        class="fa fa-plus-circle"></span> 编辑
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
+
 <!-- 页面主体start -->
 <script th:inline="javascript">
-    $(document).ready(function () {
-        /*<![CDATA[*/
-        var _wHeight = $(window).height();
-        var _hHeight = $(".header").height();
-        $("#main_content").height(_wHeight - 80);
-        $(".navi").height(_wHeight - 80);
-        $(".content").height(_wHeight - 80);
-        $(".sel").select2();
-        $('.content').niceScroll().hide();
-
-        $('#stu_page').paging({
+    /*<![CDATA[*/
+    $(function(){
+        var totalCount = [[${result.total}]];
+        var pageSize = [[${result.pageSize}]];
+        if(pageSize>=totalCount){
+            $("#sub_page").hide();
+        }
+        //暂无数据
+        if(totalCount==0){
+            var resultHtml = '<div class="no-result normal"><div class="no-result-cont">' + "暂无数据！" + '</div></div>';
+            $("thead").append(resultHtml);
+        }
+        $('#sub_page').paging({
             initPageNo: [[${result.pageNum}]], // 初始页码
             totalPages: [[${result.pages}]], //总页数
             totalCount: '合计' + [[${result.total}]] + '条数据', // 条目总数
@@ -211,35 +161,55 @@
             url:EXAM.getPath()+"/student/students?"+encodeURI([[${q}]])
         });
 
-/*学生编辑事件触发*/
-        $(".btn-edit").click(function (e) {
-            e.preventDefault();
-            $("#edit-sclass").val($(this).attr('data-sclass'));
-            $("#edit-result").val($(this).attr('data-result'));
-            $('#btn-edit-submit').attr('data-sysid', $(this).attr('data-sysid'));
-            $("#modal-edit").modal('show');
-        });
-/*学生编辑保存*/
-        $("#btn-edit-submit").click(function (e) {
-            e.preventDefault();
-            $('#form-edit').parsley().validate();
-            if ($('#form-edit').parsley().isValid()) {
-                var id = $(this).attr('data-id');
-                $.ajax({
-                    url: '/student/' + sysid,
-                    method: 'POST',
-                    dataType: 'json',
-                    data: $('#form-edit').serialize(),
-                    success: function (data) {
-                        window.location.reload();
-                    },
-                    error: function (data) {
-                        notie.alert(3, data.responseJSON.message, 2.5);
-                    }
-                });
-            }
-        });
+        //查询
+        $("#student_reset").on('click',function(){
+            $("#content_page").load('student/students',$("#student_search_form").serializeArray(),function(){
 
+            });
+        });
+        //重置
+        $("#subject_reset").on('click',function(){
+            $("#findByStudentName").val('');
+            $("#findByStudentId").val('');
+            $("#findBySclass").val('');
+
+        });
     });
+
+        //编辑
+        function edit(sysid){
+            $("#content_page").load('student/addExam',{"sysid":sysid},function(){
+
+            });
+        };
+        //删除
+        function del(sysid){
+            new $Msg({
+                content:"确定要删除吗？",
+                type:"success",
+                btnName : ["确定","取消"],
+                confirm:function(){
+                    $.ajax({
+                        type:'PUT',
+                        url:'student/student/'+sysid+"/stuStatus",
+                        data:{"sysid":sysid},
+                        dataType:"json",
+                        success:function(res){
+                            if(res.code=='200'){
+                                new $Msg({
+                                    content:"删除"+res.message+"！",
+                                    type:"success",
+                                    btnName : ["确定","取消"],
+                                    confirm:function(){
+                                        //跳转列表
+                                        $("#content_page").load("student/students",function(){});
+                                    }
+                                });
+                            }
+                        },
+                    });
+                }
+            });
+        };
     /*]]>*/
 </script>

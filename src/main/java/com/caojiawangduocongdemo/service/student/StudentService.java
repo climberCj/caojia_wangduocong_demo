@@ -3,6 +3,8 @@ package com.caojiawangduocongdemo.service.student;
 import com.caojiawangduocongdemo.entity.Student;
 import com.caojiawangduocongdemo.utils.PageInfo;
 
+import java.util.List;
+
 /**
  * @author DC
  * @time 16：00
@@ -19,7 +21,10 @@ public interface StudentService {
     //学生分页
     PageInfo<Student> sPage(int page, int pageSize, String q,String stuStatus);
     //添加学生
+/*
     void insert(Student student);
+*/
+void insert(String sysid,String studentId,String studentName,String scalss,String stupic,int result,String teacherId);
     //根据sysId修改
     void updateBySysid(String sysid,String scalss,String stupic,int result);
     //根据sysId删除
@@ -27,6 +32,7 @@ public interface StudentService {
     //逻辑性删除
     void updateStatus(String sysid);
 
+    List<Student> getAll( );
 
 
 }

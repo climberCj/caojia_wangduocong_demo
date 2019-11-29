@@ -90,6 +90,13 @@
 
         });
     });
+    //添加学生
+    $("#add_student").on('click',function(){
+        $("#content_page").load("student/student",function(){
+
+        });
+    });
+
     //查询学生信息
     $("#search_students").on('click',function(){
         $("#content_page").load("student/students",function(){

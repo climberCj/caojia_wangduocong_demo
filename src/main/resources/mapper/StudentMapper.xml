@@ -38,7 +38,7 @@
       )
     values (#{sysid,jdbcType=VARCHAR}, #{studentid,jdbcType=VARCHAR}, #{studentname,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{result,jdbcType=INTEGER}, #{sclass,jdbcType=VARCHAR}, 
-      #{teacherid,jdbcType=VARCHAR}, #{stuStatus,jdbcType=VARCHAR}, #{stupic,jdbcType=VARCHAR}
+      #{teacherid,jdbcType=VARCHAR}, '1', #{stupic,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.caojiawangduocongdemo.entity.Student" >
@@ -152,7 +152,7 @@
   </select>
   <select id="page" resultMap="BaseResultMap">
     SELECT sysid, studentId, stuStatus, studentName, password, result,sclass,teacherId,stupic FROM student
-    where 1=1
+    where 1=1  and stuStatus='1'
     <if test="q != null">
       AND (studentName like '%${q}%' or studentId like '%${q}%'  )
     </if>

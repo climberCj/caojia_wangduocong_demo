@@ -31,3 +31,4 @@ CREATE TABLE `student` (
   `stuPic` varchar(255) DEFAULT NULL COMMENT '学生头像',
   PRIMARY KEY (`sysid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+insert into student(sysid, studentId, studentName, password, result, sclass, teacherId, stuStatus) value ('005','叫我美女','小昭','dev',467,'高三五班','01','1')

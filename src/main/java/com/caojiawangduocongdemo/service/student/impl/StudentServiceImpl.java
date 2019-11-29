@@ -1,11 +1,15 @@
 package com.caojiawangduocongdemo.service.student.impl;
 
+import com.caojiawangduocongdemo.common.BizException;
 import com.caojiawangduocongdemo.dao.StudentMapper;
 import com.caojiawangduocongdemo.entity.Student;
 import com.caojiawangduocongdemo.service.student.StudentService;
 import com.caojiawangduocongdemo.utils.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author DC
@@ -78,26 +82,52 @@ public class StudentServiceImpl implements StudentService {
      * @return
      */
     @Override
-    public PageInfo<Student> sPage(int page, int pageSize, String q,String stuStatus) {
+    public PageInfo<Student> sPage(int page, int pageSize, String q, String stuStatus) {
         PageInfo<Student> result = new PageInfo<>();
-        result.setTotal(studentMapper.count(q,stuStatus));
+        result.setTotal(studentMapper.count(q, stuStatus));
         result.setPageSize(pageSize);
         result.setPageNum(page);
         if (result.getTotal() > 0) {
-            result.setList(studentMapper.page(page, pageSize, q));
+            result.setList(studentMapper.page((page-1)*pageSize, pageSize, q));
         }
         return result;
     }
 
     /**
-     * 添加学生信息
      *
-     * @param student
+     * @param sysid
+     * @param studentId
+     * @param studentName
+     * @param scalss
+     * @param stupic
+     * @param result
      */
-    @Override
+   /* @Override
     public void insert(Student student) {
         studentMapper.insert(student);
 
+    }*/
+
+    @Override
+    public void insert(String sysid, String studentId, String studentName, String scalss, String stupic, int result,String teacherId) {
+        Student student=new Student();
+        if (student.getStudentid() ==null||student.getStudentid().isEmpty()){
+            throw new BizException("学号不能为空");
+        }else if ( student.getStudentname()==null||student.getStudentname().isEmpty()){
+            throw new BizException("学生姓名不能为空");
+        }else if (student.getSclass()==null||student.getSclass().isEmpty()){
+            throw new BizException("班级不能为空");
+        }else if (studentMapper.countBySudentId(studentId)>0){
+            throw new BizException("该学号已存在");
+        }
+        student.setSysid(UUID.randomUUID().toString());
+        student.setStudentname(studentName);
+        student.setStudentid(studentId);
+        student.setSclass(scalss);
+        student.setStupic(stupic);
+        student.setResult(result);
+        student.setTeacherid(teacherId);
+        studentMapper.insert(student);
     }
 
     /**
@@ -135,5 +165,11 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void updateStatus(String sysid) {
         studentMapper.updateStatuds(sysid);
+    }
+
+    @Override
+    public List<Student> getAll() {
+        return studentMapper.findAll();
+
     }
 }
