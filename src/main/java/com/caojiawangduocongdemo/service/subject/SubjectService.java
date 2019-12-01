@@ -24,4 +24,6 @@ public interface SubjectService {
     int delete(String sysid);
 
     List<Subject> findAll();
+
+    int getScore(List<String> selects,List<String> prim);
 }

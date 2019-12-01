@@ -20,11 +20,11 @@
 				<ul class="fn-clear">
 					<li>
 						<img src="../img/admin.png" alt="">
-						<span>张三</span><span>，欢迎您登录在线考试系统</span>
+						<span th:text="${session.user.studentname}"></span><span>，欢迎您登录在线考试系统</span>
 					</li>
 					<li class="space"></li>
 					<li class="exit">
-						<a>退出登录</a>
+						<a onclick="loginOut()">退出登录</a>
 					</li>
 				</ul>
 			</div>
@@ -34,59 +34,58 @@
 		<div class="main fn-clear" id="main_content">
 			<!-- 页面导航栏start -->
 			<div class="navi">
-				<!--<ul class="app-list-menu menu1">
-					<li class="app-list level1">
-						<a href="" class="active name level1-name">学生管理</a>
-						<ul class="app-list-menu menu2">
-							<li><a href="../teacher/addStudent.html" class="name level2-name">添加学生</a></li>
-							<li><a href="" class="active name level2-name">查询学生信息</a></li>
-						</ul>
+				<ul class="test-wrap">
+					<li>
+						<span style="font-size: 16px;font-weight: 700;">学号：</span>
 					</li>
-					<li class="app-list level1">
-						<a class="name level1-name">试题管理</a>
-						<ul class="app-list-menu menu2">
-							<li><a href="../subject/addExam.html" class="name level2-name">添加试题</a></li>
-							<li><a href="../teacher/examList.html" class="name level2-name">查询试题</a></li>
-							<li><a href="exam.html" class="name level2-name">搜索试题</a></li>
-						</ul>
+					<li>
+						<span style="font-size: 16px;font-weight: 700;">班级：</span>
 					</li>
-				</ul>-->
+					<li>
+						<span style="font-size: 16px;font-weight: 700;">最近一次成绩：</span>
+					</li>
+					<li>
+						<span style="font-size: 16px;font-weight: 700;">剩余时间：</span><span id="time"></span>
+					</li>
+				</ul>
 			</div>
 			<!-- 页面导航栏end -->
 			<div class="content">
 				<div class="content-wrap">
 					<div class="add-stu-wrap">
-						<form action="">
+						<form action="" id="exam_commit">
 							<div class="test-content">
 								<h1 class="test-head">XXX考试</h1>
-								<h3><span>剩余时间：</span><span>1:30:45</span></h3>
+								<!--<h3><span>剩余时间：</span><span id="time"></span></h3>-->
 								<div class="test-item">
 									<div class="test-title test-score">一、选择题(从以下选项中选出正确答案,满分100分)</div>
 									<ul class="test-wrap">
-										<li>
-											<div class="test-title">1、JAVA所定义的版本中不包括：（）</div>
+										<li th:each="item,ste :${lists}">
+											<input type="hidden" th:name="'sysid'+${ste.index}" th:value="${item.sysid}"/>
+											<!--<span th:text="${ste.index+1}"></span>-->
+											<div class="test-title" th:text="${ste.index+1}+'、'+${item.sttitle}"></div>
 											<ul class="test-option">
 												<li>
-													<input type="radio" name="first" id="first-first" />
-													<label for="first-first">A、 JAVA2 EE</label>
+													<input type="radio" th:name="'stanswer'+${ste.index}" value="1"/>
+													<label th:text="${item.stoptiona}"></label>
 												</li>
 												<li>
-													<input type="radio" name="first" id="first-second"/>
-													<label for="first-second">B、 JAVA2 Card</label>
+													<input type="radio" th:name="'stanswer'+${ste.index}" value="2"/>
+													<label th:text="${item.stoptionb}"></label>
 												</li>
 												<li>
-													<input type="radio" name="first" id="first-third"/>
-													<label for="first-third">C、 JAVA2 ME</label>
+													<input type="radio" th:name="'stanswer'+${ste.index}" value="3"/>
+													<label th:text="${item.stoptionc}"></label>
 												</li>
 												<li>
-													<input type="radio" name="first" id="first-four"/>
-													<label for="first-four">D、 JAVA2 HE</label>
+													<input type="radio" th:name="'stanswer'+${ste.index}" value="4"/>
+													<label th:text="${item.stoptiond}"></label>
 												</li>
 											</ul>
 										</li>
 									</ul>
 								</div>
-								<div class="operate"><a class="btn commit-btn">提交试卷</a></div>
+								<div class="operate"><a class="btn commit-btn" id="exam_submit" th:onclick="commit();">提交试卷</a></div>
 							</div>
 						</form>
 					</div>
@@ -99,6 +98,8 @@
 	<script type="text/javaScript" src="../plugins/select2/pinyin.js"></script>
 	<script type="text/javaScript" src="../plugins/select2/select2.js"></script>
 	<script type="text/javaScript" src="../plugins/nicescroll/jquery.nicescroll.js"></script>
+	<script type="text/javascript" src="../js/dialog.js"></script>
+	<script type="text/javascript" src="../js/online.js"></script>
 	<script th:inline="javascript">
         /*<![CDATA[*/
 		$(document).ready(function() {
@@ -110,7 +111,125 @@
 			$(".sel").select2();
 			$('.content').niceScroll().hide();
 
+            daojishi();
 		});
+        var counttime=5*60;//总秒钟
+        function daojishi(){
+            if(counttime>=0){
+                var ms = counttime%60;//余数 89%60==29秒
+                var mis = Math.floor(counttime/60);//分钟
+                if(mis>=60){
+                    var hour=Math.floor(mis/60);
+                    mis=Math.floor((counttime-hour*60*60)/60);
+                    document.getElementById("time").innerHTML=hour+"小时"+mis+"分"+ms+"秒";
+                }else if(mis>=1){
+                    document.getElementById("time").innerHTML=mis+"分"+ms+"秒";
+                }else{
+                    document.getElementById("time").innerHTML=ms+"秒";
+                }
+                counttime--;
+                vartt =  window.setTimeout("daojishi()",1000);
+            }else{
+                window.clearTimeout(vartt);
+                window.confirm("考试时间结束,请单击提交");
+                commit();
+            }
+        }
+        function commit(){
+            //提交前校验
+            let arr = new Array();
+            $(".test-option li").each(function (index,element) {
+                var sel= $(this).find("input[type='radio']").is(":checked");
+                if(sel){
+                    arr.push($(this).find("input[type='radio']").val());
+                }
+            });
+            if(arr.length!=5){
+                new $Msg({
+                    content:"您的试题还没有填选完整，提交后再不能更改，确认提交吗？",
+                    type:"success",
+                    btnName : ["确认", "回到页面"],
+                    confirm:function(){
+                        $.ajax({
+                            type:'post',
+                            url:'doSubmit',
+                            dataType:'json',
+                            data:$("#exam_commit").serializeArray(),
+                            success:function (r) {
+                                if(r.code == '200'){
+                                    new $Msg({
+                                        content:"提交"+r.message+"！",
+                                        type:"success",
+                                        btnName : ["查看成绩", "查看解析"],
+                                        confirm:function(){
+
+                                        },
+                                        cancle:function(){
+
+                                        }
+                                    });
+                                }
+                                //移除提交按钮，避免二次提交
+                                $("#exam_submit").remove();
+                            }
+                        });
+                    },
+                    cancle:function(){
+
+                    }
+                });
+            }else{
+                new $Msg({
+                    content:"您的试题全部完成，确认提交吗？",
+                    type:"success",
+                    btnName : ["确认", "再看看"],
+                    confirm:function(){
+                        $.ajax({
+                            type:'post',
+                            url:'doSubmit',
+                            dataType:'json',
+                            data:$("#exam_commit").serializeArray(),
+                            success:function (r) {
+                                if(r.code == '200'){
+                                    new $Msg({
+                                        content:"提交"+r.message+"！",
+                                        type:"success",
+                                        btnName : ["查看成绩", "查看解析"],
+                                        confirm:function(){
+
+                                        },
+                                        cancle:function(){
+
+                                        }
+                                    });
+                                }
+                                //移除提交按钮，避免二次提交
+                                $("#exam_submit").remove();
+                            }
+                        });
+                    },
+                    cancle:function(){
+
+                    }
+                });
+			}
+        };
+        //退出登录
+        function loginOut(){
+            //显示弹出框，点击确定才能退出
+            new $Msg({
+                content:"确定要退出吗？",
+                type:"success",
+                confirm:function(){
+                    //获取项目跟路径
+                    var result = EXAM.getPath();
+                    window.location.href=result+"/loginOut";
+                },
+                cancle:function(){
+                    console.log("不做任何操作！")
+                }
+            })
+        };
         /*]]>*/
 	</script>
 </body>

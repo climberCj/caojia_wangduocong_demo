@@ -186,3 +186,13 @@ a { text-decoration: none; color: #333; }
 	transition: all .3s;
 	opacity: 0;
 }
+.no-result.normal {
+	padding-top: 100px;
+}
+.no-result-cont {
+	line-height: 80px;
+	text-align: center;
+	font-size: 25px;
+	color: #A5E0F3;
+	letter-spacing: 10px;
+}
