@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<title>学生登录成功</title>
+	<link rel="stylesheet" href="../css/base.css"/>
+	<link rel="stylesheet" href="../css/skin.css"/>
+	<link rel="stylesheet" href="../plugins/select2/css/select2.min.css"/>
+</head>
+<body>
+	<div class="wrap">
+		<!-- 页面头部start -->
+		<div class="header">
+			<div class="logo">
+				<h1>
+					<a>在线考试系统</a>
+				</h1>
+			</div>
+			<div class="header-menu">
+				<ul class="fn-clear">
+					<li>
+						<img src="../img/admin.png" alt="">
+						<span th:text="${session.user.studentname}"></span><span>，欢迎您登录在线考试系统</span>
+					</li>
+					<li class="space"></li>
+					<li class="exit">
+						<a onclick="loginOut()">退出登录</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!-- 页面头部end -->
+		<!-- 页面主体start -->
+		<div class="main fn-clear" id="main_content">
+			<!-- 页面导航栏start -->
+			<div class="navi">
+				<ul class="test-wrap">
+					<li>
+						<span style="font-size: 16px;font-weight: 700;" th:text="${session.user.studentid}">学号：</span>
+					</li>
+					<li>
+						<span style="font-size: 16px;font-weight: 700;" th:text="${session.user.sclass}">班级：</span>
+					</li>
+					<li>
+						<span style="font-size: 16px;font-weight: 700;">最近一次成绩：</span>
+					</li>
+					<li>
+						<span style="font-size: 16px;font-weight: 700;">剩余时间：</span><span id="time"></span>
+					</li>
+				</ul>
+			</div>
+			<!-- 页面导航栏end -->
+			<div class="content" id="exam_content_page">
+
+			</div>
+		</div>
+		<!-- 页面主体start -->
+	</div>
+	<script type="text/javaScript" src="../plugins/jquery/jquery-1.11.3.min.js"></script>
+	<script type="text/javaScript" src="../plugins/select2/pinyin.js"></script>
+	<script type="text/javaScript" src="../plugins/select2/select2.js"></script>
+	<script type="text/javaScript" src="../plugins/nicescroll/jquery.nicescroll.js"></script>
+	<script type="text/javascript" src="../js/dialog.js"></script>
+	<script type="text/javascript" src="../js/online.js"></script>
+	<script th:inline="javascript">
+        /*<![CDATA[*/
+		$(document).ready(function() {
+			var _wHeight = $(window).height();
+			var _hHeight =$(".header").height();
+			$("#main_content").height(_wHeight-80);
+			$(".navi").height(_wHeight-80);
+			$(".content").height(_wHeight-80);
+			$(".sel").select2();
+			$('.content').niceScroll().hide();
+
+			$("#exam_content_page").load("exam/online",function () {
+
+            })
+		});
+        //退出登录
+        function loginOut(){
+            //显示弹出框，点击确定才能退出
+            new $Msg({
+                content:"确定要退出吗？",
+                type:"success",
+                confirm:function(){
+                    //获取项目跟路径
+                    var result = EXAM.getPath();
+                    window.location.href=result+"/loginOut";
+                },
+                cancle:function(){
+                    console.log("不做任何操作！")
+                }
+            })
+        };
+        /*]]>*/
+	</script>
+</body>
+</html>
