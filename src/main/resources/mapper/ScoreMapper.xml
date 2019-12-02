@@ -26,6 +26,10 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.caojiawangduocongdemo.entity.Score" >
+    <!-- 修改keyProperty的值为 assetIdVal，让assetIdVal是这个文件内唯一的 -->
+    <selectKey keyProperty="sysid" order="BEFORE" resultType="java.lang.String">
+      select replace(uuid(),'-','')
+    </selectKey>
     insert into score
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="sysid != null" >
