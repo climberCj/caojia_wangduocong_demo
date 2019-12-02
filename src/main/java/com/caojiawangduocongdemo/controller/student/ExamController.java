@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author caojia
@@ -52,6 +54,9 @@ public class ExamController {
             String examIndex = request.getParameter("sysid"+i);
             primaryKey.add(examIndex);
         }
+        //将试题主键的集合存放到session中，以便后面查看试卷解析调用
+        HttpSession session = request.getSession();
+        session.setAttribute("stKey", primaryKey);
         int score = subjectService.getScore(request,examAnswers,primaryKey);
         return ResultBody.success(score);
     }
@@ -64,7 +69,12 @@ public class ExamController {
     }
 
     @RequestMapping("/parse")
-    public String getAnswer(Model model){
-        return "student/view_parse";
+    public String getAnswer(HttpServletRequest request,Model model) {
+        List<String> st = (List<String>)request.getSession().getAttribute("stKey");
+        for (String ss:st) {
+            System.out.println(ss);
+        }
+        //return "student/view_parse";
+        return "";
     }
 }

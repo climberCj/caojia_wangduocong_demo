@@ -1,8 +1,7 @@
-/**
- * Copyright (c) 2019, 万维公司 All rights reserved.
- * 万维公司 专有/保密源代码,未经许可禁止任何人通过任何渠道使用、修改源代码.
- */
 package com.caojiawangduocongdemo.utils;
+
+import java.util.Random;
+import java.util.stream.IntStream;
 
 /**
  * @author caojia
@@ -24,6 +23,11 @@ public class ExamUtils {
         }else{
             return obj.toString().trim();
         }
+
+    }
+    public static void main(String[] args){
+        Random r = new Random();
+        System.out.println(r.nextInt(10));
 
     }
 }
