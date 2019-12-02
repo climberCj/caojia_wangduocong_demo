@@ -5,9 +5,10 @@
     <id column="sysid" property="sysid" jdbcType="VARCHAR" />
     <result column="studentId" property="studentid" jdbcType="VARCHAR" />
     <result column="score" property="score" jdbcType="INTEGER" />
+    <result column="submitTime" property="submittime" jdbcType="VARCHAR"/>
   </resultMap>
   <sql id="Base_Column_List" >
-    sysid, studentId, score
+    sysid, studentId, score,submitTime
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -20,9 +21,9 @@
     where sysid = #{sysid,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.caojiawangduocongdemo.entity.Score" >
-    insert into score (sysid, studentId, score
+    insert into score (sysid, studentId, score,submitTime
       )
-    values (#{sysid,jdbcType=VARCHAR}, #{studentid,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER}
+    values (#{sysid,jdbcType=VARCHAR}, #{studentid,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER},#{submittime,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.caojiawangduocongdemo.entity.Score" >
@@ -41,6 +42,9 @@
       <if test="score != null" >
         score,
       </if>
+      <if test="submittime != null" >
+        submitTime,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="sysid != null" >
@@ -51,6 +55,9 @@
       </if>
       <if test="score != null" >
         #{score,jdbcType=INTEGER},
+      </if>
+      <if test="submittime != null" >
+        #{submittime,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -63,13 +70,17 @@
       <if test="score != null" >
         score = #{score,jdbcType=INTEGER},
       </if>
+      <if test="submittime != null" >
+        #{submittime,jdbcType=VARCHAR},
+      </if>
     </set>
     where sysid = #{sysid,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.caojiawangduocongdemo.entity.Score" >
     update score
     set studentId = #{studentid,jdbcType=VARCHAR},
-      score = #{score,jdbcType=INTEGER}
+      score = #{score,jdbcType=INTEGER},
+      submitTime =  #{submittime,jdbcType=VARCHAR},
     where sysid = #{sysid,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -10,6 +10,7 @@ public class Score implements Serializable {
 
     private Integer score;
 
+    private String submittime;
     public String getSysid() {
         return sysid;
     }
@@ -32,5 +33,13 @@ public class Score implements Serializable {
 
     public void setScore(Integer score) {
         this.score = score;
+    }
+
+    public String getSubmittime() {
+        return submittime;
+    }
+
+    public void setSubmittime(String submittime) {
+        this.submittime = submittime;
     }
 }

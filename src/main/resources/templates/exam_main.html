@@ -36,17 +36,17 @@
 			<div class="navi">
 				<ul class="test-wrap">
 					<li>
-						<span style="font-size: 16px;font-weight: 700;" th:text="${session.user.studentid}">学号：</span>
+						<span style="font-size: 16px;font-weight: 700;" th:text="${session.user.studentid}" id="xuehao">学号：</span>
 					</li>
 					<li>
 						<span style="font-size: 16px;font-weight: 700;" th:text="${session.user.sclass}">班级：</span>
 					</li>
 					<li>
-						<span style="font-size: 16px;font-weight: 700;">最近一次成绩：</span>
+						<span style="font-size: 16px;font-weight: 700;">上一次成绩：</span>
 					</li>
-					<li>
+					<!--<li>
 						<span style="font-size: 16px;font-weight: 700;">剩余时间：</span><span id="time"></span>
-					</li>
+					</li>-->
 				</ul>
 			</div>
 			<!-- 页面导航栏end -->
@@ -72,11 +72,32 @@
 			$(".content").height(_wHeight-80);
 			$(".sel").select2();
 			$('.content').niceScroll().hide();
-
-			$("#exam_content_page").load("exam/online",function () {
+			$("#exam_content_page").load("online",function () {
 
             })
 		});
+        var counttime=5*60;//总秒钟
+        function daojishi(){
+            if(counttime>=0){
+                var ms = counttime%60;//余数 89%60==29秒
+                var mis = Math.floor(counttime/60);//分钟
+                if(mis>=60){
+                    var hour=Math.floor(mis/60);
+                    mis=Math.floor((counttime-hour*60*60)/60);
+                    document.getElementById("time").innerHTML=hour+"小时"+mis+"分"+ms+"秒";
+                }else if(mis>=1){
+                    document.getElementById("time").innerHTML=mis+"分"+ms+"秒";
+                }else{
+                    document.getElementById("time").innerHTML=ms+"秒";
+                }
+                counttime--;
+                vartt =  window.setTimeout("daojishi()",1000);
+            }else{
+                window.clearTimeout(vartt);
+                window.confirm("考试时间结束,请单击提交");
+                commit();
+            }
+        };
         //退出登录
         function loginOut(){
             //显示弹出框，点击确定才能退出

@@ -3,7 +3,7 @@
         <form action="" id="exam_commit">
             <div class="test-content">
                 <h1 class="test-head">XXX考试</h1>
-                <!--<h3><span>剩余时间：</span><span id="time"></span></h3>-->
+                <h3><span>剩余时间：</span><span id="time"></span></h3>
                 <div class="test-item">
                     <div class="test-title test-score">一、选择题(从以下选项中选出正确答案,满分100分)</div>
                     <ul class="test-wrap">
@@ -42,28 +42,6 @@
     $(function(){
         daojishi();
     });
-    var counttime=5*60;//总秒钟
-    function daojishi(){
-        if(counttime>=0){
-            var ms = counttime%60;//余数 89%60==29秒
-            var mis = Math.floor(counttime/60);//分钟
-            if(mis>=60){
-                var hour=Math.floor(mis/60);
-                mis=Math.floor((counttime-hour*60*60)/60);
-                document.getElementById("time").innerHTML=hour+"小时"+mis+"分"+ms+"秒";
-            }else if(mis>=1){
-                document.getElementById("time").innerHTML=mis+"分"+ms+"秒";
-            }else{
-                document.getElementById("time").innerHTML=ms+"秒";
-            }
-            counttime--;
-            vartt =  window.setTimeout("daojishi()",1000);
-        }else{
-            window.clearTimeout(vartt);
-            window.confirm("考试时间结束,请单击提交");
-            commit();
-        }
-    }
     function commit(){
         //提交前校验
         let arr = new Array();
@@ -81,7 +59,7 @@
                 confirm:function(){
                     $.ajax({
                         type:'post',
-                        url:'exam/doSubmit',
+                        url:'doSubmit',
                         dataType:'json',
                         data:$("#exam_commit").serializeArray(),
                         success:function (r) {
@@ -91,7 +69,9 @@
                                     type:"success",
                                     btnName : ["查看成绩", "查看解析"],
                                     confirm:function(){
+                                        $("#exam_content_page").load("score",{"studentid":$("#xuehao").text()},function () {
 
+                                        })
                                     },
                                     cancle:function(){
 
@@ -125,7 +105,9 @@
                                     type:"success",
                                     btnName : ["查看成绩", "查看解析"],
                                     confirm:function(){
+                                        $("#exam_content_page").load("score",{"studentid":$("#xuehao").text()},function () {
 
+                                        })
                                     },
                                     cancle:function(){
 

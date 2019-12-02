@@ -8,6 +8,7 @@ import com.caojiawangduocongdemo.entity.Student;
 import com.caojiawangduocongdemo.entity.Subject;
 import com.caojiawangduocongdemo.service.subject.SubjectService;
 import com.caojiawangduocongdemo.utils.ExamUtils;
+import com.caojiawangduocongdemo.utils.TimeUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -128,6 +129,7 @@ public class SubjectServiceImpl implements SubjectService {
         Score s = new Score();
         s.setStudentid(student.getStudentid());
         s.setScore(score);
+        s.setSubmittime(TimeUtil.getCurrentTime());
         int res = scoreMapper.insertSelective(s);
         if(res!=1){
             throw new BizException("分数保存失败");

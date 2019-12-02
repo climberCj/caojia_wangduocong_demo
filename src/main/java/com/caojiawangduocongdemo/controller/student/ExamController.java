@@ -1,7 +1,9 @@
 package com.caojiawangduocongdemo.controller.student;
 
 import com.caojiawangduocongdemo.common.ResultBody;
+import com.caojiawangduocongdemo.entity.Score;
 import com.caojiawangduocongdemo.entity.Subject;
+import com.caojiawangduocongdemo.service.score.ScoreService;
 import com.caojiawangduocongdemo.service.subject.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,8 @@ import java.util.List;
 public class ExamController {
     @Autowired
     private SubjectService subjectService;
+    @Autowired
+    private ScoreService scoreService;
 
     @RequestMapping("/index")
     public String goToExam(){
@@ -53,7 +57,9 @@ public class ExamController {
     }
 
     @RequestMapping("/score")
-    public String getScore(Model model){
+    public String getScore(String studentid,Model model){
+        Score score = scoreService.findLastScore(studentid);
+        model.addAttribute("score", score);
         return "student/view_score";
     }
 
