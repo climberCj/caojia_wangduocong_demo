@@ -93,4 +93,5 @@ public class Student implements Serializable {
     public void setStupic(String stupic) {
         this.stupic = stupic == null ? null : stupic.trim();
     }
+
 }

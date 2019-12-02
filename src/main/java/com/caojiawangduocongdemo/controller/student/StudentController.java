@@ -24,8 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 public class StudentController {
     @Autowired
     private StudentService studentService;
-   /* @Autowired
-    private StudentMapper studentMapper;*/
+    @Autowired
+    private StudentMapper studentMapper;
 
     @RequestMapping(value = "/students", method = RequestMethod.GET)
     public String view(HttpServletRequest request,
@@ -74,8 +74,10 @@ public class StudentController {
                                         @RequestParam(value = "sclass",required = false)String sclass,
                                         @RequestParam(value = "result",required = false)int result,
                                         @RequestParam(value = "stupic ",required = false)String stupic,
-                                        @RequestParam(value = "teacherId",required = false)String teacherId){
-        studentService.insert( sysid, studentId, studentName, sclass, stupic, result, teacherId);
+                                        @RequestParam(value = "teacherId",required = false)String teacherId,
+                                        @RequestParam(value = "password",defaultValue = "123456")String password){
+
+        studentService.insert( sysid, studentId, studentName, sclass, stupic, result, teacherId,password);
         return ResponseEntity.ok("{}");
     }
     @RequestMapping(value = "/student/{sysid}", method = RequestMethod.PUT)

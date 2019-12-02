@@ -1,39 +1,4 @@
-<!--<div class="row">
-                    <form>
-                        <div class="info-write">
-                            <label for="findBySclass">
-                                <div>根据班级查询学生</div>
-                            </label>
-                            <input type="text" id="findBySclass" style="width:30%" placeholder="请输入班级查询"
-                                   name="filter_stNo" th:value="${sclass}"/>
-                        </div>
 
-                        <div class="info-write">
-                            <label for="findBySclass">
-                                <div>根据姓名查询学生</div>
-                            </label>
-                            <input type="text" id="findByStudentName" style="width:30%" placeholder="请输入姓名查询"
-                                   name="filter_stNo" th:value="${studentName}"/>
-                        </div>
-                        <div class="info-write">
-                            <label for="findBySid">
-                                <div>根据姓名查询学生</div>
-                            </label>
-                            <input type="text" id="findBySid" style="width:30%" placeholder="请输入姓名查询" name="filter_stNo"
-                                   th:value="${studentId}"/>
-                        </div>
-                        <div class="col-md-3 col-xs-12 col-sm-12">
-                            <div class="search-form-nav-rotate">
-                                <input class="search-content-nav form-control" name="q"
-                                       value="${q}"
-                                       placeholder="搜索内容（学生名称）" type="text">
-                                <button class="btn search-btn-nav glyphicon glyphicon-search"
-                                        type="submit"></button>
-                            </div>
-                            <div style="margin-bottom: 5px;"></div>
-                        </div>
-                    </form>
-                </div>-->
 <div>
     <h3 class="patr-name">学生查询</h3>
     <form id="student_search_form">
@@ -60,16 +25,6 @@
                     <input type="text" id="findByStudentId" style="width:30%" placeholder="请输入学号查询" name="filter_stNo"
                            th:value="${studentId}"/>
                 </div>
-                <!--<div class="col-md-3 col-xs-12 col-sm-12">
-                    <div class="search-form-nav-rotate">
-                        <input class="search-content-nav form-control" name="q"
-                               value="${q}"
-                               placeholder="搜索内容（学生名称）" type="text">
-                        <button class="btn search-btn-nav glyphicon glyphicon-search"
-                                type="submit"></button>
-                    </div>
-                    <div style="margin-bottom: 5px;"></div>
-                </div>-->
             </tr>
             <tr>
                 <div class="operate">
@@ -110,7 +65,7 @@
                         <tbody>
                         <tr th:each="item:${result.list}" >
                             <td style="vertical-align: middle">
-                                <div th:text="${item.sysid}"></div>
+                                <div th:text="${item.studentid}"></div>
                             </td>
                             <td style="vertical-align: middle">
                                 <div th:text="${item.studentname}"></div>
@@ -162,13 +117,13 @@
         });
 
         //查询
-        $("#student_reset").on('click',function(){
+        $("#student_search").on('click',function(){
             $("#content_page").load('student/students',$("#student_search_form").serializeArray(),function(){
 
             });
         });
         //重置
-        $("#subject_reset").on('click',function(){
+        $("#student_reset").on('click',function(){
             $("#findByStudentName").val('');
             $("#findByStudentId").val('');
             $("#findBySclass").val('');

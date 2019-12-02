@@ -93,40 +93,44 @@ public class StudentServiceImpl implements StudentService {
         return result;
     }
 
+    @Override
+    public void add(Student student) {
+
+            studentMapper.insert(student);
+
+    }
     /**
      *
      * @param sysid
      * @param studentId
      * @param studentName
-     * @param scalss
+     * @param sclass
      * @param stupic
      * @param result
      */
-   /* @Override
-    public void insert(Student student) {
-        studentMapper.insert(student);
 
-    }*/
 
     @Override
-    public void insert(String sysid, String studentId, String studentName, String scalss, String stupic, int result,String teacherId) {
-        Student student=new Student();
-        if (student.getStudentid() ==null||student.getStudentid().isEmpty()){
+    public void insert(String sysid, String studentId, String studentName, String sclass, String stupic, int result,String teacherId,String password) {
+        if (studentId == null||studentId.isEmpty()){
             throw new BizException("学号不能为空");
-        }else if ( student.getStudentname()==null||student.getStudentname().isEmpty()){
+        }else
+        if ( studentName==null||studentName.isEmpty()){
             throw new BizException("学生姓名不能为空");
-        }else if (student.getSclass()==null||student.getSclass().isEmpty()){
+        }else if (sclass==null||sclass.isEmpty()){
             throw new BizException("班级不能为空");
         }else if (studentMapper.countBySudentId(studentId)>0){
             throw new BizException("该学号已存在");
         }
+        Student student=new Student();
         student.setSysid(UUID.randomUUID().toString());
         student.setStudentname(studentName);
         student.setStudentid(studentId);
-        student.setSclass(scalss);
+        student.setSclass(sclass);
         student.setStupic(stupic);
         student.setResult(result);
         student.setTeacherid(teacherId);
+        student.setPassword(password);
         studentMapper.insert(student);
     }
 
