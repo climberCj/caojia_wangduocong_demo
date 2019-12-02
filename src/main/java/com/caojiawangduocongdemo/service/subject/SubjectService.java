@@ -1,8 +1,10 @@
 package com.caojiawangduocongdemo.service.subject;
 
+import com.caojiawangduocongdemo.entity.Score;
 import com.caojiawangduocongdemo.entity.Subject;
 import com.github.pagehelper.Page;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -25,5 +27,7 @@ public interface SubjectService {
 
     List<Subject> findAll();
 
-    int getScore(List<String> selects,List<String> prim);
+    int getScore(HttpServletRequest request,List<String> selects,List<String> prim);
+
+    void save(HttpServletRequest request,int score);
 }

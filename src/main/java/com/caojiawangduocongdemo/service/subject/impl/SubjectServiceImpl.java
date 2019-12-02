@@ -1,7 +1,10 @@
 package com.caojiawangduocongdemo.service.subject.impl;
 
 import com.caojiawangduocongdemo.common.BizException;
+import com.caojiawangduocongdemo.dao.ScoreMapper;
 import com.caojiawangduocongdemo.dao.SubjectMapper;
+import com.caojiawangduocongdemo.entity.Score;
+import com.caojiawangduocongdemo.entity.Student;
 import com.caojiawangduocongdemo.entity.Subject;
 import com.caojiawangduocongdemo.service.subject.SubjectService;
 import com.caojiawangduocongdemo.utils.ExamUtils;
@@ -14,6 +17,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.thymeleaf.util.MapUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
@@ -24,6 +28,8 @@ import java.util.*;
 public class SubjectServiceImpl implements SubjectService {
     @Autowired
     private SubjectMapper subjectMapper;
+    @Autowired
+    private ScoreMapper scoreMapper;
     @Override
     public Page<Subject> findByPage(Map<String,Object> conditions,int pageNo, int pageSize) {
         Page<Subject> page = PageHelper.startPage(pageNo,pageSize);
@@ -97,7 +103,7 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public int getScore(List<String> selects,List<String> prim) {
+    public int getScore(HttpServletRequest request,List<String> selects,List<String> prim) {
         int score = 0;
         if(CollectionUtils.isEmpty(selects)&&CollectionUtils.isEmpty(prim)){
             throw new BizException("成绩获取异常");
@@ -109,7 +115,22 @@ public class SubjectServiceImpl implements SubjectService {
                     score += 20;
                 }
             }
+            //将成绩保存进score表中
+            save(request,score);
         }
         return score;
+    }
+
+    @Transactional
+    @Override
+    public void save(HttpServletRequest request, int score) {
+        Student student = (Student) request.getSession().getAttribute("user");
+        Score s = new Score();
+        s.setStudentid(student.getStudentid());
+        s.setScore(score);
+        int res = scoreMapper.insertSelective(s);
+        if(res!=1){
+            throw new BizException("分数保存失败");
+        }
     }
 }
