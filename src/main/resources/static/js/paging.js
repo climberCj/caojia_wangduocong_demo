@@ -20,7 +20,6 @@
             this.bindEvents();
         },
         createDom: function() {
-        	console.info(this);
             var that = this,
                 ulDom = '',
                 jumpDom = '',

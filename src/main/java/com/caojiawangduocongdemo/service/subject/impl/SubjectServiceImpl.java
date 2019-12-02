@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+import org.thymeleaf.util.MapUtils;
 
 import java.util.*;
 
@@ -93,5 +94,22 @@ public class SubjectServiceImpl implements SubjectService {
             }
             return examLists;
         }
+    }
+
+    @Override
+    public int getScore(List<String> selects,List<String> prim) {
+        int score = 0;
+        if(CollectionUtils.isEmpty(selects)&&CollectionUtils.isEmpty(prim)){
+            throw new BizException("成绩获取异常");
+        }else{
+            //使用List的有序特性
+            for(int i =0;i < prim.size();i ++){
+                String rightAnswer = this.findBySysId(prim.get(i)).getStanswer();
+                if(rightAnswer.equals(selects.get(i))){
+                    score += 20;
+                }
+            }
+        }
+        return score;
     }
 }
