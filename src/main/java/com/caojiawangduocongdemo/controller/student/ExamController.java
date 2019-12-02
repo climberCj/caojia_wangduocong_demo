@@ -24,6 +24,11 @@ public class ExamController {
     private SubjectService subjectService;
 
     @RequestMapping("/index")
+    public String goToExam(){
+        return "exam_main";
+    }
+
+    @RequestMapping("/online")
     public String goToExam(Model model){
         List<Subject> subjectList = subjectService.findAll();
         model.addAttribute("lists", subjectList);
@@ -43,7 +48,17 @@ public class ExamController {
             String examIndex = request.getParameter("sysid"+i);
             primaryKey.add(examIndex);
         }
-        int score = subjectService.getScore(examAnswers,primaryKey);
+        int score = subjectService.getScore(request,examAnswers,primaryKey);
         return ResultBody.success(score);
+    }
+
+    @RequestMapping("/score")
+    public String getScore(Model model){
+        return "student/view_score";
+    }
+
+    @RequestMapping("/parse")
+    public String getAnswer(Model model){
+        return "student/view_parse";
     }
 }
