@@ -67,7 +67,7 @@ public class ExamController {
     @RequestMapping("/score")
     public String getScore(String studentid,Model model){
         Score score = scoreService.findLastScore(studentid);
-        model.addAttribute("score", score);
+        model.addAttribute("score", score.getScore());
         return "student/view_score";
     }
 
