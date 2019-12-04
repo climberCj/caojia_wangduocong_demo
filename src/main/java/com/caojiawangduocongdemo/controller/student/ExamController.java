@@ -2,6 +2,7 @@ package com.caojiawangduocongdemo.controller.student;
 
 import com.caojiawangduocongdemo.common.ResultBody;
 import com.caojiawangduocongdemo.entity.Score;
+import com.caojiawangduocongdemo.entity.Student;
 import com.caojiawangduocongdemo.entity.Subject;
 import com.caojiawangduocongdemo.service.score.ScoreService;
 import com.caojiawangduocongdemo.service.subject.SubjectService;
@@ -15,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author caojia
@@ -30,7 +30,10 @@ public class ExamController {
     private ScoreService scoreService;
 
     @RequestMapping("/index")
-    public String goToExam(){
+    public String goToExam(HttpServletRequest request, Model model){
+        Student stu = (Student)request.getSession().getAttribute("user");
+        Score score = scoreService.findLastScore(stu.getStudentid());
+        model.addAttribute("s",score.getScore());
         return "exam_main";
     }
 
@@ -70,11 +73,15 @@ public class ExamController {
 
     @RequestMapping("/parse")
     public String getAnswer(HttpServletRequest request,Model model) {
+        List<Subject> lists = new ArrayList<>();
+        //为了保证查看解析的题目是试卷题目，之前得到试卷后，将题目主键存放到session中，方便在此调用
         List<String> st = (List<String>)request.getSession().getAttribute("stKey");
-        for (String ss:st) {
-            System.out.println(ss);
+        for(int i = 0;i<st.size();i++){
+            //通过主键查询试题
+            Subject sub = subjectService.findBySysId(st.get(i));
+            lists.add(sub);
         }
-        //return "student/view_parse";
-        return "";
+        model.addAttribute("stKey",lists);
+        return "student/view_parse";
     }
 }
