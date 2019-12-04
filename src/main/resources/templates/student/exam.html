@@ -69,7 +69,7 @@
                                     type:"success",
                                     btnName : ["查看成绩", "查看解析"],
                                     confirm:function(){
-                                        $("#exam_content_page").load("score",{"studentid":$("#xuehao").text()},function () {
+                                        $("#exam_content_page").load("score",{"studentid":[[${session.user.studentid}]]},function () {
 
                                         })
                                     },
@@ -105,7 +105,7 @@
                                     type:"success",
                                     btnName : ["查看成绩", "查看解析"],
                                     confirm:function(){
-                                        $("#exam_content_page").load("score",{"studentid":$("#xuehao").text()},function () {
+                                        $("#exam_content_page").load("score",{"studentid":[[${session.user.studentid}]]},function () {
 
                                         })
                                     },

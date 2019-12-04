@@ -10,24 +10,24 @@
                             <div class="test-title" th:text="${ste.index+1}+'、'+${item.sttitle}"></div>
                             <ul class="test-option">
                                 <li>
-                                    <input type="radio" name="stanswer" value="1"/>
+                                    <input type="radio" name="stanswer" value="1" th:field="${item.stanswer}"/>
                                     <label th:text="${item.stoptiona}"></label>
                                 </li>
                                 <li>
-                                    <input type="radio" name="stanswer" value="2"/>
+                                    <input type="radio" name="stanswer" value="2" th:field="${item.stanswer}"/>
                                     <label th:text="${item.stoptionb}"></label>
                                 </li>
                                 <li>
-                                    <input type="radio" name="stanswer" value="3"/>
+                                    <input type="radio" name="stanswer" value="3" th:field="${item.stanswer}"/>
                                     <label th:text="${item.stoptionc}"></label>
                                 </li>
                                 <li>
-                                    <input type="radio" name="stanswer" value="4"/>
+                                    <input type="radio" name="stanswer" value="4" th:field="${item.stanswer}"/>
                                     <label th:text="${item.stoptiond}"></label>
                                 </li>
                                 <li>
-                                    <span>本题解析：</span>
-                                    <input type="text"  th:value="${item.stparse}"/>
+                                    <span style="color: red;">本题解析：</span>
+                                    <span th:text="${item.stparse}"/>
                                 </li>
                             </ul>
                         </li>
