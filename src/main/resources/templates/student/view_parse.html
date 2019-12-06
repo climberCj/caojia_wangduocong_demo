@@ -2,33 +2,32 @@
     <div class="add-stu-wrap">
         <form action="" id="exam_commit">
             <div class="test-content">
-                <h1 class="test-head">XXX考试</h1>
+                <h1 class="test-head">XXX考试试题答案</h1>
                 <div class="test-item">
-                    <div class="test-title test-score">一、选择题(从以下选项中选出正确答案,满分100分)</div>
+                    <!--<div class="test-title test-score">一、选择题(从以下选项中选出正确答案,满分100分)</div>-->
                     <ul class="test-wrap">
-                        <li th:each="item,ste :${lists}">
-                            <input type="hidden" th:name="'sysid'+${ste.index}" th:value="${item.sysid}"/>
-                            <!--<span th:text="${ste.index+1}"></span>-->
+                        <li th:each="item,ste :${stKey}">
                             <div class="test-title" th:text="${ste.index+1}+'、'+${item.sttitle}"></div>
                             <ul class="test-option">
                                 <li>
-                                    <input type="radio" th:name="'stanswer'+${ste.index}" value="1"/>
+                                    <input type="radio" name="stanswer" value="1" th:field="${item.stanswer}"/>
                                     <label th:text="${item.stoptiona}"></label>
                                 </li>
                                 <li>
-                                    <input type="radio" th:name="'stanswer'+${ste.index}" value="2"/>
+                                    <input type="radio" name="stanswer" value="2" th:field="${item.stanswer}"/>
                                     <label th:text="${item.stoptionb}"></label>
                                 </li>
                                 <li>
-                                    <input type="radio" th:name="'stanswer'+${ste.index}" value="3"/>
+                                    <input type="radio" name="stanswer" value="3" th:field="${item.stanswer}"/>
                                     <label th:text="${item.stoptionc}"></label>
                                 </li>
                                 <li>
-                                    <input type="radio" th:name="'stanswer'+${ste.index}" value="4"/>
+                                    <input type="radio" name="stanswer" value="4" th:field="${item.stanswer}"/>
                                     <label th:text="${item.stoptiond}"></label>
                                 </li>
                                 <li>
-                                    <input type="text"  th:value="${item.stparse}"/>
+                                    <span style="color: red;">本题解析：</span>
+                                    <span th:text="${item.stparse}"/>
                                 </li>
                             </ul>
                         </li>
