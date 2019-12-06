@@ -35,7 +35,7 @@ public interface StudentMapper {
     long count(@Param("q") String q,@Param("stuStatus")String stuStatus);
 
     @Select("select count(1) from student where studentId=#{studentId} and stuStatus='1' and studentName=#{studentName}")
-    long countBySudentIdAndStudentName(@Param("studentId")String studentId,@Param("studentName")String studentName);
+    long countBySudentIdAndStudentName(@Param("studentId")String studentId,@Param("studentName")String studentName,@Param("stuStatus")String stuStatus);
 
     //通过学生班级查询
     @Select("select * from student where sclass=#{sclass} and stuStatus='1' order by result desc")

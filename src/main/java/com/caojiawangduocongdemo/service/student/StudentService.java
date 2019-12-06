@@ -25,13 +25,8 @@ public interface StudentService {
     //学生分页
     PageInfo<Student> sPage(int page, int pageSize, String q, String stuStatus);
 
-    //添加学生
-    void add(Student student);
-
-//    void insert(String sysid, String studentId, String studentName, String scalss, String stupic, int result, String teacherId, String password);
-
     //根据sysId修改
-    void updateBySysid(String sysid, String scalss, String stupic, int result);
+    void updateBySysid(String sysid, Student student);
 
     //根据sysId删除
     void delete(String sysid);

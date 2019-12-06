@@ -94,12 +94,6 @@ public class StudentServiceImpl implements StudentService {
         return result;
     }
 
-    @Override
-    public void add(Student student) {
-
-        studentMapper.insert(student);
-
-    }
 
     /**
      * @param sysid
@@ -111,43 +105,20 @@ public class StudentServiceImpl implements StudentService {
      */
 
 
-  /*  @Override
-    public void insert(String sysid, String studentId, String studentName, String sclass, String stupic, int result, String teacherId, String password) {
-        if (studentId == null || studentId.isEmpty()) {
-            throw new BizException("学号不能为空");
-        } else if (studentName == null || studentName.isEmpty()) {
-            throw new BizException("学生姓名不能为空");
-        } else if (sclass == null || sclass.isEmpty()) {
-            throw new BizException("班级不能为空");
-        } else if (studentMapper.countBySudentIdAndStudentName(studentId,studentName) > 0) {
-            throw new BizException("该学生已存在");
-        }
-        Student student = new Student();
-        student.setSysid(UUID.randomUUID().toString());
-        student.setStudentname(studentName);
-        student.setStudentid(studentId);
-        student.setSclass(sclass);
-        student.setStupic(stupic);
-        student.setResult(result);
-        student.setTeacherid(teacherId);
-        student.setPassword(password);
-        studentMapper.insert(student);
-    }*/
-
     /**
-     * 编辑学生信息
      *
      * @param sysid
-     * @param scalss
-     * @param stupic
-     * @param result
+     * @param student
      */
     @Override
-    public void updateBySysid(String sysid, String scalss, String stupic, int result) {
-        Student student = studentMapper.selectByPrimaryKey(sysid);
-        student.setSclass(scalss);
-        student.setStupic(stupic);
-        student.setResult(result);
+    public void updateBySysid(String sysid,Student student) {
+       student = studentMapper.selectByPrimaryKey(sysid);
+        if (student==null) {
+            throw new BizException("该生不存在");
+        }
+        if (studentMapper.countBySudentIdAndStudentName(student.getStudentid(),student.getStudentname(),student.getStuStatus())!=0){
+            throw new BizException("该生已经存在");
+        }
         studentMapper.updateByPrimaryKey(student);
     }
 
@@ -179,13 +150,14 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public int save(Student student) {
-        if (studentMapper.countBySudentIdAndStudentName(student.getStudentid(),student.getStudentname())==0){
+        if (studentMapper.countBySudentIdAndStudentName(student.getStudentid(),student.getStudentname(),student.getStuStatus())!=0){
+            throw new BizException("该生已经存在");
+        }
             if (StringUtils.isEmpty(student.getStudentid())||StringUtils.isEmpty(student.getStudentname())){
                 throw new BizException("学生姓名或学号不能为空");
             }
             student.setSysid(UUID.randomUUID().toString());
+            student.setPassword("123465");
             return studentMapper.insert(student);
-        }
-        return studentMapper.updateByPrimaryKey(student);
     }
 }

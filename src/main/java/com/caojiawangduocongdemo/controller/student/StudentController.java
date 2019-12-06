@@ -60,10 +60,8 @@ public class StudentController {
     @RequestMapping(value = "/student/{id}", method = RequestMethod.PUT)
     @ResponseBody
     public ResponseEntity<String> up(@PathVariable("id") String id, Student student) {
-        if (StringUtils.isEmpty(id)) {
-            throw new BizException("该生不存在");
-        }
-        studentService.save(student);
+
+        studentService.updateBySysid(id,student);
         return ResponseEntity.ok("");
     }
 
