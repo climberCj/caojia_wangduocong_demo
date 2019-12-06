@@ -1,30 +1,30 @@
 <div class="content-wrap">
 	<div class="add-stu-wrap">
 		<h3 class="patr-name">添加学生</h3>
-		<form id="add_exam_form">
-			<input type="hidden" id="sysId" name="sysId" th:value="${sysId}"/>
+		<form id="add_student_form">
+			<input type="hidden" id="sysId" name="sysId" th:value="${addStudent.sysid}"/>
 			<!--<input type="hidden" name="stno" th:value="${subject.stno}"/>-->
 			<!--<input type="hidden" name="ststatus" th:value="${result.list.ststatus}"/>-->
 			<div class="form-table">
 				<div class="info-write">
 					<label for="studentId"><div>学号：</div></label>
-					<input type="text"  id="studentId" name="studentId" th:value="${studentId}"/>
+					<input type="text"  id="studentId" name="studentid" th:value="${addStudent.studentid}"/>
 				</div>
 				<div class="info-write">
 					<label for="studentName"><div>姓名：</div></label>
-					<input type="text"  id="studentName" name="studentName" th:value="${studentName}"/>
+					<input type="text"  id="studentName" name="studentname" th:value="${addStudent.studentname}"/>
 				</div>
 				<div class="info-write">
 					<label for="sclass"><div>班级：</div></label>
-					<input type="text"  id="sclass" name="sclass" th:value="${sclass}"/>
+					<input type="text"  id="sclass" name="sclass" th:value="${addStudent.sclass}"/>
 				</div>
 				<div class="info-write">
 					<label for="teacherId"><div>老师工号：</div></label>
-					<input type="text"  id="teacherId" name="teacherId" th:value="${teacherId}"/>
+					<input type="text"  id="teacherId" name="teacherid" th:value="${addStudent.teacherid}"/>
 				</div>
 				<div class="info-write">
 					<label for="result"><div>分数：</div></label>
-					<input type="text" id="result" name="result" th:value="${result}"/>
+					<input type="text" id="result" name="result" th:value="${addStudent.result}"/>
 				</div>
 				<div class="operate">
 					<a class="btn add-btn" id="add_save" th:onclick="subjectAdd.save()">添加</a>
@@ -50,7 +50,7 @@
                     type:'post',
                     url:'student/save',
                     dataType:'json',
-                    data:$("#add_exam_form").serializeArray(),
+                    data:$("#add_student_form").serializeArray(),
                     async:'false',//异步
                     success:function(res){
                         if(res.code='200'){
@@ -60,7 +60,7 @@
                                 btnName : ["留在本页", "学生列表"],
                                 confirm:function(){
                                     //刷新页面
-                                    $("#content_page").load("student/addExam",{"studentId":$("#studentId".val())},function(){});
+                                    $("#content_page").load("student/addExam",{"sysid":$("#sysid".val())},function(){});
                                 },
                                 cancle:function(){
                                     //跳转列表

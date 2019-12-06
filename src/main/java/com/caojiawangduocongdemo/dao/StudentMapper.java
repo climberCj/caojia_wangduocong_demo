@@ -29,18 +29,18 @@ public interface StudentMapper {
     //通过学生姓名查询
     @Select("select * from student where studentName=#{studentname} and stuStatus='1' order by result desc")
     @ResultMap("BaseResultMap")
-    Student findByStudentName(@Param("studentname") String findByStudentName);
+    List<Student> findByStudentName(@Param("studentname") String findByStudentName);
 
     //    long countStudentName(@Param("studentName")String studentName);
     long count(@Param("q") String q,@Param("stuStatus")String stuStatus);
 
-    @Select("select count(1) from student where studentId=#{studentId} and stuStatus='1'")
-    long countBySudentId(@Param("studentId")String studentId);
+    @Select("select count(1) from student where studentId=#{studentId} and stuStatus='1' and studentName=#{studentName}")
+    long countBySudentIdAndStudentName(@Param("studentId")String studentId,@Param("studentName")String studentName);
 
     //通过学生班级查询
     @Select("select * from student where sclass=#{sclass} and stuStatus='1' order by result desc")
     @ResultMap("BaseResultMap")
-    Student findBysclass(@Param("sclass") String sclass);
+    List<Student> findBysclass(@Param("sclass") String sclass);
 
     @Select("select * from student where stuStatus='1' order by result desc")
     @ResultMap("BaseResultMap")
@@ -48,5 +48,9 @@ public interface StudentMapper {
 
     @Update("update student set stuStatus= '0' where sysid=#{sysid}")
     void updateStatuds(@Param("sysid")String sysid);
+
+    @Select("select * from student where teacherId=#{teacherId} order by result sesc")
+    @ResultMap("BaseResultMap")
+    List<Student> findeByTeacherId(@Param("teacherId")String teacherId);
 
 }

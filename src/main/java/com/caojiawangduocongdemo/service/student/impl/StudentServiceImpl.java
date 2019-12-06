@@ -7,6 +7,7 @@ import com.caojiawangduocongdemo.service.student.StudentService;
 import com.caojiawangduocongdemo.utils.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.UUID;
@@ -59,7 +60,7 @@ public class StudentServiceImpl implements StudentService {
      * @return
      */
     @Override
-    public Student findBysclass(String sclass) {
+    public List<Student> findBysclass(String sclass) {
         return studentMapper.findBysclass(sclass);
     }
 
@@ -69,7 +70,7 @@ public class StudentServiceImpl implements StudentService {
      * @param studentName
      */
     @Override
-    public Student findByName(String studentName) {
+    public  List<Student>  findByName(String studentName) {
         return studentMapper.findByStudentName(studentName);
     }
 
@@ -88,7 +89,7 @@ public class StudentServiceImpl implements StudentService {
         result.setPageSize(pageSize);
         result.setPageNum(page);
         if (result.getTotal() > 0) {
-            result.setList(studentMapper.page((page-1)*pageSize, pageSize, q));
+            result.setList(studentMapper.page((page - 1) * pageSize, pageSize, q));
         }
         return result;
     }
@@ -96,11 +97,11 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void add(Student student) {
 
-            studentMapper.insert(student);
+        studentMapper.insert(student);
 
     }
+
     /**
-     *
      * @param sysid
      * @param studentId
      * @param studentName
@@ -110,19 +111,18 @@ public class StudentServiceImpl implements StudentService {
      */
 
 
-    @Override
-    public void insert(String sysid, String studentId, String studentName, String sclass, String stupic, int result,String teacherId,String password) {
-        if (studentId == null||studentId.isEmpty()){
+  /*  @Override
+    public void insert(String sysid, String studentId, String studentName, String sclass, String stupic, int result, String teacherId, String password) {
+        if (studentId == null || studentId.isEmpty()) {
             throw new BizException("学号不能为空");
-        }else
-        if ( studentName==null||studentName.isEmpty()){
+        } else if (studentName == null || studentName.isEmpty()) {
             throw new BizException("学生姓名不能为空");
-        }else if (sclass==null||sclass.isEmpty()){
+        } else if (sclass == null || sclass.isEmpty()) {
             throw new BizException("班级不能为空");
-        }else if (studentMapper.countBySudentId(studentId)>0){
-            throw new BizException("该学号已存在");
+        } else if (studentMapper.countBySudentIdAndStudentName(studentId,studentName) > 0) {
+            throw new BizException("该学生已存在");
         }
-        Student student=new Student();
+        Student student = new Student();
         student.setSysid(UUID.randomUUID().toString());
         student.setStudentname(studentName);
         student.setStudentid(studentId);
@@ -132,7 +132,7 @@ public class StudentServiceImpl implements StudentService {
         student.setTeacherid(teacherId);
         student.setPassword(password);
         studentMapper.insert(student);
-    }
+    }*/
 
     /**
      * 编辑学生信息
@@ -175,5 +175,17 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> getAll() {
         return studentMapper.findAll();
 
+    }
+
+    @Override
+    public int save(Student student) {
+        if (studentMapper.countBySudentIdAndStudentName(student.getStudentid(),student.getStudentname())==0){
+            if (StringUtils.isEmpty(student.getStudentid())||StringUtils.isEmpty(student.getStudentname())){
+                throw new BizException("学生姓名或学号不能为空");
+            }
+            student.setSysid(UUID.randomUUID().toString());
+            return studentMapper.insert(student);
+        }
+        return studentMapper.updateByPrimaryKey(student);
     }
 }
