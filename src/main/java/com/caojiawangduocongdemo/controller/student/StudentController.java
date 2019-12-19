@@ -8,6 +8,7 @@ import com.caojiawangduocongdemo.entity.Student;
 import com.caojiawangduocongdemo.service.student.StudentService;
 import com.caojiawangduocongdemo.utils.GsonHelper;
 import com.sun.org.apache.regexp.internal.RE;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +32,7 @@ public class StudentController {
     @Autowired
     private StudentMapper studentMapper;
 
+    @RequiresPermissions("query")
     @RequestMapping(value = "/students", method = RequestMethod.GET)
     public String view(HttpServletRequest request,
                        @RequestParam(value = "page", required = false, defaultValue = "1") int page,
@@ -50,6 +52,7 @@ public class StudentController {
         return "student/stulist";
     }
 
+    @RequiresPermissions("create")
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<String> save(Student student) {

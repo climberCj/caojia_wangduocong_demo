@@ -6,6 +6,7 @@ import com.caojiawangduocongdemo.entity.Student;
 import com.caojiawangduocongdemo.entity.Subject;
 import com.caojiawangduocongdemo.service.score.ScoreService;
 import com.caojiawangduocongdemo.service.subject.SubjectService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +30,7 @@ public class ExamController {
     @Autowired
     private ScoreService scoreService;
 
+    @RequiresPermissions("exam")
     @RequestMapping("/index")
     public String goToExam(HttpServletRequest request, Model model){
         Student stu = (Student)request.getSession().getAttribute("user");
@@ -37,6 +39,7 @@ public class ExamController {
         return "exam_main";
     }
 
+    @RequiresPermissions("exam")
     @RequestMapping("/online")
     public String goToExam(Model model){
         List<Subject> subjectList = subjectService.findAll();
@@ -44,6 +47,7 @@ public class ExamController {
         return "student/exam";
     }
 
+    @RequiresPermissions("exam")
     @RequestMapping("/doSubmit")
     @ResponseBody
     public ResultBody commit(HttpServletRequest request){
@@ -64,6 +68,7 @@ public class ExamController {
         return ResultBody.success(score);
     }
 
+    @RequiresPermissions("view")
     @RequestMapping("/score")
     public String getScore(String studentid,Model model){
         Score score = scoreService.findLastScore(studentid);
@@ -71,6 +76,7 @@ public class ExamController {
         return "student/view_score";
     }
 
+    @RequiresPermissions("view")
     @RequestMapping("/parse")
     public String getAnswer(HttpServletRequest request,Model model) {
         List<Subject> lists = new ArrayList<>();

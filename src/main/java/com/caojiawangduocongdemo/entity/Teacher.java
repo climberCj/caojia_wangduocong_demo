@@ -8,8 +8,6 @@ public class Teacher implements Serializable {
 
     private String teacherid;
 
-    private String password;
-
     private String teachername;
 
     private String teacherpic;
@@ -28,14 +26,6 @@ public class Teacher implements Serializable {
 
     public void setTeacherid(String teacherid) {
         this.teacherid = teacherid == null ? null : teacherid.trim();
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
     }
 
     public String getTeachername() {

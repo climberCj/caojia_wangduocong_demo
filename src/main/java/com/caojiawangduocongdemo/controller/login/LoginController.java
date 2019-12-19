@@ -3,14 +3,20 @@ package com.caojiawangduocongdemo.controller.login;
 import com.caojiawangduocongdemo.common.ResultBody;
 import com.caojiawangduocongdemo.entity.Student;
 import com.caojiawangduocongdemo.entity.Teacher;
+import com.caojiawangduocongdemo.entity.User;
+import com.caojiawangduocongdemo.service.custom.UserService;
 import com.caojiawangduocongdemo.service.student.StudentService;
 import com.caojiawangduocongdemo.service.teacher.TeacherService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,13 +37,60 @@ public class LoginController {
     private TeacherService teacherService;
     @Autowired
     private StudentService studentService;
+    @Autowired
+    private UserService userService;
 
     @RequestMapping("/login")
     public String login(){
         return "login";
     }
 
+    /**
+     * shiro登录认证
+     * @param userName
+     * @param userPass
+     * @param request
+     * @return
+     */
     @RequestMapping("/main")
+    public String shiroLogin(@RequestParam("userName")String userName,
+                             @RequestParam("userPass")String userPass,HttpServletRequest request,HttpServletResponse response)throws Exception{
+        UsernamePasswordToken token = new UsernamePasswordToken(userName,userPass);
+        Subject subject = SecurityUtils.getSubject();
+        logger.info("对用户[" + userName + "]进行登录验证..验证开始");
+        subject.login(token);
+        Map<String,String> respMap = new HashMap<>();
+        if(subject.isAuthenticated()){//登录成功
+            logger.info("用户[" + userName + "]登录成功！请继续执行以下操作");
+            //获取当前登录用户对象
+            User user = (User) subject.getPrincipal();
+            request.getSession().setAttribute("custom",user);
+            //通过identify查询用户信息，将用户信息存放到session中
+            if(user.getIdentify().length()==8){//学生编号
+                Student student = studentService.findByStudentId(user.getIdentify());
+                request.getSession().setAttribute("user",student);
+            }else if(user.getIdentify().length()==9){
+                Teacher teacher = teacherService.findByTeacherId(user.getIdentify());
+                request.getSession().setAttribute("user",teacher);
+            }
+            return "main";
+        }else{//登录失败
+            token.clear();
+            logger.info("用户[" + userName + "]登录失败！重新登录");
+            respMap.put("msg","登录失败，请重新登录！");
+        }
+        if(!CollectionUtils.isEmpty(respMap)){
+            response.setContentType("text/html;charset=utf-8");
+            String msg = "alert('"+respMap.get("msg")+"'); window.location.href='"+request.getContextPath()+"/login';";
+            response.getWriter().write("<script language=\"javascript\">");
+            response.getWriter().write(msg+"\n");
+            response.getWriter().write("</script>");
+            return null;
+        }
+        return "redirect:/login";
+    }
+
+    /*@RequestMapping("/main")
     public ModelAndView index(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //角色
         String role = request.getParameter("role");
@@ -86,14 +139,26 @@ public class LoginController {
             return null;
         }
         return new ModelAndView("redirect:/login");
-    }
+    }*/
 
     @RequestMapping("/index")
     public String main(){
         return "main";
     }
 
+    /**
+     * shiro退出登录
+     * @return
+     */
     @RequestMapping("/loginOut")
+    public String logout() {
+        Subject subject = SecurityUtils.getSubject();
+        if (subject != null) {
+            subject.logout();
+        }
+        return "login";
+    }
+    /*@RequestMapping("/loginOut")
     public ModelAndView loginOut(HttpServletRequest request){
         ResultBody rb = new ResultBody();
         Object user = request.getSession().getAttribute("user");
@@ -102,5 +167,5 @@ public class LoginController {
         }
         rb.setMessage("success");
         return new ModelAndView("redirect:/login");
-    }
+    }*/
 }

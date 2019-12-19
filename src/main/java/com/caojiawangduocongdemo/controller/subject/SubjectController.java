@@ -7,6 +7,7 @@ import com.caojiawangduocongdemo.service.subject.SubjectService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.sun.org.apache.xpath.internal.operations.Mod;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,14 +39,17 @@ public class SubjectController {
      * @param model
      * @return
      */
+    @RequiresPermissions("query")
     @RequestMapping("/list")
     public String findPage(@RequestParam(value = "pageNo",defaultValue = "1") int pageNo,
                            @RequestParam(value = "pageSize",defaultValue = "5")int pageSize, HttpServletRequest request, Model model){
+        //存放查询条件的Map集合，查询条件的name前缀必须为filter_
         Map<String,Object> searchParams = Servlets.getParametersStartingWith(request,"filter_");
         Page<Subject> page = subjectService.findByPage(searchParams,pageNo,pageSize);
         PageInfo<Subject> pageInfo = new PageInfo<>(page);
         model.addAttribute("pageInfo",pageInfo);
         model.addAttribute("searchParams",Servlets.encodeParameterStringWithPrefix(searchParams,"filter_"));
+        //用于前台回显
         Map<String,Object> params = new HashMap<>();
         for(Map.Entry<String,Object> entry:searchParams.entrySet()){
             params.put(entry.getKey(),entry.getValue());
@@ -58,6 +62,7 @@ public class SubjectController {
      * 跳转添加试题页面
      * @return
      */
+    @RequiresPermissions("create")
     @RequestMapping("/addExam")
     public String addQues(String sysid, Model model){
         Subject subject = null;
@@ -70,6 +75,7 @@ public class SubjectController {
         return "subject/addExam";
     }
 
+    @RequiresPermissions("update")
     @RequestMapping("/save")
     @ResponseBody
     public ResultBody saveSubject(Subject subject){
@@ -80,6 +86,7 @@ public class SubjectController {
         return ResultBody.success(result);
     }
 
+    @RequiresPermissions("delete")
     @RequestMapping("/delete")
     @ResponseBody
     public ResultBody delete(String sysid){

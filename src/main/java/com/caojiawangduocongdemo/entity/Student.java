@@ -10,8 +10,6 @@ public class Student implements Serializable {
 
     private String studentname;
 
-    private String password;
-
     private Integer result;
 
     private String sclass;
@@ -44,14 +42,6 @@ public class Student implements Serializable {
 
     public void setStudentname(String studentname) {
         this.studentname = studentname == null ? null : studentname.trim();
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
     }
 
     public Integer getResult() {

@@ -5,7 +5,6 @@
     <id column="sysid" property="sysid" jdbcType="VARCHAR" />
     <result column="studentId" property="studentid" jdbcType="VARCHAR" />
     <result column="studentName" property="studentname" jdbcType="VARCHAR" />
-    <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="result" property="result" jdbcType="INTEGER" />
     <result column="sclass" property="sclass" jdbcType="VARCHAR" />
     <result column="teacherId" property="teacherid" jdbcType="VARCHAR" />
@@ -13,7 +12,7 @@
     <result column="stuPic" property="stupic" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    sysid, studentId, studentName, password, result, sclass, teacherId, stuStatus, stuPic
+    sysid, studentId, studentName, result, sclass, teacherId, stuStatus, stuPic
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -33,11 +32,11 @@
   </delete>
   <insert id="insert" parameterType="com.caojiawangduocongdemo.entity.Student" >
     insert into student (sysid, studentId, studentName, 
-      password, result, sclass, 
+      result, sclass,
       teacherId, stuStatus, stuPic
       )
     values (#{sysid,jdbcType=VARCHAR}, #{studentid,jdbcType=VARCHAR}, #{studentname,jdbcType=VARCHAR}, 
-      #{password,jdbcType=VARCHAR}, #{result,jdbcType=INTEGER}, #{sclass,jdbcType=VARCHAR}, 
+       #{result,jdbcType=INTEGER}, #{sclass,jdbcType=VARCHAR},
       #{teacherid,jdbcType=VARCHAR}, '1', #{stupic,jdbcType=VARCHAR}
       )
   </insert>
@@ -52,9 +51,6 @@
       </if>
       <if test="studentname != null" >
         studentName,
-      </if>
-      <if test="password != null" >
-        password,
       </if>
       <if test="result != null" >
         result,
@@ -82,9 +78,6 @@
       <if test="studentname != null" >
         #{studentname,jdbcType=VARCHAR},
       </if>
-      <if test="password != null" >
-        #{password,jdbcType=VARCHAR},
-      </if>
       <if test="result != null" >
         #{result,jdbcType=INTEGER},
       </if>
@@ -111,9 +104,6 @@
       <if test="studentname != null" >
         studentName = #{studentname,jdbcType=VARCHAR},
       </if>
-      <if test="password != null" >
-        password = #{password,jdbcType=VARCHAR},
-      </if>
       <if test="result != null" >
         result = #{result,jdbcType=INTEGER},
       </if>
@@ -136,7 +126,6 @@
     update student
     set studentId = #{studentid,jdbcType=VARCHAR},
       studentName = #{studentname,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
       result = #{result,jdbcType=INTEGER},
       sclass = #{sclass,jdbcType=VARCHAR},
       teacherId = #{teacherid,jdbcType=VARCHAR},
@@ -151,7 +140,7 @@
     </if>
   </select>
   <select id="page" resultMap="BaseResultMap">
-    SELECT sysid, studentId, stuStatus, studentName, password, result,sclass,teacherId,stupic FROM student
+    SELECT sysid, studentId, stuStatus, studentName, result,sclass,teacherId,stupic FROM student
     where 1=1  and stuStatus='1'
     <if test="q != null">
       AND (studentName like '%${q}%' or studentId like '%${q}%'  )
