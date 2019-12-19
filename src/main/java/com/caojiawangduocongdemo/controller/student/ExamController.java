@@ -41,7 +41,10 @@ public class ExamController {
 
     @RequiresPermissions("exam")
     @RequestMapping("/online")
-    public String goToExam(Model model){
+    public String goToExam(Model model,HttpServletRequest request){
+        Student stu = (Student)request.getSession().getAttribute("user");
+        Score score = scoreService.findLastScore(stu.getStudentid());
+        model.addAttribute("s",score.getScore());
         List<Subject> subjectList = subjectService.findAll();
         model.addAttribute("lists", subjectList);
         return "student/exam";

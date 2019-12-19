@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.*;
  * @author caojia
  * @createtime 2019-11-04 17:17
  */
-@Configuration
+//@Configuration
 public class MyWebConfig /*extends WebMvcConfigurationSupport*/ implements WebMvcConfigurer {
     @Autowired
     private MyIntercept myIntercept;

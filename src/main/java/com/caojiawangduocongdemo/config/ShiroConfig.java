@@ -1,5 +1,6 @@
 package com.caojiawangduocongdemo.config;
 
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -16,6 +17,11 @@ import java.util.LinkedHashMap;
 
 @Configuration
 public class ShiroConfig {
+    //用于thymeleaf模板使用shiro标签
+    @Bean
+    public ShiroDialect shiroDialect() {
+        return new ShiroDialect();
+    }
     /**
      * 密码校验规则HashedCredentialsMatcher
      * 这个类是为了对密码进行编码的 ,
@@ -70,9 +76,9 @@ public class ShiroConfig {
         //可以写路由也可以写jsp页面的访问路径
         bean.setLoginUrl("/login");
         //设置登录成功跳转的页面，也可以设置跳转的路由
-        bean.setSuccessUrl("index.html");
+        //bean.setSuccessUrl("index.html");
         //设置未授权跳转的页面，也可以设置跳转的路由
-        bean.setUnauthorizedUrl("unauthorized.html");
+        //bean.setUnauthorizedUrl("unauthorized.html");
         //定义过滤器
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         filterChainDefinitionMap.put("/login", "anon");//标识可以匿名访问
@@ -82,6 +88,12 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/student/**", "roles[teacher]");
         filterChainDefinitionMap.put("/subject/**", "roles[teacher]");
         filterChainDefinitionMap.put("/druid/**", "anon");
+        filterChainDefinitionMap.put("/css/**", "anon");
+        filterChainDefinitionMap.put("/fonts/**", "anon");
+        filterChainDefinitionMap.put("/images/**", "anon");
+        filterChainDefinitionMap.put("/img/**", "anon");
+        filterChainDefinitionMap.put("/js/**", "anon");
+        filterChainDefinitionMap.put("/plugins/**", "anon");
         //需要登录访问的资源 , 一般将/**放在最下边
         filterChainDefinitionMap.put("/**", "authc");
         bean.setFilterChainDefinitionMap(filterChainDefinitionMap);

@@ -21,7 +21,7 @@ public class TeacherServiceImpl implements TeacherService {
      * @param password
      * @return
      */
-    @Override
+    /*@Override
     public boolean allowLogin(String teacherId, String password) {
         Teacher teacher = teacherMapper.findByTeacherId(teacherId);
         if(teacher!=null){
@@ -33,7 +33,7 @@ public class TeacherServiceImpl implements TeacherService {
         }else{
             return false;
         }
-    }
+    }*/
 
     /**
      * 通过老师用户名查询教师对象

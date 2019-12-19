@@ -60,6 +60,7 @@ public class StudentController {
         return ResponseEntity.ok("{}");
     }
 
+    @RequiresPermissions("query")
     @RequestMapping(value = "/student/{id}", method = RequestMethod.PUT)
     @ResponseBody
     public ResponseEntity<String> up(@PathVariable("id") String id, Student student) {
@@ -68,14 +69,15 @@ public class StudentController {
         return ResponseEntity.ok("");
     }
 
+    @RequiresPermissions("create")
     @RequestMapping(value = "/student", method = RequestMethod.GET)
-
     public String insert(HttpServletRequest request, Student student) {
 
         request.setAttribute("addStudent", student);
         return "student/addExam";
     }
 
+    @RequiresPermissions("create")
     @RequestMapping(value = "/student/{sysid}/stuStatus", method = RequestMethod.PUT)
     public ResponseEntity<String> delete(@PathVariable("sysid") String sysid) {
         studentService.updateStatus(sysid);
@@ -83,6 +85,7 @@ public class StudentController {
 
     }
 
+    @RequiresPermissions("query")
     @RequestMapping(value = "/student/sclass", method = RequestMethod.GET)
     public ResponseEntity<String> findByClass(@RequestParam("sclass") String sclass) {
         return ResponseEntity.ok().body(GsonHelper.DEFAULT_GSON.toJson(studentService.findBysclass(sclass)));

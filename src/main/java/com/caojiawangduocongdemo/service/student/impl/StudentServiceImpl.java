@@ -28,7 +28,7 @@ public class StudentServiceImpl implements StudentService {
      * @param password
      * @return
      */
-    @Override
+    /*@Override
     public boolean allowLogin(String studentId, String password) {
         Student student = studentMapper.findByStudentId(studentId);
         if (student == null) {
@@ -40,7 +40,7 @@ public class StudentServiceImpl implements StudentService {
                 return false;
             }
         }
-    }
+    }*/
 
     /**
      * 通过学生用户名查询学生对象
@@ -157,7 +157,7 @@ public class StudentServiceImpl implements StudentService {
                 throw new BizException("学生姓名或学号不能为空");
             }
             student.setSysid(UUID.randomUUID().toString());
-            student.setPassword("123465");
+            //student.setPassword("123465");
             return studentMapper.insert(student);
     }
 }

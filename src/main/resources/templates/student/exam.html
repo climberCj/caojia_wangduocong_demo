@@ -41,6 +41,9 @@
     /*<![CDATA[*/
     $(function(){
         daojishi();
+        var result = [[${s}]];
+        var html = '<span style="font-size: 16px;font-weight: 700;">'+"上一次的得分为："+result+'</span>';
+        $("#last_score").html(html);
     });
     function commit(){
         //提交前校验
@@ -59,7 +62,7 @@
                 confirm:function(){
                     $.ajax({
                         type:'post',
-                        url:'doSubmit',
+                        url:'exam/doSubmit',
                         dataType:'json',
                         data:$("#exam_commit").serializeArray(),
                         success:function (r) {
@@ -69,12 +72,12 @@
                                     type:"success",
                                     btnName : ["查看成绩", "查看解析"],
                                     confirm:function(){
-                                        $("#exam_content_page").load("score",{"studentid":[[${session.user.studentid}]]},function () {
+                                        $("#content_page").load("exam/score",{"studentid":[[${session.custom.identify}]]},function () {
 
                                         })
                                     },
                                     cancle:function(){
-                                        $("#exam_content_page").load("parse",function () {})
+                                        $("#content_page").load("exam/parse",function () {})
                                     }
                                 });
                             }
@@ -95,7 +98,7 @@
                 confirm:function(){
                     $.ajax({
                         type:'post',
-                        url:'doSubmit',
+                        url:'exam/doSubmit',
                         dataType:'json',
                         data:$("#exam_commit").serializeArray(),
                         success:function (r) {
@@ -105,12 +108,12 @@
                                     type:"success",
                                     btnName : ["查看成绩", "查看解析"],
                                     confirm:function(){
-                                        $("#exam_content_page").load("score",{"studentid":[[${session.user.studentid}]]},function () {
+                                        $("#content_page").load("exam/score",{"studentid":[[${session.custom.identify}]]},function () {
 
                                         })
                                     },
                                     cancle:function(){
-                                        $("#exam_content_page").load("parse",function () {})
+                                        $("#content_page").load("exam/parse",function () {})
                                     }
                                 });
                             }

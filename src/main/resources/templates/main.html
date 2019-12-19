@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="UTF-8"></meta>
     <title>教师登录成功</title>
@@ -34,37 +34,41 @@
     <!-- 页面主体start -->
     <div class="main fn-clear" id="main_content">
         <!-- 页面导航栏start -->
-        <div class="navi" shiro:hasRole="teacher">
-            <ul class="app-list-menu menu1">
-                <li class="app-list level1">
-                    <a class="active name level1-name">学生管理</a>
-                    <ul class="app-list-menu menu2">
-                        <li><a  class="active name level2-name"id="add_student">添加学生</a></li>
-                        <li><a class="name level2-name"id="search_students">查询学生信息</a></li>
-                    </ul>
-                </li>
-                <li class="app-list level1">
-                    <a class="name level1-name">试题管理</a>
-                    <ul class="app-list-menu menu2">
-                        <li><a class="name level2-name" id="add_question">添加试题</a></li>
-                        <li><a class="name level2-name" id="search_questions">查询试题</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-        <div class="navi">
-            <ul class="test-wrap">
-                <li>
-                    <span style="font-size: 16px;font-weight: 700;" th:text="'登录学号：'+${session.user.studentid}" id="xuehao"></span>
-                </li>
-                <li>
-                    <span style="font-size: 16px;font-weight: 700;" th:text="'所在班级：'+${session.user.sclass}">班级：</span>
-                </li>
-                <li>
-                    <span style="font-size: 16px;font-weight: 700;" th:text="'上一次成绩：'+${s}">上一次成绩：</span>
-                </li>
-            </ul>
-        </div>
+        <shiro:hasRole name="teacher">
+            <div class="navi">
+                <ul class="app-list-menu menu1">
+                    <li class="app-list level1">
+                        <a class="active name level1-name">学生管理</a>
+                        <ul class="app-list-menu menu2">
+                            <li><a  class="active name level2-name"id="add_student">添加学生</a></li>
+                            <li><a class="name level2-name"id="search_students">查询学生信息</a></li>
+                        </ul>
+                    </li>
+                    <li class="app-list level1">
+                        <a class="name level1-name">试题管理</a>
+                        <ul class="app-list-menu menu2">
+                            <li><a class="name level2-name" id="add_question">添加试题</a></li>
+                            <li><a class="name level2-name" id="search_questions">查询试题</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </shiro:hasRole>
+        <shiro:hasRole name="student">
+            <div class="navi">
+                <ul class="test-wrap">
+                    <li>
+                        <span style="font-size: 16px;font-weight: 700;" th:text="'登录学号：'+${session.user.studentname}" id="xuehao"></span>
+                    </li>
+                    <li>
+                        <span style="font-size: 16px;font-weight: 700;" th:text="'所在班级：'+${session.user.sclass}">班级：</span>
+                    </li>
+                    <li id="last_score">
+                        <!--<span style="font-size: 16px;font-weight: 700;"  th:text="${s}">上一次成绩：</span>-->
+                    </li>
+                </ul>
+            </div>
+        </shiro:hasRole>
         <!-- 页面导航栏end -->
         <div class="content" id="content_page">
 
@@ -90,6 +94,11 @@
         $(".content").height(_wHeight-80);
         $(".sel").select2();
         $('.content').niceScroll().hide();
+        var stu = [[${session.custom.userRole}]];
+        if(stu == 'student'){
+            //自动获取试题
+            $("#content_page").load("exam/online",function () {});
+        }
     });
     //添加试题
     $("#add_question").on('click',function(){
@@ -132,8 +141,30 @@
                 console.log("不做任何操作！")
             }
         })
+    };
 
-    }
+    var counttime=5*60;//总秒钟
+    function daojishi(){
+        if(counttime>=0){
+            var ms = counttime%60;//余数 89%60==29秒
+            var mis = Math.floor(counttime/60);//分钟
+            if(mis>=60){
+                var hour=Math.floor(mis/60);
+                mis=Math.floor((counttime-hour*60*60)/60);
+                document.getElementById("time").innerHTML=hour+"小时"+mis+"分"+ms+"秒";
+            }else if(mis>=1){
+                document.getElementById("time").innerHTML=mis+"分"+ms+"秒";
+            }else{
+                document.getElementById("time").innerHTML=ms+"秒";
+            }
+            counttime--;
+            vartt =  window.setTimeout("daojishi()",1000);
+        }else{
+            window.clearTimeout(vartt);
+            window.confirm("考试时间结束,请单击提交");
+            commit();
+        }
+    };
     /*]]>*/
 </script>
 </body>

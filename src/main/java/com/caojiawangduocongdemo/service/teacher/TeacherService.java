@@ -8,7 +8,7 @@ import com.caojiawangduocongdemo.entity.Teacher;
  */
 public interface TeacherService {
     //教师登录验证
-    public boolean allowLogin(String teacherId,String password);
+    //public boolean allowLogin(String teacherId,String password);
     //根据用户名查询
     Teacher findByTeacherId(String teacherId);
 }
