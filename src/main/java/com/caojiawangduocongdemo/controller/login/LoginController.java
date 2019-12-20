@@ -54,7 +54,8 @@ public class LoginController {
      */
     @RequestMapping("/main")
     public String shiroLogin(@RequestParam("userName")String userName,
-                             @RequestParam("userPass")String userPass,HttpServletRequest request,HttpServletResponse response)throws Exception{
+                             @RequestParam("userPass")String userPass,
+                             @RequestParam(name = "rememberMe",required = false)Integer rememberMe,HttpServletRequest request,HttpServletResponse response)throws Exception{
         UsernamePasswordToken token = new UsernamePasswordToken(userName,userPass);
         Subject subject = SecurityUtils.getSubject();
         logger.info("对用户[" + userName + "]进行登录验证..验证开始");
@@ -62,6 +63,9 @@ public class LoginController {
         Map<String,String> respMap = new HashMap<>();
         if(subject.isAuthenticated()){//登录成功
             logger.info("用户[" + userName + "]登录成功！请继续执行以下操作");
+            if(rememberMe!=null && rememberMe ==1){
+                token.setRememberMe(true);
+            }
             //获取当前登录用户对象
             User user = (User) subject.getPrincipal();
             request.getSession().setAttribute("custom",user);

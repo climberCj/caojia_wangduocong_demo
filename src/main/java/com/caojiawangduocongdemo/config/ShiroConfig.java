@@ -2,11 +2,15 @@ package com.caojiawangduocongdemo.config;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -43,12 +47,43 @@ public class ShiroConfig {
     @Bean("authRealm")
     @DependsOn("lifecycleBeanPostProcessor")//可选
     public AuthRealm authRealm(@Qualifier("hashedCredentialsMatcher") HashedCredentialsMatcher matcher) {
+        //自定义realm
         AuthRealm authRealm = new AuthRealm();
         authRealm.setAuthorizationCachingEnabled(false);
         authRealm.setCredentialsMatcher(matcher);
         return authRealm;
     }
 
+    /**
+     * shiro session会话过期时间设置
+     * @return
+     */
+    @Bean
+    public DefaultWebSessionManager getDefaultWebSessionManager(){
+        DefaultWebSessionManager defaultWebSessionManager = new DefaultWebSessionManager();
+        defaultWebSessionManager.setGlobalSessionTimeout(1000*60*30);//单位毫秒
+        defaultWebSessionManager.setSessionValidationSchedulerEnabled(true);
+        defaultWebSessionManager.setSessionIdCookieEnabled(true);
+        return defaultWebSessionManager;
+    }
+
+    @Bean
+    public SimpleCookie getSimpleCookie(){
+        SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
+        simpleCookie.setHttpOnly(true);
+        //设置记住我时间
+        simpleCookie.setMaxAge(2*60);//单位是秒
+        return simpleCookie;
+    }
+
+    @Bean
+    public CookieRememberMeManager getCookieRememberMe(){
+        CookieRememberMeManager manager = new CookieRememberMeManager();
+        //用来设置加密的Key,参数类型byte[],字节数组长度要求16
+        manager.setCipherKey(Base64.decode("6ZmI6I2j5Y+R5aSn5ZOlAA=="));
+        manager.setCookie(getSimpleCookie());
+        return manager;
+    }
 
     /**
      * 定义安全管理器securityManager,注入自定义的realm
@@ -59,6 +94,8 @@ public class ShiroConfig {
     public SecurityManager securityManager(@Qualifier("authRealm") AuthRealm authRealm) {
         DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
         manager.setRealm(authRealm);
+        manager.setSessionManager(getDefaultWebSessionManager());
+        manager.setRememberMeManager(getCookieRememberMe());
         return manager;
     }
 
