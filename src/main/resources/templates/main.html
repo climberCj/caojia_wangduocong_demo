@@ -2,7 +2,7 @@
 <html lang="en" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="UTF-8"></meta>
-    <title>教师登录成功</title>
+    <title>登录成功</title>
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/skin.css">
     <link rel="stylesheet" href="css/paging.css">
@@ -98,6 +98,8 @@
         if(stu == 'student'){
             //自动获取试题
             $("#content_page").load("exam/online",function () {});
+        }else if(stu == 'teacher'){
+            $("#content_page").load("student/students",function(){});
         }
     });
     //添加试题

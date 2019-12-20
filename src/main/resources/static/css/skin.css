@@ -23,7 +23,7 @@ a { text-decoration: none; color: #333; }
 .app-list.level1 .level1-name.active, 
 .app-list.level1:hover .level1-name{ border-left-color:  #1e87f0; color: #1e87f0; background: #EAF5FF; }
 .app-list-menu  a:last-child { border-bottom:0; }  
-.app-list-menu.menu2 li:hover .level2-name,.app-list-menu.menu2 li .level2-name.active{ color: #1e87f0; }
+.app-list-menu.menu2 li:hover .level2-name,.app-list-menu.menu2 li .level2-name.active{ color: #1e87f0; cursor:pointer;}
 /* content */
 .content { margin-left: 240px; background: #fff; overflow-y: scroll; }
 .content .content-wrap { padding-top: 10px; }
