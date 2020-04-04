@@ -55,22 +55,24 @@ public class LoginController {
     @RequestMapping("/main")
     public String shiroLogin(@RequestParam("userName")String userName,
                              @RequestParam("userPass")String userPass,
-                             @RequestParam(name = "rememberMe",required = false)Integer rememberMe,HttpServletRequest request,HttpServletResponse response)throws Exception{
+                             @RequestParam(name = "rememberMe",required = false)boolean rememberMe,HttpServletRequest request,HttpServletResponse response)throws Exception{
         UsernamePasswordToken token = new UsernamePasswordToken(userName,userPass);
         Subject subject = SecurityUtils.getSubject();
         logger.info("对用户[" + userName + "]进行登录验证..验证开始");
         subject.login(token);
         Map<String,String> respMap = new HashMap<>();
-        if(subject.isAuthenticated()){//登录成功
+        //登录成功
+        if(subject.isAuthenticated()){
             logger.info("用户[" + userName + "]登录成功！请继续执行以下操作");
-            if(rememberMe!=null && rememberMe ==1){
+            if(rememberMe){
                 token.setRememberMe(true);
             }
             //获取当前登录用户对象
             User user = (User) subject.getPrincipal();
             request.getSession().setAttribute("custom",user);
             //通过identify查询用户信息，将用户信息存放到session中
-            if(user.getIdentify().length()==8){//学生编号
+            //学生编号
+            if(user.getIdentify().length()==8){
                 Student student = studentService.findByStudentId(user.getIdentify());
                 request.getSession().setAttribute("user",student);
             }else if(user.getIdentify().length()==9){
