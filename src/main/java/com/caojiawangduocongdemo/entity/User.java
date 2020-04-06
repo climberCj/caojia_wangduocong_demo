@@ -1,9 +1,11 @@
 package com.caojiawangduocongdemo.entity;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-public class User {
+public class User implements Serializable {
+    private static final long serialVersionUID = -8322944778118102224L;
     private String userId;
 
     private String chinaName;
@@ -92,5 +94,20 @@ public class User {
 
     public void setIdentify(String identify) {
         this.identify = identify;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId='" + userId + '\'' +
+                ", chinaName='" + chinaName + '\'' +
+                ", userName='" + userName + '\'' +
+                ", userPass='" + userPass + '\'' +
+                ", userRole='" + userRole + '\'' +
+                ", createTime='" + createTime + '\'' +
+                ", roleId='" + roleId + '\'' +
+                ", identify='" + identify + '\'' +
+                ", roles=" + roles +
+                '}';
     }
 }

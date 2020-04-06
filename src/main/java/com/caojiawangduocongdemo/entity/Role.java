@@ -1,9 +1,11 @@
 package com.caojiawangduocongdemo.entity;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Role {
+public class Role implements Serializable {
+    private static final long serialVersionUID = -5604230590490814160L;
     private String roleId;
 
     private String name;
@@ -42,5 +44,15 @@ public class Role {
 
     public void setPermissions(Set<Permission> permissions) {
         this.permissions = permissions;
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "roleId='" + roleId + '\'' +
+                ", name='" + name + '\'' +
+                ", roleName='" + roleName + '\'' +
+                ", permissions=" + permissions +
+                '}';
     }
 }
