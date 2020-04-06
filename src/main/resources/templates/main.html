@@ -130,6 +130,7 @@
 
     //退出登录
     function loginOut(){
+        debugger;
         //显示弹出框，点击确定才能退出
         new $Msg({
             content:"确定要退出吗？",
@@ -137,7 +138,7 @@
             confirm:function(){
                 //获取项目跟路径
                 var result = EXAM.getPath();
-                window.location.href=result+"/loginOut";
+                window.location.href=result+"/logout";
             },
             cancle:function(){
                 console.log("不做任何操作！")

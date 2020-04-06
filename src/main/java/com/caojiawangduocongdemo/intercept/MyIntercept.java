@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author caojia
  * @time 下午 7:25
  */
-@Component
+//@Component
 public class MyIntercept implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {

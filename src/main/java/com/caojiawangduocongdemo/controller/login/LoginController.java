@@ -1,5 +1,6 @@
 package com.caojiawangduocongdemo.controller.login;
 
+import com.caojiawangduocongdemo.common.BizException;
 import com.caojiawangduocongdemo.common.ResultBody;
 import com.caojiawangduocongdemo.entity.Student;
 import com.caojiawangduocongdemo.entity.Teacher;
@@ -53,23 +54,16 @@ public class LoginController {
      * @return
      */
     @RequestMapping("/main")
-    public String shiroLogin(@RequestParam("userName")String userName,
-                             @RequestParam("userPass")String userPass,
-                             @RequestParam(name = "rememberMe",required = false)boolean rememberMe,HttpServletRequest request,HttpServletResponse response)throws Exception{
-        UsernamePasswordToken token = new UsernamePasswordToken(userName,userPass);
+    public String shiroLogin(String userName, String userPass, boolean rememberMe,HttpServletRequest request)throws BizException {
+        UsernamePasswordToken token = new UsernamePasswordToken(userName,userPass,rememberMe);
         Subject subject = SecurityUtils.getSubject();
-        logger.info("对用户[" + userName + "]进行登录验证..验证开始");
-        subject.login(token);
-        Map<String,String> respMap = new HashMap<>();
-        //登录成功
-        if(subject.isAuthenticated()){
+        try{
+            logger.info("对用户[" + userName + "]进行登录验证..验证开始");
+            subject.login(token);
             logger.info("用户[" + userName + "]登录成功！请继续执行以下操作");
-            if(rememberMe){
-                token.setRememberMe(true);
-            }
             //获取当前登录用户对象
-            User user = (User) subject.getPrincipal();
-            request.getSession().setAttribute("custom",user);
+            User user = userService.findByUsername(subject.getPrincipal().toString());
+            //request.getSession().setAttribute("custom",user);
             //通过identify查询用户信息，将用户信息存放到session中
             //学生编号
             if(user.getIdentify().length()==8){
@@ -80,20 +74,14 @@ public class LoginController {
                 request.getSession().setAttribute("user",teacher);
             }
             return "main";
-        }else{//登录失败
+        }catch (Exception e){
+            //登录失败从request中获取shiro处理的异常信息 shiroLoginFailure:就是shiro异常类的全类名
+            String exception = (String) request.getAttribute("shiroLoginFailure");
             token.clear();
             logger.info("用户[" + userName + "]登录失败！重新登录");
-            respMap.put("msg","登录失败，请重新登录！");
+            return "redirect:/login";
         }
-        if(!CollectionUtils.isEmpty(respMap)){
-            response.setContentType("text/html;charset=utf-8");
-            String msg = "alert('"+respMap.get("msg")+"'); window.location.href='"+request.getContextPath()+"/login';";
-            response.getWriter().write("<script language=\"javascript\">");
-            response.getWriter().write(msg+"\n");
-            response.getWriter().write("</script>");
-            return null;
-        }
-        return "redirect:/login";
+        //return "redirect:/login";
     }
 
     /*@RequestMapping("/main")
@@ -156,7 +144,7 @@ public class LoginController {
      * shiro退出登录
      * @return
      */
-    @RequestMapping("/loginOut")
+    @RequestMapping("/logout")
     public String logout() {
         Subject subject = SecurityUtils.getSubject();
         if (subject != null) {

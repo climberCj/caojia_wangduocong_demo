@@ -4,6 +4,7 @@ import com.caojiawangduocongdemo.entity.Permission;
 import com.caojiawangduocongdemo.entity.Role;
 import com.caojiawangduocongdemo.entity.User;
 import com.caojiawangduocongdemo.service.custom.UserService;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -16,23 +17,22 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * 自定义Realm
+ */
 public class AuthRealm extends AuthorizingRealm {
     @Autowired
     private UserService userService;
 
     /**
-     * 为用户授权
+     * 用来验证当前登录的用户，获取认证信息
      * @param principalCollection
      * @return
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        //获取前端输入的用户信息，封装为User对象
-        User userWeb = (User) principalCollection.getPrimaryPrincipal();
-        //获取前端输入的用户名
-        String username = userWeb.getUserName();
         //数据库查询
-        User user = userService.findByUsername(username);
+        User user = userService.findByUsername(principalCollection.getPrimaryPrincipal().toString());
         //若存在，则进行授权操作
         if(user!=null) {
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
@@ -65,26 +65,29 @@ public class AuthRealm extends AuthorizingRealm {
     }
 
     /**
-     * 认证登录
+     * 用来为当前登陆成功的用户授予权限和角色
      * @param authenticationToken
      * @return
      * @throws AuthenticationException
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        //token携带了用户信息
-        UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) authenticationToken;
-        //获取前端输入的用户名
-        String userName  = usernamePasswordToken.getUsername();
+        String userName  = authenticationToken.getPrincipal().toString();
         //根据用户名查询数据库中对应的记录
         User user = userService.findByUsername(userName);
-        //当前realm对象的用户名
-        String realmName = getName();
-        //盐值
-        ByteSource credentialsSalt = ByteSource.Util.bytes(user.getUserName());
-        //封装用户信息，构建AuthenticationInfo对象并返回
-        AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user, user.getUserPass(),
-                credentialsSalt, realmName);
-        return authcInfo;
+        if(user!=null){
+            // 把当前用户存到session中
+            SecurityUtils.getSubject().getSession().setAttribute("custom", user);
+            //当前realm对象的用户名
+            String realmName = getName();
+            //盐值
+            ByteSource credentialsSalt = ByteSource.Util.bytes(user.getUserName());
+            //封装用户信息，构建AuthenticationInfo对象并返回
+            AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user.getUserName(), user.getUserPass(),
+                    credentialsSalt, realmName);
+            return authcInfo;
+        }else{
+            return null;
+        }
     }
 }
