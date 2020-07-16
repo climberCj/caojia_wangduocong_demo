@@ -76,9 +76,10 @@ public class LoginController {
             return "main";
         }catch (Exception e){
             //登录失败从request中获取shiro处理的异常信息 shiroLoginFailure:就是shiro异常类的全类名
-            String exception = (String) request.getAttribute("shiroLoginFailure");
+            //String exception = (String) request.getAttribute("shiroLoginFailure");
             token.clear();
             logger.info("用户[" + userName + "]登录失败！重新登录");
+            logger.info("登录异常",e);
             return "redirect:/login";
         }
         //return "redirect:/login";
