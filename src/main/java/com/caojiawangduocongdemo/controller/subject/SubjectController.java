@@ -1,3 +1,4 @@
+/*
 package com.caojiawangduocongdemo.controller.subject;
 
 import com.caojiawangduocongdemo.common.BizException;
@@ -22,23 +23,27 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+*/
 /**
  * @author caojia
  * @createtime 2019-11-21 17:48
- */
+ *//*
+
 @Controller
 @RequestMapping("/subject")
 public class SubjectController {
     @Autowired
     private SubjectService subjectService;
-    /**
+    */
+/**
      * 试题分页列表
      * @param pageNo
      * @param pageSize
      * @param request
      * @param model
      * @return
-     */
+     *//*
+
     @RequiresPermissions("query")
     @RequestMapping("/list")
     public String findPage(@RequestParam(value = "pageNo",defaultValue = "1") int pageNo,
@@ -58,10 +63,12 @@ public class SubjectController {
         return "subject/subject_list";
     }
 
-    /**
+    */
+/**
      * 跳转添加试题页面
      * @return
-     */
+     *//*
+
     @RequiresPermissions("create")
     @RequestMapping("/addExam")
     public String addQues(String sysid, Model model){
@@ -97,3 +104,4 @@ public class SubjectController {
         return ResultBody.success(result);
     }
 }
+*/

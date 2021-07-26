@@ -62,6 +62,7 @@ public class UserServiceImplTest {
 
     @Test
     public void getPass(){
+        //2次加密
         String pass = new Md5Hash(new Md5Hash("123456","heis")).toHex();
         System.out.println(pass);
     }

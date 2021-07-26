@@ -1,7 +1,9 @@
 package com.caojiawangduocongdemo.dao;
 
 import com.caojiawangduocongdemo.entity.User;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface UserMapper {
     int deleteByPrimaryKey(String userId);
 

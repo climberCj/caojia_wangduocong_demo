@@ -13,6 +13,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -37,7 +38,7 @@ public class SubjectServiceImpl implements SubjectService {
         return subjectMapper.findByPage(conditions);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public int save(Subject subject) {
         Subject exitsSub = subjectMapper.selectByPrimaryKey(subject.getSysid());
@@ -75,7 +76,7 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED)
     public int delete(String sysid) {
         Subject subject = subjectMapper.selectByPrimaryKey(sysid);
         if(subject==null){
