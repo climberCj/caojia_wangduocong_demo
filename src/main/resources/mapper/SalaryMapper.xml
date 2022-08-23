@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.caojiawangduocongdemo.dao.SalaryMapper" >
+    <update id="updateByPrimaryKey" parameterType="com.caojiawangduocongdemo.entity.Salary" >
+        update salary
+        set money = #{money,jdbcType=DECIMAL}
+        where salary_id = #{salaryId,jdbcType=INTEGER}
+    </update>
+
+    <select id="queryByKey" resultType="com.caojiawangduocongdemo.entity.Salary">
+        select salary_id salaryId,card_id cardId,money,user_nm userNm from salary where salary_id = #{salaryId}
+    </select>
+</mapper>
